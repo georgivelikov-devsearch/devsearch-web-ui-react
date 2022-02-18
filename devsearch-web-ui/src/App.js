@@ -7,6 +7,8 @@ import Developers from "./components/Developers";
 import Projects from "./components/Projects";
 import Inbox from "./components/Inbox";
 import Profile from "./components/Profile";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
         <Footer />
       </Router>

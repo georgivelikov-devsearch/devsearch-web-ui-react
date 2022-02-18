@@ -28,9 +28,14 @@ function Header() {
               <Link to="/profile">My Profile</Link>
             </li>
             <li className="header__menuItem">
-              <a href="login.html" className="btn btn--sub">
-                Login/Sign Up
-              </a>
+              <Link to="/login" className="btn btn--sub">
+                Login
+              </Link>
+            </li>
+            <li className="header__menuItem">
+              <Link to="/register" className="btn btn--sub">
+                Register
+              </Link>
             </li>
           </ul>
         </nav>
