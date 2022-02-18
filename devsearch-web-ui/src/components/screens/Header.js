@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
@@ -29,12 +28,7 @@ function Header() {
             </li>
             <li className="header__menuItem">
               <Link to="/login" className="btn btn--sub">
-                Login
-              </Link>
-            </li>
-            <li className="header__menuItem">
-              <Link to="/register" className="btn btn--sub">
-                Register
+                Login / Sign Up
               </Link>
             </li>
           </ul>

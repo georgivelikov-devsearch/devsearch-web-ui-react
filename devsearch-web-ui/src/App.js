@@ -1,20 +1,22 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Home from "./components/Home";
-import Developers from "./components/Developers";
-import Projects from "./components/Projects";
-import Inbox from "./components/Inbox";
-import Profile from "./components/Profile";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Header from "./components/screens/Header";
+import Footer from "./components/screens/Footer";
+import Home from "./components/screens/Home";
+import Developers from "./components/screens/Developers";
+import Projects from "./components/screens/Projects";
+import Inbox from "./components/screens/Inbox";
+import Profile from "./components/screens/Profile";
+import Login from "./components/screens/Login";
+import Register from "./components/screens/Register";
+import ForgetPassword from "./components/screens/ForgetPassword";
 
 function App() {
   return (
     <div>
-      <Router>
+      <BrowserRouter>
         <Header />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/developers" element={<Developers />} />
@@ -23,9 +25,10 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
         <Footer />
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }
