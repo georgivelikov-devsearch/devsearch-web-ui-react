@@ -4,5 +4,5 @@ export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
 
 export const USER_LOGOUT = "USER_LOGOUT";
 
-//export const AUTH_HEADER = "authorization";
-//export const AUTH_USER_ID = "userid";
+export const AUTH_HEADER = "authorization";
+export const AUTH_USER_ID = "userid";

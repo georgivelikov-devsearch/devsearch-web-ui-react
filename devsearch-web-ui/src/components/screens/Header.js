@@ -1,6 +1,16 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../../actions/userActions";
 
 function Header() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
   return (
     <header className="header">
       <div className="container container--narrow">
@@ -20,17 +30,27 @@ function Header() {
             <li className="header__menuItem">
               <Link to="/projects">Projects</Link>
             </li>
-            <li className="header__menuItem">
-              <Link to="/inbox">Inbox</Link>
-            </li>
-            <li className="header__menuItem">
-              <Link to="/profile">My Profile</Link>
-            </li>
-            <li className="header__menuItem">
-              <Link to="/login" className="btn btn--sub">
-                Login / Sign Up
-              </Link>
-            </li>
+            {userInfo ? (
+              <>
+                <li className="header__menuItem">
+                  <Link to="/inbox">Inbox</Link>
+                </li>
+                <li className="header__menuItem">
+                  <Link to="/profile">My Profile</Link>
+                </li>
+                <li className="header__menuItem">
+                  <Link to="/" onClick={logoutHandler} className="btn btn--sub">
+                    Logout
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li className="header__menuItem">
+                <Link to="/login" className="btn btn--sub">
+                  Login / Sign Up
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       </div>

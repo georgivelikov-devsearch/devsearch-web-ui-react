@@ -12,8 +12,8 @@ import {
 export const login = (username, password) => async (dispatch) => {
   const getNewUserInfo = (res) => {
     return {
-      Authorization: res.headers["authorization"],
-      UserId: res.headers["userid"],
+      AUTH_HEADER: res.headers[AUTH_HEADER],
+      AUTH_USER_ID: res.headers[AUTH_USER_ID],
     };
   };
 
@@ -49,4 +49,11 @@ export const login = (username, password) => async (dispatch) => {
       payload: error,
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("userInfo");
+  dispatch({
+    type: USER_LOGOUT,
+  });
 };
