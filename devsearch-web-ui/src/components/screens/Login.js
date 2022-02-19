@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import HomeIcon from "../common/HomeIcon";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
 
@@ -12,7 +12,6 @@ function Login() {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-
   const { error, loading, userInfo } = userLogin;
 
   useEffect(() => {

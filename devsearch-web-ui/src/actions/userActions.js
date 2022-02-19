@@ -1,6 +1,9 @@
 import axios from "axios";
 
 import {
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
@@ -56,4 +59,42 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: USER_LOGOUT,
   });
+};
+
+export const register = (userData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTER_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const { username, firstName, lastName, email, password } = userData;
+    const response = await axios.post(
+      "http://localhost:8080/users",
+      {
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+      },
+      config
+    );
+
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload: error.response.data,
+    });
+  }
 };
