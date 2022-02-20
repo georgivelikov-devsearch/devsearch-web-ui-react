@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
-import HomeIcon from "../common/HomeIcon";
 import { useState, useEffect } from "react";
 import { register } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import HomeIcon from "../common/HomeIcon";
+import Message from "../common/Message";
+import Loader from "../common/Loader";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -18,13 +20,11 @@ function Register() {
   const userRegister = useSelector((state) => state.userRegister);
   const { error, loading, newUserInfo } = userRegister;
 
+  if (error) {
+  }
   useEffect(() => {
     if (newUserInfo) {
       navigate("/login");
-    }
-
-    if (error) {
-      alert(error.message);
     }
   }, [navigate, newUserInfo]);
 
@@ -47,102 +47,109 @@ function Register() {
   };
 
   return (
-    <body>
-      <div class="auth">
-        <div class="card">
-          <div class="auth__header text-center">
-            <HomeIcon />
-            <h3>Account SignUp</h3>
-            <p>Create a new developer account</p>
+    <div className="auth">
+      <div className="card">
+        <div className="auth__header text-center">
+          <HomeIcon />
+          <h3>Account SignUp</h3>
+          <p>Create a new developer account</p>
+        </div>
+        {error && (
+          <Message
+            variant="alert alert--error"
+            variantStyle={{ width: "100%" }}
+            message={error.message}
+          />
+        )}
+        {loading && <Loader />}
+        <form action="#" className="form auth__form" onSubmit={submitHanlder}>
+          <div className="form__field">
+            <label htmlFor="formInput#text">Username: </label>
+            <input
+              className="input input--text"
+              id="formInput#text"
+              type="text"
+              name="text"
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
 
-          <form action="#" class="form auth__form" onSubmit={submitHanlder}>
-            <div class="form__field">
-              <label for="formInput#text">Username: </label>
-              <input
-                class="input input--text"
-                id="formInput#text"
-                type="text"
-                name="text"
-                placeholder="Username"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-
-            <div class="form__field">
-              <label for="formInput#text">First Name: </label>
-              <input
-                class="input input--text"
-                id="formInput#text"
-                type="text"
-                name="text"
-                placeholder="First Name"
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
-
-            <div class="form__field">
-              <label for="formInput#text">Last Name: </label>
-              <input
-                class="input input--text"
-                id="formInput#text"
-                type="text"
-                name="text"
-                placeholder="Last Name"
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
-
-            <div class="form__field">
-              <label for="formInput#email">Email Address: </label>
-              <input
-                class="input input--email"
-                id="formInput#email"
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div class="form__field">
-              <label for="formInput#password">Password: </label>
-              <input
-                class="input input--password"
-                id="formInput#passowrd"
-                type="password"
-                name="password"
-                placeholder="••••••••"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            <div class="form__field">
-              <label for="formInput#confirm-password">Confirm Password: </label>
-              <input
-                class="input input--password"
-                id="formInput#confirm-passowrd"
-                type="password"
-                name="confirm-password"
-                placeholder="••••••••"
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-            <div class="auth__actions">
-              <input
-                class="btn btn--sub btn--lg"
-                type="submit"
-                value="Sign  In"
-              />
-            </div>
-          </form>
-          <div class="auth__alternative">
-            <p>Already have an Account?</p>
-            <Link to="/login">Log In</Link>
+          <div className="form__field">
+            <label htmlFor="formInput#text">First Name: </label>
+            <input
+              className="input input--text"
+              id="formInput#text"
+              type="text"
+              name="text"
+              placeholder="First Name"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
           </div>
+
+          <div className="form__field">
+            <label htmlFor="formInput#text">Last Name: </label>
+            <input
+              className="input input--text"
+              id="formInput#text"
+              type="text"
+              name="text"
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+
+          <div className="form__field">
+            <label htmlFor="formInput#email">Email Address: </label>
+            <input
+              className="input input--email"
+              id="formInput#email"
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="form__field">
+            <label htmlFor="formInput#password">Password: </label>
+            <input
+              className="input input--password"
+              id="formInput#passowrd"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <div className="form__field">
+            <label htmlFor="formInput#confirm-password">
+              Confirm Password:{" "}
+            </label>
+            <input
+              className="input input--password"
+              id="formInput#confirm-passowrd"
+              type="password"
+              name="confirm-password"
+              placeholder="••••••••"
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          <div className="auth__actions">
+            <input
+              className="btn btn--sub btn--lg"
+              type="submit"
+              value="Sign  In"
+            />
+          </div>
+        </form>
+        <div className="auth__alternative">
+          <p>Already have an Account?</p>
+          <Link to="/login">Log In</Link>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 

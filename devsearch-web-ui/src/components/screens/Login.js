@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import HomeIcon from "../common/HomeIcon";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
+import { Link } from "react-router-dom";
+import HomeIcon from "../common/HomeIcon";
 
 function Login() {
   const [username, setUsername] = useState("");
