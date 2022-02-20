@@ -20,8 +20,6 @@ function Register() {
   const userRegister = useSelector((state) => state.userRegister);
   const { error, loading, newUserInfo } = userRegister;
 
-  if (error) {
-  }
   useEffect(() => {
     if (newUserInfo) {
       navigate("/login");
