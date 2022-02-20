@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../actions/userActions";
 import { Link } from "react-router-dom";
 import HomeIcon from "../common/HomeIcon";
+import Message from "../common/Message";
+import Loader from "../common/Loader";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -33,7 +35,14 @@ function Login() {
           <h3>Account Login</h3>
           <p>Hello Developer, Welcome Back!</p>
         </div>
-
+        {error && (
+          <Message
+            variant="alert alert--error"
+            variantStyle={{ width: "100%" }}
+            message={error.message}
+          />
+        )}
+        {loading && <Loader />}
         <form action="#" className="form auth__form" onSubmit={submitHanlder}>
           <div className="form__field">
             <label htmlFor="formInput#text">Username: </label>
