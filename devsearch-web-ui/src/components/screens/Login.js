@@ -32,7 +32,7 @@ function Login() {
       <div className="card">
         <div className="auth__header text-center">
           <HomeIcon />
-          <h3>Account Login</h3>
+          <h3>Profile Login</h3>
           <p>Hello Developer, Welcome Back!</p>
         </div>
         {error && (
