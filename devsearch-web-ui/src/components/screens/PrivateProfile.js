@@ -1,6 +1,6 @@
 import React from "react";
 
-function Profile() {
+function PrivateProfile() {
   return (
     <main className="settingsPage profile my-md">
       <div className="container">
@@ -225,4 +225,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default PrivateProfile;

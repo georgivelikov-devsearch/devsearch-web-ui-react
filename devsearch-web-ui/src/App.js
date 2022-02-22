@@ -1,17 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/screens/Header";
 import Footer from "./components/screens/Footer";
 import Home from "./components/screens/Home";
 import Developers from "./components/screens/Developers";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
-import Profile from "./components/screens/Profile";
+import PrivateProfile from "./components/screens/PrivateProfile";
 import Login from "./components/screens/Login";
 import Register from "./components/screens/Register";
 import ForgetPassword from "./components/screens/ForgetPassword";
 
+import { useSelector } from "react-redux";
+
 function App() {
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   return (
     <div>
       <BrowserRouter>
@@ -21,7 +25,10 @@ function App() {
           <Route path="/developers" element={<Developers />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile/private"
+            element={userInfo ? <PrivateProfile /> : <Navigate to="/login" />}
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />

@@ -36,7 +36,7 @@ function Header() {
                   <Link to="/inbox">Inbox</Link>
                 </li>
                 <li className="header__menuItem">
-                  <Link to="/profile">My Profile</Link>
+                  <Link to="/profile/private">My Profile</Link>
                 </li>
                 <li className="header__menuItem">
                   <Link to="/" onClick={logoutHandler} className="btn btn--sub">
