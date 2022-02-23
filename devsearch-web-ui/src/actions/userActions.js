@@ -12,6 +12,8 @@ import {
   AUTH_USER_ID,
 } from "../constants/userConstants";
 
+import { LOGIN_URL, REGISTER_URL } from "../constants/urlConstants";
+
 export const login = (username, password) => async (dispatch) => {
   const getNewUserInfo = (res) => {
     return {
@@ -32,7 +34,7 @@ export const login = (username, password) => async (dispatch) => {
     };
 
     const response = await axios.post(
-      "http://localhost:8080/users/login",
+      LOGIN_URL,
       {
         username: username,
         password: password,
@@ -75,7 +77,7 @@ export const register = (userData) => async (dispatch) => {
 
     const { username, firstName, lastName, email, password } = userData;
     const response = await axios.post(
-      "http://localhost:8080/users",
+      REGISTER_URL,
       {
         username: username,
         firstName: firstName,
