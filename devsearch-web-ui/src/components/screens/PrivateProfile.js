@@ -13,7 +13,7 @@ function PrivateProfile() {
                 </a>
                 <img
                   className="avatar avatar--xl dev__avatar"
-                  src="images/user-default.png"
+                  src="../../../images/user-default.png"
                 />
                 <h2 className="dev__name">Dennis Ivanov</h2>
                 <p className="dev__title">
