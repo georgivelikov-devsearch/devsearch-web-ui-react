@@ -63,7 +63,7 @@ export const logout = () => (dispatch) => {
   });
 };
 
-export const register = (userData) => async (dispatch) => {
+export const register = (userData, navigate) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -92,6 +92,8 @@ export const register = (userData) => async (dispatch) => {
       type: USER_REGISTER_SUCCESS,
       payload: response.data,
     });
+
+    navigate("/login");
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

@@ -18,13 +18,7 @@ function Register() {
   const dispatch = useDispatch();
 
   const userRegister = useSelector((state) => state.userRegister);
-  const { error, loading, newUserInfo } = userRegister;
-
-  useEffect(() => {
-    if (newUserInfo) {
-      navigate("/login");
-    }
-  }, [navigate, newUserInfo]);
+  const { error, loading } = userRegister;
 
   const submitHanlder = (e) => {
     e.preventDefault();
@@ -41,7 +35,7 @@ function Register() {
       password: password,
     };
 
-    dispatch(register(userData));
+    dispatch(register(userData, navigate));
   };
 
   return (
