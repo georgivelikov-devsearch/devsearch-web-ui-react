@@ -13,6 +13,8 @@ import { AUTH_USER_ID } from "../../../constants/userConstants";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
+import { Link } from "react-router-dom";
+
 function PrivateProfile() {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -27,15 +29,18 @@ function PrivateProfile() {
 
   return (
     <main className="settingsPage profile my-md">
-      {profile ? (
+      {profile && (
         <div className="container">
           <div className="layout">
             <div className="column column--1of3">
               <div className="card text-center">
                 <div className="card__body dev">
-                  <a className="tag tag--pill tag--main settings__btn" href="#">
+                  <Link
+                    to="/profile/private/edit"
+                    className="tag tag--pill tag--main settings__btn"
+                  >
                     <i className="im im-edit"></i> Edit
-                  </a>
+                  </Link>
                   <img
                     className="avatar avatar--xl dev__avatar"
                     src="../../../images/user-default.png"
@@ -320,7 +325,8 @@ function PrivateProfile() {
             </div>
           </div>
         </div>
-      ) : error ? (
+      )}
+      {error && (
         <Message
           variant="alert alert--error"
           variantStyle={{
@@ -330,9 +336,8 @@ function PrivateProfile() {
           }}
           message={error.message}
         />
-      ) : (
-        <Loader />
       )}
+      {loading && <Loader />}
     </main>
   );
 }

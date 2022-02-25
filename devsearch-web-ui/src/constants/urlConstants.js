@@ -4,3 +4,4 @@ export const REGISTER_URL = "http://localhost:8080/users";
 
 // Profile
 export const PRIVATE_PROFILE_URL = "";
+export const EDIT_PRIVATE_PROFILE_URL = "";

@@ -5,6 +5,7 @@ import Index from "./components/screens/Home/Index";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
 import PrivateProfile from "./components/screens/Profiles/PrivateProfile";
+import PrivateProfileEdit from "./components/screens/Profiles/PrivateProfileEdit";
 import Login from "./components/screens/Users/Login";
 import Register from "./components/screens/Users/Register";
 import ForgetPassword from "./components/screens/ForgetPassword";
@@ -14,6 +15,9 @@ import { useSelector } from "react-redux";
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const privateProfile = useSelector((state) => state.privateProfile);
+  const { profile } = privateProfile;
 
   return (
     <div>
@@ -26,6 +30,16 @@ function App() {
           <Route
             path="/profile/private"
             element={userInfo ? <PrivateProfile /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile/private/edit"
+            element={
+              profile ? (
+                <PrivateProfileEdit />
+              ) : (
+                <Navigate to="/profile/private" />
+              )
+            }
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

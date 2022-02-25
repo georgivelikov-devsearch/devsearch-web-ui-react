@@ -39,7 +39,7 @@ function Login() {
           <Message
             variant="alert alert--error"
             variantStyle={{ width: "100%" }}
-            message={error.message}
+            message={error.additionalInformation}
           />
         )}
         {loading && <Loader />}
