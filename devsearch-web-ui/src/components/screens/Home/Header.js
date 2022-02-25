@@ -15,7 +15,7 @@ function Header() {
     <header className="header">
       <div className="container container--narrow">
         <Link className="header__logo" to="/">
-          <img src="images/logo.svg" alt="DevSearch Logo" />
+          <img src="/images/logo.svg" alt="DevSearch Logo" />
         </Link>
         <nav className="header__nav">
           <input type="checkbox" id="responsive-menu" />
@@ -25,7 +25,7 @@ function Header() {
           </label>
           <ul className="header__menu">
             <li className="header__menuItem">
-              <Link to="/developers">Developers</Link>
+              <Link to="/">Developers</Link>
             </li>
             <li className="header__menuItem">
               <Link to="/projects">Projects</Link>

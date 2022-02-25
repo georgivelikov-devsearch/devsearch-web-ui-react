@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 import {
   PRIVATE_PROFILE_REQUEST,
@@ -40,7 +41,7 @@ export const getPrivateProfileForUser =
     } catch (error) {
       dispatch({
         type: PRIVATE_PROFILE_FAIL,
-        payload: error.response.data,
+        payload: error,
       });
     }
   };

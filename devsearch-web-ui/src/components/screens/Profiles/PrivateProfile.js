@@ -323,7 +323,11 @@ function PrivateProfile() {
       ) : error ? (
         <Message
           variant="alert alert--error"
-          variantStyle={{ width: "100%" }}
+          variantStyle={{
+            width: "100%",
+            display: "inline-block",
+            textAlign: "center",
+          }}
           message={error.message}
         />
       ) : (
