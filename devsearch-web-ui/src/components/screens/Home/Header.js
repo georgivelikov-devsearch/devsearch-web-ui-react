@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../../actions/userActions";
+import { logout } from "../../../actions/userActions";
 
 function Header() {
   const userLogin = useSelector((state) => state.userLogin);

@@ -17,8 +17,8 @@ import { LOGIN_URL, REGISTER_URL } from "../constants/urlConstants";
 export const login = (username, password) => async (dispatch) => {
   const getNewUserInfo = (res) => {
     return {
-      AUTH_HEADER: res.headers[AUTH_HEADER],
-      AUTH_USER_ID: res.headers[AUTH_USER_ID],
+      [AUTH_HEADER]: res.headers[AUTH_HEADER],
+      [AUTH_USER_ID]: res.headers[AUTH_USER_ID],
     };
   };
 

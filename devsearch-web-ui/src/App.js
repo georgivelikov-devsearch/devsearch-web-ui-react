@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/screens/Header";
-import Footer from "./components/screens/Footer";
-import Home from "./components/screens/Home";
+import Header from "./components/screens/Home/Header";
+import Footer from "./components/screens/Home/Footer";
+import Home from "./components/screens/Home/Home";
 import Developers from "./components/screens/Developers";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
-import PrivateProfile from "./components/screens/PrivateProfile";
-import Login from "./components/screens/Login";
-import Register from "./components/screens/Register";
+import PrivateProfile from "./components/screens/Profiles/PrivateProfile";
+import Login from "./components/screens/Users/Login";
+import Register from "./components/screens/Users/Register";
 import ForgetPassword from "./components/screens/ForgetPassword";
 
 import { useSelector } from "react-redux";

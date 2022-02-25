@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { register } from "../../actions/userActions";
+import { register } from "../../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import HomeIcon from "../common/HomeIcon";
-import Message from "../common/Message";
-import Loader from "../common/Loader";
+import HomeIcon from "../../common/HomeIcon";
+import Message from "../../common/Message";
+import Loader from "../../common/Loader";
 
 function Register() {
   const [username, setUsername] = useState("");
