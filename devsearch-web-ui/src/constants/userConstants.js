@@ -1,3 +1,6 @@
+export const AUTH_HEADER = "authorization";
+export const AUTH_USER_ID = "userid";
+
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
 export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
 export const USER_REGISTER_FAIL = "USER_REGISTER_FAIL";
@@ -8,5 +11,20 @@ export const USER_LOGIN_FAIL = "USER_LOGIN_FAIL";
 
 export const USER_LOGOUT = "USER_LOGOUT";
 
-export const AUTH_HEADER = "authorization";
-export const AUTH_USER_ID = "userid";
+const USERNAME_MIN_LENGTH = 2;
+const USERNAME_MAX_LENGTH = 50;
+
+const PASSWORD_MIN_LENGTH = 6;
+const PASSWORD_MAX_LENGTH = 50;
+
+const EMAIL_MIN_LENGTH = 6;
+const EMAIL_MAX_LENGTH = 50;
+
+export const USER_VALIDATION = {
+  USERNAME_MIN_LENGTH,
+  USERNAME_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
+  EMAIL_MIN_LENGTH,
+  EMAIL_MAX_LENGTH,
+};

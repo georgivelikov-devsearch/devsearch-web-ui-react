@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { login } from "../../../actions/userActions";
 import { validateStringLength } from "../../../utils/validator";
+import { USER_VALIDATION } from "../../../constants/userConstants";
 
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
@@ -33,14 +34,24 @@ function Login() {
   const submitHanlder = (e) => {
     e.preventDefault();
 
-    let isValid = validateStringLength(username, 2, 50, "Username");
+    let isValid = validateStringLength(
+      username,
+      USER_VALIDATION.USERNAME_MIN_LENGTH,
+      USER_VALIDATION.USERNAME_MAX_LENGTH,
+      "Username"
+    );
     setValidUsername(isValid.result);
     if (!isValid.result) {
       setValidUsernameErrMessage(isValid.message);
       return;
     }
 
-    isValid = validateStringLength(password, 6, 50, "Password");
+    isValid = validateStringLength(
+      password,
+      USER_VALIDATION.PASSWORD_MIN_LENGTH,
+      USER_VALIDATION.PASSWORD_MAX_LENGTH,
+      "Password"
+    );
     setValidPassword(isValid.result);
     if (!isValid.result) {
       setValidPasswordErrMessage(isValid.message);

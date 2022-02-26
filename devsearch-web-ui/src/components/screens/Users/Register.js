@@ -1,7 +1,12 @@
-import { useState, useEffect } from "react";
-import { register } from "../../../actions/userActions";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import { register } from "../../../actions/userActions";
+import { validateStringLength } from "../../../utils/validator";
+import { USER_VALIDATION } from "../../../constants/userConstants";
+import { PROFILE_VALIDATION } from "../../../constants/profileConstants";
+
 import { Link } from "react-router-dom";
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
@@ -14,7 +19,20 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
+  const [confirmPasswordAlertMessage, setConfirmPasswordAlertMessage] =
+    useState("");
+
+  const [validUsername, setValidUsername] = useState(true);
+  const [validFirstName, setValidFirstName] = useState(true);
+  const [validLastName, setValidLastName] = useState(true);
+  const [validEmail, setValidEmail] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+
+  const [validUsernameErrMessage, setValidUsernameErrMessage] = useState("");
+  const [validFirstNameErrMessage, setValidFirstNameErrMessage] = useState("");
+  const [validLastNameErrMessage, setValidLastNameErrMessage] = useState("");
+  const [validEmailErrMessage, setValidEmailErrMessage] = useState("");
+  const [validPasswordErrMessage, setValidPasswordErrMessage] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,10 +43,79 @@ function Register() {
   const submitHanlder = (e) => {
     e.preventDefault();
     if (confirmPassword !== password) {
-      setAlertMessage("Passwords do not match!");
+      setConfirmPasswordAlertMessage("Passwords do not match!");
       return;
     }
 
+    // Clearing all previous values for validation
+    clearValidation();
+
+    // Username validation
+    let isValid = validateStringLength(
+      username,
+      USER_VALIDATION.USERNAME_MIN_LENGTH,
+      USER_VALIDATION.USERNAME_MAX_LENGTH,
+      "Username"
+    );
+    setValidUsername(isValid.result);
+    if (!isValid.result) {
+      setValidUsernameErrMessage(isValid.message);
+      return;
+    }
+
+    // First Name validation
+    isValid = validateStringLength(
+      firstName,
+      PROFILE_VALIDATION.FIRSTNAME_MIN_LENGTH,
+      PROFILE_VALIDATION.FIRSTNAME_MAX_LENGTH,
+      "First Name"
+    );
+    setValidFirstName(isValid.result);
+    if (!isValid.result) {
+      setValidFirstNameErrMessage(isValid.message);
+      return;
+    }
+
+    // Last Name validation
+    isValid = validateStringLength(
+      lastName,
+      PROFILE_VALIDATION.LASTNAME_MIN_LENGTH,
+      PROFILE_VALIDATION.LASTNAME_MAX_LENGTH,
+      "Last Name"
+    );
+    setValidLastName(isValid.result);
+    if (!isValid.result) {
+      setValidLastNameErrMessage(isValid.message);
+      return;
+    }
+
+    // Email validation
+    isValid = validateStringLength(
+      username,
+      USER_VALIDATION.EMAIL_MIN_LENGTH,
+      USER_VALIDATION.EMAIL_MAX_LENGTH,
+      "Email"
+    );
+    setValidEmail(isValid.result);
+    if (!isValid.result) {
+      setValidEmailErrMessage(isValid.message);
+      return;
+    }
+
+    // Password validation
+    isValid = validateStringLength(
+      password,
+      USER_VALIDATION.PASSWORD_MIN_LENGTH,
+      USER_VALIDATION.PASSWORD_MAX_LENGTH,
+      "Password"
+    );
+    setValidPassword(isValid.result);
+    if (!isValid.result) {
+      setValidPasswordErrMessage(isValid.message);
+      return;
+    }
+
+    // Register
     const userData = {
       username: username,
       firstName: firstName,
@@ -38,7 +125,22 @@ function Register() {
     };
 
     dispatch(register(userData, navigate));
-    setAlertMessage("");
+  };
+
+  const clearValidation = () => {
+    setConfirmPasswordAlertMessage("");
+
+    setValidUsername(true);
+    setValidFirstName(true);
+    setValidLastName(true);
+    setValidEmail(true);
+    setValidPassword(true);
+
+    setValidUsernameErrMessage("");
+    setValidFirstNameErrMessage("");
+    setValidLastNameErrMessage("");
+    setValidEmailErrMessage("");
+    setValidPasswordErrMessage("");
   };
 
   return (
@@ -56,13 +158,6 @@ function Register() {
             message={error.message}
           />
         )}
-        {alertMessage && (
-          <Message
-            variant="alert alert--error"
-            variantStyle={{ width: "100%" }}
-            message={alertMessage}
-          />
-        )}
         {loading && <Loader />}
         <form action="#" className="form auth__form" onSubmit={submitHanlder}>
           <div className="form__field">
@@ -76,6 +171,13 @@ function Register() {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
+          {!validUsername && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validUsernameErrMessage}
+            />
+          )}
 
           <div className="form__field">
             <label htmlFor="formInput#text">First Name: </label>
@@ -88,6 +190,13 @@ function Register() {
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
+          {!validFirstName && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validFirstNameErrMessage}
+            />
+          )}
 
           <div className="form__field">
             <label htmlFor="formInput#text">Last Name: </label>
@@ -100,6 +209,13 @@ function Register() {
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
+          {!validLastName && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validLastNameErrMessage}
+            />
+          )}
 
           <div className="form__field">
             <label htmlFor="formInput#email">Email Address: </label>
@@ -112,6 +228,13 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+          {!validEmail && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validEmailErrMessage}
+            />
+          )}
 
           <div className="form__field">
             <label htmlFor="formInput#password">Password: </label>
@@ -124,6 +247,13 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {!validPassword && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validPasswordErrMessage}
+            />
+          )}
 
           <div className="form__field">
             <label htmlFor="formInput#confirm-password">
@@ -138,11 +268,18 @@ function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
+          {confirmPasswordAlertMessage && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={confirmPasswordAlertMessage}
+            />
+          )}
           <div className="auth__actions">
             <input
               className="btn btn--sub btn--lg"
               type="submit"
-              value="Sign  In"
+              value="Sign Up"
             />
           </div>
         </form>
