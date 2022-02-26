@@ -157,9 +157,9 @@ function Register() {
   };
 
   return (
-    <div className="auth">
+    <div className="reg">
       <div className="card">
-        <div className="auth__header text-center">
+        <div className="reg__header text-center">
           <HomeIcon />
           <h3>Account SignUp</h3>
           <p>Create a new developer account</p>
@@ -173,7 +173,7 @@ function Register() {
         )}
         {loading && <Loader />}
 
-        <form action="#" className="form auth__form" onSubmit={submitHanlder}>
+        <form action="#" className="form reg__form" onSubmit={submitHanlder}>
           <div className="form__field">
             <label htmlFor="formInput#text">Username: </label>
             <input
@@ -289,7 +289,7 @@ function Register() {
               message={confirmPasswordAlertMessage}
             />
           )}
-          <div className="auth__actions">
+          <div className="reg__actions">
             <input
               className="btn btn--sub btn--lg"
               type="submit"
@@ -297,7 +297,7 @@ function Register() {
             />
           </div>
         </form>
-        <div className="auth__alternative">
+        <div className="reg__alternative">
           <p>Already have an Account?</p>
           <Link to="/login">Log In</Link>
         </div>
