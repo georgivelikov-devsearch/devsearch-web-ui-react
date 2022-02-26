@@ -1,15 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { login } from "../../../actions/userActions";
-import { Link } from "react-router-dom";
+import { validateStringLength } from "../../../utils/validator";
+
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
+import { Link } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [validUsername, setValidUsername] = useState(true);
+  const [validPassword, setValidPassword] = useState(true);
+  const [validUsernameErrMessage, setValidUsernameErrMessage] = useState("");
+  const [validPasswordErrMessage, setValidPasswordErrMessage] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,6 +32,21 @@ function Login() {
 
   const submitHanlder = (e) => {
     e.preventDefault();
+
+    let isValid = validateStringLength(username, 2, 50, "Username");
+    setValidUsername(isValid.result);
+    if (!isValid.result) {
+      setValidUsernameErrMessage(isValid.message);
+      return;
+    }
+
+    isValid = validateStringLength(password, 6, 50, "Password");
+    setValidPassword(isValid.result);
+    if (!isValid.result) {
+      setValidPasswordErrMessage(isValid.message);
+      return;
+    }
+
     dispatch(login(username, password));
   };
 
@@ -55,7 +78,13 @@ function Login() {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-
+          {!validUsername && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validUsernameErrMessage}
+            />
+          )}
           <div className="form__field">
             <label htmlFor="formInput#password">Password: </label>
             <input
@@ -67,6 +96,13 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          {!validPassword && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validPasswordErrMessage}
+            />
+          )}
           <div className="auth__actions">
             <input
               className="btn btn--sub btn--lg"
