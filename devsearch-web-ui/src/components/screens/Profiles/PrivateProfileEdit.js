@@ -430,13 +430,13 @@ function PrivateProfileEdit() {
             )}
 
             <div className="form__field">
-              <label htmlFor="formInput#text">About: </label>
-              <input
-                className="input input--text"
-                id="formInput#text"
-                type="text"
+              <label htmlFor="formInput#textarea">About: </label>
+              <textarea
+                className="input input--textarea"
+                id="formInput#textarea"
+                type="textarea"
                 name="text"
-                placeholder="Short Intro"
+                placeholder="About"
                 defaultValue={profile.about}
                 onChange={(e) => setAbout(e.target.value)}
               />

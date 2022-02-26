@@ -64,7 +64,7 @@ function PrivateProfile() {
                         {profile.locationCountry}
                       </span>
                     ) : profile.locationCity ? (
-                      <span>Based in {profile.locationCity},</span>
+                      <span>Based in {profile.locationCity}</span>
                     ) : profile.locationCountry ? (
                       <span>Based in {profile.locationCountry}</span>
                     ) : (
