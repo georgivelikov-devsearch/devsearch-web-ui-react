@@ -172,6 +172,7 @@ function Register() {
           />
         )}
         {loading && <Loader />}
+
         <form action="#" className="form auth__form" onSubmit={submitHanlder}>
           <div className="form__field">
             <label htmlFor="formInput#text">Username: </label>

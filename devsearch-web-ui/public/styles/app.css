@@ -61,11 +61,11 @@ img {
   display: none;
 }
 
-.header__nav input[type='checkbox'] {
+.header__nav input[type="checkbox"] {
   display: none;
 }
 
-.header__nav input[type='checkbox']:checked ~ .header__menu {
+.header__nav input[type="checkbox"]:checked ~ .header__menu {
   opacity: 1;
   pointer-events: all;
 }
@@ -103,7 +103,7 @@ img {
   .toggle-menu__lines::before,
   .toggle-menu__lines::after {
     pointer-events: none;
-    content: '';
+    content: "";
     display: block;
     height: 2px;
     width: 2.5rem;
@@ -124,17 +124,26 @@ img {
     transform-origin: 0 0;
   }
 
-  .header__nav input[type='checkbox']:checked + .toggle-menu > .toggle-menu__lines::before {
+  .header__nav
+    input[type="checkbox"]:checked
+    + .toggle-menu
+    > .toggle-menu__lines::before {
     margin-left: 3px;
     transform: rotate(45deg) scaleX(1.2) translateX(-2px) translateY(-4px);
     visibility: visible;
   }
 
-  .header__nav input[type='checkbox']:checked + .toggle-menu > .toggle-menu__lines {
+  .header__nav
+    input[type="checkbox"]:checked
+    + .toggle-menu
+    > .toggle-menu__lines {
     visibility: hidden;
   }
 
-  .header__nav input[type='checkbox']:checked + .toggle-menu > .toggle-menu__lines::after {
+  .header__nav
+    input[type="checkbox"]:checked
+    + .toggle-menu
+    > .toggle-menu__lines::after {
     transform: rotate(-45deg) scaleX(1.2) translateX(-2px) translateY(3px);
     visibility: visible;
   }
@@ -464,14 +473,14 @@ img {
   margin-bottom: 3rem;
 }
 
-.project__author{
+.project__author {
   font-size: 1.4rem;
   font-style: italic;
 }
 
-.project--rating{
+.project--rating {
   margin-bottom: 1.6em;
-  margin-top: .5em;
+  margin-top: 0.5em;
 }
 
 .singleProject__subtitle {
@@ -613,7 +622,7 @@ img {
   object-fit: contain;
 }
 
-.settings__tableInfo{
+.settings__tableInfo {
   width: 100%;
 }
 
@@ -635,7 +644,7 @@ img {
 }
 
 /*=======================
-  Login/SignUp
+  Login
 ========================*/
 
 .auth {
@@ -652,7 +661,7 @@ img {
 .auth::after {
   z-index: -1;
   opacity: 0.1;
-  content: '';
+  content: "";
   display: block;
   position: fixed;
   top: 0;
@@ -710,6 +719,85 @@ img {
 }
 
 .auth .auth__alternative a {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+/*=======================
+  SignUp
+========================*/
+
+.reg {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reg::after {
+  z-index: -1;
+  opacity: 0.1;
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: url(../images/pattern.jpg);
+}
+
+.reg > .card {
+  padding: 3rem 4rem;
+  width: 95%;
+  max-width: 65rem;
+}
+
+@media screen and (min-width: 650px) {
+  .reg > .card {
+    padding: 5rem 8rem;
+    width: 95%;
+    max-width: 65rem;
+  }
+}
+
+.reg__header h3 {
+  color: var(--color-sub);
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.reg__header p {
+  font-weight: 400;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.reg__form {
+  margin: 3rem 0;
+}
+
+.reg .reg__form label,
+.reg .reg__alternative p {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--color-sub-light);
+}
+
+.reg .reg__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2.5rem 0;
+}
+.reg .reg__actions a {
+  text-decoration: underline;
+}
+
+.reg .reg__alternative a {
   font-size: 2rem;
   font-weight: 500;
 }
@@ -825,7 +913,6 @@ img {
 .backButton i {
   font-size: 1.8rem;
 }
-
 
 /*=======================
   Form Page
