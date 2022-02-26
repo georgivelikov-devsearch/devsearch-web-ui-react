@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { getPrivateProfileForUser } from "../../../actions/profileActions";
 
 import {
@@ -12,19 +14,25 @@ import { AUTH_USER_ID } from "../../../constants/userConstants";
 
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-
 import { Link } from "react-router-dom";
 
 function PrivateProfile() {
-  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const userId = userInfo[AUTH_USER_ID];
+
   const privateProfile = useSelector((state) => state.privateProfile);
   const { loading, error, profile } = privateProfile;
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    dispatch(getPrivateProfileForUser(userId));
+    if (!userInfo) {
+      navigate("/login");
+    } else {
+      const userId = userInfo[AUTH_USER_ID];
+      dispatch(getPrivateProfileForUser(userId));
+    }
   }, []);
 
   return (

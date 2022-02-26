@@ -14,6 +14,8 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -23,7 +25,7 @@ function Register() {
   const submitHanlder = (e) => {
     e.preventDefault();
     if (confirmPassword !== password) {
-      alert("Passwords do not match!");
+      setAlertMessage("Passwords do not match!");
       return;
     }
 
@@ -36,6 +38,7 @@ function Register() {
     };
 
     dispatch(register(userData, navigate));
+    setAlertMessage("");
   };
 
   return (
@@ -51,6 +54,13 @@ function Register() {
             variant="alert alert--error"
             variantStyle={{ width: "100%" }}
             message={error.message}
+          />
+        )}
+        {alertMessage && (
+          <Message
+            variant="alert alert--error"
+            variantStyle={{ width: "100%" }}
+            message={alertMessage}
           />
         )}
         {loading && <Loader />}

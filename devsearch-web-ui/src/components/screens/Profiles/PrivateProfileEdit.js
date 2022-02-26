@@ -1,35 +1,66 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { editPrivateProfileForUser } from "../../../actions/profileActions";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import {
+  getPrivateProfileForUser,
+  editPrivateProfileForUser,
+} from "../../../actions/profileActions";
+
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
+import { AUTH_USER_ID } from "../../../constants/userConstants";
+
 function PrivateProfileEdit() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [shortIntro, setShortIntro] = useState("");
+  const [about, setAbout] = useState("");
+  const [locationCity, setLocationCity] = useState("");
+  const [locationCountry, setLocationCountry] = useState("");
+  const [socialGithub, setSocialGithub] = useState("");
+  const [socialYoutube, setSocialYoutube] = useState("");
+  const [socialTwitter, setSocialTwitter] = useState("");
+  const [socialLinkedIn, setSocialLinkedIn] = useState("");
+  const [socialWebsite, setSocialWebsite] = useState("");
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const privateProfile = useSelector((state) => state.privateProfile);
   const { loading, error, profile } = privateProfile;
 
-  const [firstName, setFirstName] = useState(profile.firstName);
-  const [lastName, setLastName] = useState(profile.lastName);
-  const [shortIntro, setShortIntro] = useState(profile.shortIntro);
-  const [about, setAbout] = useState(profile.about);
-  const [locationCity, setLocationCity] = useState(profile.locationCity);
-  const [locationCountry, setLocationCountry] = useState(
-    profile.locationCountry
-  );
-  const [socialGithub, setSocialGithub] = useState(profile.socialGithub);
-  const [socialYoutube, setSocialYoutube] = useState(profile.socialYoutube);
-  const [socialTwitter, setSocialTwitter] = useState(profile.socialTwitter);
-  const [socialLinkedIn, setSocialLinkedIn] = useState(profile.socialLinkedIn);
-  const [socialWebsite, setSocialWebsite] = useState(profile.setSocialWebsite);
+  const editPrivateProfile = useSelector((state) => state.editPrivateProfile);
+  const { editLoading, editError } = editPrivateProfile;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const editPrivateProfile = useSelector((state) => state.editPrivateProfile);
-  const { editLoading, editError } = editPrivateProfile;
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    } else {
+      if (!profile) {
+        let userId = userInfo[AUTH_USER_ID];
+        dispatch(getPrivateProfileForUser(userId));
+      } else {
+        setFirstName(profile.firstName);
+        setLastName(profile.lastName);
+        setShortIntro(profile.shortIntro);
+        setAbout(profile.about);
+        setLocationCity(profile.locationCity);
+        setLocationCountry(profile.locationCountry);
+        setSocialGithub(profile.socialGithub);
+        setSocialYoutube(profile.socialYoutube);
+        setSocialTwitter(profile.socialTwitter);
+        setSocialLinkedIn(profile.socialLinkedIn);
+        setSocialWebsite(profile.setSocialWebsite);
+      }
+    }
+  }, []);
 
   const submitHanlder = (e) => {
     e.preventDefault();
