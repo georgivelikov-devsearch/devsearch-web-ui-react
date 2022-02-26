@@ -8,6 +8,9 @@ import {
   editPrivateProfileForUser,
 } from "../../../actions/profileActions";
 
+import { validateStringLength } from "../../../utils/validator";
+import { PROFILE_VALIDATION } from "../../../constants/profileConstants";
+
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
@@ -26,6 +29,39 @@ function PrivateProfileEdit() {
   const [socialTwitter, setSocialTwitter] = useState("");
   const [socialLinkedIn, setSocialLinkedIn] = useState("");
   const [socialWebsite, setSocialWebsite] = useState("");
+
+  const [validFirstName, setValidFirstName] = useState(true);
+  const [validLastName, setValidLastName] = useState(true);
+  const [validShortIntro, setValidShortIntro] = useState(true);
+  const [validAbout, setValidAbout] = useState(true);
+  const [validLocationCity, setValidLocationCity] = useState(true);
+  const [validLocationCountry, setValidLocationCountry] = useState(true);
+  const [validSocialGithub, setValidSocialGithub] = useState(true);
+  const [validSocialYoutube, setValidSocialYoutube] = useState(true);
+  const [validSocialTwitter, setValidSocialTwitter] = useState(true);
+  const [validSocialLinkedIn, setValidSocialLinkedIn] = useState(true);
+  const [validSocialWebsite, setValidSocialWebsite] = useState(true);
+
+  const [validFirstNameErrMessage, setValidFirstNameErrMessage] =
+    useState(true);
+  const [validLastNameErrMessage, setValidLastNameErrMessage] = useState(true);
+  const [validShortIntroErrMessage, setValidShortIntroErrMessage] =
+    useState(true);
+  const [validAboutErrMessage, setValidAboutErrMessage] = useState(true);
+  const [validLocationCityErrMessage, setValidLocationCityErrMessage] =
+    useState(true);
+  const [validLocationCountryErrMessage, setValidLocationCountryErrMessage] =
+    useState(true);
+  const [validSocialGithubErrMessage, setValidSocialGithubErrMessage] =
+    useState(true);
+  const [validSocialYoutubeErrMessage, setValidSocialYoutubeErrMessage] =
+    useState(true);
+  const [validSocialTwitterErrMessage, setValidSocialTwitterErrMessage] =
+    useState(true);
+  const [validSocialLinkedInErrMessage, setValidSocialLinkedInErrMessage] =
+    useState(true);
+  const [validSocialWebsiteErrMessage, setValidSocialWebsiteErrMessage] =
+    useState(true);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -64,6 +100,18 @@ function PrivateProfileEdit() {
 
   const submitHanlder = (e) => {
     e.preventDefault();
+
+    // Clear all previous values for validation
+    clearValidation();
+
+    // Validation
+    let validationComplete = validateFields();
+
+    if (!validationComplete) {
+      return;
+    }
+
+    // Update profile
     const profilePrivateId = profile.profilePrivateId;
     const newData = {
       profilePrivateId,
@@ -80,6 +128,42 @@ function PrivateProfileEdit() {
       socialWebsite,
     };
     dispatch(editPrivateProfileForUser(newData, navigate));
+  };
+
+  const validateFields = () => {
+    let isValid = validateStringLength(
+      firstName,
+      PROFILE_VALIDATION.FIRSTNAME_MIN_LENGTH,
+      PROFILE_VALIDATION.FIRSTNAME_MAX_LENGTH,
+      "First Name"
+    );
+    setValidFirstName(isValid.result);
+    if (!isValid.result) {
+      setValidFirstNameErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      firstName,
+      PROFILE_VALIDATION.LASTNAME_MIN_LENGTH,
+      PROFILE_VALIDATION.LASTNAME_MAX_LENGTH,
+      "Last Name"
+    );
+    setValidLastName(isValid.result);
+    if (!isValid.result) {
+      setValidLastNameErrMessage(isValid.message);
+      return false;
+    }
+
+    return true;
+  };
+
+  const clearValidation = () => {
+    setValidFirstName(true);
+    setValidLastName(true);
+
+    setValidFirstNameErrMessage("");
+    setValidLastNameErrMessage("");
   };
 
   return (
@@ -128,6 +212,13 @@ function PrivateProfileEdit() {
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
+            {!validFirstName && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validFirstNameErrMessage}
+              />
+            )}
 
             <div className="form__field">
               <label htmlFor="formInput#text">Last Name: </label>
@@ -141,6 +232,14 @@ function PrivateProfileEdit() {
                 onChange={(e) => setLastName(e.target.value)}
               />
             </div>
+            {!validLastName && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validLastNameErrMessage}
+              />
+            )}
+
             <div className="auth__actions">
               <input
                 className="btn btn--sub btn--lg"

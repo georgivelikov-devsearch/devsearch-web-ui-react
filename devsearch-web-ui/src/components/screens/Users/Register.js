@@ -42,76 +42,20 @@ function Register() {
 
   const submitHanlder = (e) => {
     e.preventDefault();
-    if (confirmPassword !== password) {
-      setConfirmPasswordAlertMessage("Passwords do not match!");
-      return;
-    }
 
-    // Clearing all previous values for validation
+    // Clear all previous values for validation
     clearValidation();
 
-    // Username validation
-    let isValid = validateStringLength(
-      username,
-      USER_VALIDATION.USERNAME_MIN_LENGTH,
-      USER_VALIDATION.USERNAME_MAX_LENGTH,
-      "Username"
-    );
-    setValidUsername(isValid.result);
-    if (!isValid.result) {
-      setValidUsernameErrMessage(isValid.message);
+    // Validation
+    let validationSuccess = validateFields();
+
+    if (!validationSuccess) {
       return;
     }
 
-    // First Name validation
-    isValid = validateStringLength(
-      firstName,
-      PROFILE_VALIDATION.FIRSTNAME_MIN_LENGTH,
-      PROFILE_VALIDATION.FIRSTNAME_MAX_LENGTH,
-      "First Name"
-    );
-    setValidFirstName(isValid.result);
-    if (!isValid.result) {
-      setValidFirstNameErrMessage(isValid.message);
-      return;
-    }
-
-    // Last Name validation
-    isValid = validateStringLength(
-      lastName,
-      PROFILE_VALIDATION.LASTNAME_MIN_LENGTH,
-      PROFILE_VALIDATION.LASTNAME_MAX_LENGTH,
-      "Last Name"
-    );
-    setValidLastName(isValid.result);
-    if (!isValid.result) {
-      setValidLastNameErrMessage(isValid.message);
-      return;
-    }
-
-    // Email validation
-    isValid = validateStringLength(
-      username,
-      USER_VALIDATION.EMAIL_MIN_LENGTH,
-      USER_VALIDATION.EMAIL_MAX_LENGTH,
-      "Email"
-    );
-    setValidEmail(isValid.result);
-    if (!isValid.result) {
-      setValidEmailErrMessage(isValid.message);
-      return;
-    }
-
-    // Password validation
-    isValid = validateStringLength(
-      password,
-      USER_VALIDATION.PASSWORD_MIN_LENGTH,
-      USER_VALIDATION.PASSWORD_MAX_LENGTH,
-      "Password"
-    );
-    setValidPassword(isValid.result);
-    if (!isValid.result) {
-      setValidPasswordErrMessage(isValid.message);
+    // Check if passwords match
+    if (confirmPassword !== password) {
+      setConfirmPasswordAlertMessage("Passwords do not match!");
       return;
     }
 
@@ -125,6 +69,75 @@ function Register() {
     };
 
     dispatch(register(userData, navigate));
+  };
+
+  const validateFields = () => {
+    // Username validation
+    let isValid = validateStringLength(
+      username,
+      USER_VALIDATION.USERNAME_MIN_LENGTH,
+      USER_VALIDATION.USERNAME_MAX_LENGTH,
+      "Username"
+    );
+    setValidUsername(isValid.result);
+    if (!isValid.result) {
+      setValidUsernameErrMessage(isValid.message);
+      return false;
+    }
+
+    // First Name validation
+    isValid = validateStringLength(
+      firstName,
+      PROFILE_VALIDATION.FIRSTNAME_MIN_LENGTH,
+      PROFILE_VALIDATION.FIRSTNAME_MAX_LENGTH,
+      "First Name"
+    );
+    setValidFirstName(isValid.result);
+    if (!isValid.result) {
+      setValidFirstNameErrMessage(isValid.message);
+      return false;
+    }
+
+    // Last Name validation
+    isValid = validateStringLength(
+      lastName,
+      PROFILE_VALIDATION.LASTNAME_MIN_LENGTH,
+      PROFILE_VALIDATION.LASTNAME_MAX_LENGTH,
+      "Last Name"
+    );
+    setValidLastName(isValid.result);
+    if (!isValid.result) {
+      setValidLastNameErrMessage(isValid.message);
+      return false;
+    }
+
+    // Email validation
+    isValid = validateStringLength(
+      email,
+      USER_VALIDATION.EMAIL_MIN_LENGTH,
+      USER_VALIDATION.EMAIL_MAX_LENGTH,
+      "Email"
+    );
+    setValidEmail(isValid.result);
+    if (!isValid.result) {
+      setValidEmailErrMessage(isValid.message);
+      return false;
+    }
+
+    // Password validation
+    isValid = validateStringLength(
+      password,
+      USER_VALIDATION.PASSWORD_MIN_LENGTH,
+      USER_VALIDATION.PASSWORD_MAX_LENGTH,
+      "Password"
+    );
+    setValidPassword(isValid.result);
+    if (!isValid.result) {
+      setValidPasswordErrMessage(isValid.message);
+      return false;
+    }
+
+    return true;
   };
 
   const clearValidation = () => {
