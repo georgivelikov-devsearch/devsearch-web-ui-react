@@ -726,7 +726,6 @@ img {
 /*=======================
   SignUp
 ========================*/
-
 .reg {
   width: 100%;
   position: relative;
@@ -798,6 +797,84 @@ img {
 }
 
 .reg .reg__alternative a {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+/*=======================
+  Profile edit
+========================*/
+.profedit {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profedit::after {
+  z-index: -1;
+  opacity: 0.1;
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: url(../images/pattern.jpg);
+}
+
+.profedit > .card {
+  padding: 3rem 4rem;
+  width: 95%;
+  max-width: 65rem;
+}
+
+@media screen and (min-width: 650px) {
+  .profedit > .card {
+    padding: 5rem 8rem;
+    width: 95%;
+    max-width: 65rem;
+  }
+}
+
+.profedit__header h3 {
+  color: var(--color-sub);
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.profedit__header p {
+  font-weight: 400;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.profedit__form {
+  margin: 3rem 0;
+}
+
+.profedit .profedit__form label,
+.profedit .profedit__alternative p {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--color-sub-light);
+}
+
+.profedit .profedit__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2.5rem 0;
+}
+.profedit .profedit__actions a {
+  text-decoration: underline;
+}
+
+.profedit .profedit__alternative a {
   font-size: 2rem;
   font-weight: 500;
 }

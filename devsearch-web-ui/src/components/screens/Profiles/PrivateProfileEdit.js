@@ -293,9 +293,9 @@ function PrivateProfileEdit() {
   };
 
   return (
-    <div className="auth">
+    <div className="profedit">
       <div className="card">
-        <div className="auth__header text-center">
+        <div className="profedit__header text-center">
           <HomeIcon />
           <h3>Edit Profile</h3>
           <p>Edit your profile</p>
@@ -325,7 +325,11 @@ function PrivateProfileEdit() {
         )}
         {editLoading && <Loader />}
         {profile && (
-          <form action="#" className="form auth__form" onSubmit={submitHanlder}>
+          <form
+            action="#"
+            className="form profedit__form"
+            onSubmit={submitHanlder}
+          >
             <div className="form__field">
               <label htmlFor="formInput#text">First Name: </label>
               <input
@@ -544,7 +548,7 @@ function PrivateProfileEdit() {
               />
             )}
 
-            <div className="auth__actions">
+            <div className="profedit__actions">
               <input
                 className="btn btn--sub btn--lg"
                 type="submit"
