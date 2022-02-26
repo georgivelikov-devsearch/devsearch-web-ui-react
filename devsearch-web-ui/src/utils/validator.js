@@ -11,7 +11,12 @@ export const validateStringLength = (
     message: "",
   };
 
-  if (stringValue.length < minLen) {
+  let valueLength = 0;
+  if (stringValue) {
+    valueLength = stringValue.length;
+  }
+
+  if (valueLength < minLen) {
     returnValue = {
       result: false,
       message: `${propertyName} must be at least ${minLen} characters`,
@@ -22,7 +27,7 @@ export const validateStringLength = (
         message: `${propertyName} must be at least ${minLen} character`,
       };
     }
-  } else if (stringValue.length > maxLen) {
+  } else if (valueLength > maxLen) {
     returnValue = {
       result: false,
       message: `${propertyName} must not be longer than ${maxLen} characters`,

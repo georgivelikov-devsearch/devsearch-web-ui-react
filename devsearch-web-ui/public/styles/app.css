@@ -830,14 +830,14 @@ img {
 .profedit > .card {
   padding: 3rem 4rem;
   width: 95%;
-  max-width: 65rem;
+  max-width: 80rem;
 }
 
 @media screen and (min-width: 650px) {
   .profedit > .card {
     padding: 5rem 8rem;
     width: 95%;
-    max-width: 65rem;
+    max-width: 80rem;
   }
 }
 
@@ -874,7 +874,7 @@ img {
   text-decoration: underline;
 }
 
-.profedit .profedit__alternative a {
+.profedit .reg__alternative a {
   font-size: 2rem;
   font-weight: 500;
 }
