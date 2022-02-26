@@ -96,7 +96,7 @@ function PrivateProfileEdit() {
         setSocialWebsite(profile.setSocialWebsite);
       }
     }
-  }, []);
+  }, [dispatch, navigate, userInfo, profile]);
 
   const submitHanlder = (e) => {
     e.preventDefault();
@@ -144,7 +144,7 @@ function PrivateProfileEdit() {
     }
 
     isValid = validateStringLength(
-      firstName,
+      lastName,
       PROFILE_VALIDATION.LASTNAME_MIN_LENGTH,
       PROFILE_VALIDATION.LASTNAME_MAX_LENGTH,
       "Last Name"
@@ -155,15 +155,141 @@ function PrivateProfileEdit() {
       return false;
     }
 
+    isValid = validateStringLength(
+      shortIntro,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.SHORTINTRO_MAX_LENGTH,
+      "Short Intro"
+    );
+    setValidShortIntro(isValid.result);
+    if (!isValid.result) {
+      setValidShortIntroErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      about,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.ABOUT_MAX_LENGTH,
+      "About Info"
+    );
+    setValidAbout(isValid.result);
+    if (!isValid.result) {
+      setValidAboutErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      locationCity,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.CITY_MAX_LENGTH,
+      "City"
+    );
+    setValidLocationCity(isValid.result);
+    if (!isValid.result) {
+      setValidLocationCityErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      locationCountry,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.COUTRY_MAX_LENGTH,
+      "Country"
+    );
+    setValidLocationCountry(isValid.result);
+    if (!isValid.result) {
+      setValidLocationCountryErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      socialGithub,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      "Github link"
+    );
+    setValidSocialGithub(isValid.result);
+    if (!isValid.result) {
+      setValidSocialGithubErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      socialYoutube,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      "Youtube link"
+    );
+    setValidSocialYoutube(isValid.result);
+    if (!isValid.result) {
+      setValidSocialYoutubeErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      socialTwitter,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      "Twitter link"
+    );
+    setValidSocialTwitter(isValid.result);
+    if (!isValid.result) {
+      setValidSocialTwitterErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      socialLinkedIn,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      "LinkedIn link"
+    );
+    setValidSocialLinkedIn(isValid.result);
+    if (!isValid.result) {
+      setValidSocialLinkedInErrMessage(isValid.message);
+      return false;
+    }
+
+    isValid = validateStringLength(
+      socialWebsite,
+      PROFILE_VALIDATION.NO_MIN_LENGTH,
+      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      "Website link"
+    );
+    setValidSocialWebsite(isValid.result);
+    if (!isValid.result) {
+      setValidSocialWebsiteErrMessage(isValid.message);
+      return false;
+    }
+
     return true;
   };
 
   const clearValidation = () => {
     setValidFirstName(true);
     setValidLastName(true);
+    setValidShortIntro(true);
+    setValidAbout(true);
+    setValidLocationCity(true);
+    setValidLocationCountry(true);
+    setValidSocialGithub(true);
+    setValidSocialYoutube(true);
+    setValidSocialTwitter(true);
+    setValidSocialLinkedIn(true);
+    setValidSocialWebsite(true);
 
     setValidFirstNameErrMessage("");
     setValidLastNameErrMessage("");
+    setValidShortIntroErrMessage("");
+    setValidAboutErrMessage("");
+    setValidLocationCityErrMessage("");
+    setValidLocationCountryErrMessage("");
+    setValidSocialGithubErrMessage("");
+    setValidSocialYoutubeErrMessage("");
+    setValidSocialTwitterErrMessage("");
+    setValidSocialLinkedInErrMessage("");
+    setValidSocialWebsiteErrMessage("");
   };
 
   return (
@@ -237,6 +363,184 @@ function PrivateProfileEdit() {
                 variant="alert alert--error"
                 variantStyle={{ width: "100%" }}
                 message={validLastNameErrMessage}
+              />
+            )}
+            <div className="form__field">
+              <label htmlFor="formInput#text">City: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="City"
+                defaultValue={profile.locationCity}
+                onChange={(e) => setLocationCity(e.target.value)}
+              />
+            </div>
+            {!validLocationCity && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validLocationCityErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">Country: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Country"
+                defaultValue={profile.locationCountry}
+                onChange={(e) => setLocationCountry(e.target.value)}
+              />
+            </div>
+            {!validLocationCountry && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validLocationCountryErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">Short Intro: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Short Intro"
+                defaultValue={profile.shortIntro}
+                onChange={(e) => setShortIntro(e.target.value)}
+              />
+            </div>
+            {!validShortIntro && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validShortIntroErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">About: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Short Intro"
+                defaultValue={profile.about}
+                onChange={(e) => setAbout(e.target.value)}
+              />
+            </div>
+            {!validAbout && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validAboutErrMessage}
+              />
+            )}
+            <div className="form__field">
+              <label htmlFor="formInput#text">Github: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Github"
+                defaultValue={profile.socialGithub}
+                onChange={(e) => setSocialGithub(e.target.value)}
+              />
+            </div>
+            {!validSocialGithub && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validSocialGithubErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">Youtube: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Youtube"
+                defaultValue={profile.socialYoutube}
+                onChange={(e) => setSocialYoutube(e.target.value)}
+              />
+            </div>
+            {!validSocialYoutube && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validSocialYoutubeErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">Twitter: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Twitter"
+                defaultValue={profile.socialTwitter}
+                onChange={(e) => setSocialTwitter(e.target.value)}
+              />
+            </div>
+            {!validSocialTwitter && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validSocialTwitterErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">LinkedIn: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="LinkedIn"
+                defaultValue={profile.socialLinkedIn}
+                onChange={(e) => setSocialLinkedIn(e.target.value)}
+              />
+            </div>
+            {!validSocialLinkedIn && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validSocialLinkedInErrMessage}
+              />
+            )}
+
+            <div className="form__field">
+              <label htmlFor="formInput#text">Website: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Website"
+                defaultValue={profile.socialWebsite}
+                onChange={(e) => setSocialWebsite(e.target.value)}
+              />
+            </div>
+            {!validSocialWebsite && (
+              <Message
+                variant="alert alert--error"
+                variantStyle={{ width: "100%" }}
+                message={validSocialWebsiteErrMessage}
               />
             )}
 
