@@ -51,7 +51,11 @@ function PrivateProfile() {
                   </Link>
                   <img
                     className="avatar avatar--xl dev__avatar"
-                    src="../../../images/user-default.png"
+                    src={
+                      profile.profilePictureUrl
+                        ? profile.profilePictureUrl
+                        : "../../../images/user-default.png"
+                    }
                   />
                   <h2 className="dev__name">
                     {profile.firstName} {profile.lastName}

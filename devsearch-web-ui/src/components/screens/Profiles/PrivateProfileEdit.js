@@ -30,7 +30,8 @@ function PrivateProfileEdit() {
   const [socialTwitter, setSocialTwitter] = useState("");
   const [socialLinkedIn, setSocialLinkedIn] = useState("");
   const [socialWebsite, setSocialWebsite] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [profilePictureBase64, setProfilePictureBase64] = useState(""); // used for upload
 
   const [validFirstName, setValidFirstName] = useState(true);
   const [validLastName, setValidLastName] = useState(true);
@@ -103,7 +104,9 @@ function PrivateProfileEdit() {
   const uploadProfileImage = async (e) => {
     let file = e.target.files[0];
     let base64Picture = await getBase64FromFile(file);
-    setProfilePicture(base64Picture);
+    console.log(base64Picture.length);
+
+    setProfilePictureBase64(base64Picture);
   };
 
   const submitHanlder = (e) => {
@@ -134,7 +137,7 @@ function PrivateProfileEdit() {
       socialTwitter,
       socialLinkedIn,
       socialWebsite,
-      profilePicture,
+      profilePictureBase64,
     };
     dispatch(editPrivateProfileForUser(newData, navigate));
   };
@@ -343,7 +346,11 @@ function PrivateProfileEdit() {
               <label htmlFor="formInput#image">
                 <img
                   className="avatar avatar--xl dev__avatar"
-                  src="https://i.ibb.co/MSYvp3n/Chimera-and-Bellerophon.jpg"
+                  src={
+                    profile.profilePictureUrl
+                      ? profile.profilePictureUrl
+                      : "../../../images/user-default.png"
+                  }
                 />
               </label>
               <input
