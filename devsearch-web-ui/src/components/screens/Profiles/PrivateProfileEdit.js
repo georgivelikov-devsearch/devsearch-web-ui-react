@@ -9,6 +9,7 @@ import {
 } from "../../../actions/profileActions";
 
 import { validateStringLength } from "../../../utils/validator";
+import { getBase64FromFile } from "../../../utils/utils";
 import { PROFILE_VALIDATION } from "../../../constants/profileConstants";
 
 import HomeIcon from "../../common/HomeIcon";
@@ -29,6 +30,7 @@ function PrivateProfileEdit() {
   const [socialTwitter, setSocialTwitter] = useState("");
   const [socialLinkedIn, setSocialLinkedIn] = useState("");
   const [socialWebsite, setSocialWebsite] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
 
   const [validFirstName, setValidFirstName] = useState(true);
   const [validLastName, setValidLastName] = useState(true);
@@ -98,6 +100,12 @@ function PrivateProfileEdit() {
     }
   }, [dispatch, navigate, userInfo, profile]);
 
+  const uploadProfileImage = async (e) => {
+    let file = e.target.files[0];
+    let base64Picture = await getBase64FromFile(file);
+    setProfilePicture(base64Picture);
+  };
+
   const submitHanlder = (e) => {
     e.preventDefault();
 
@@ -126,6 +134,7 @@ function PrivateProfileEdit() {
       socialTwitter,
       socialLinkedIn,
       socialWebsite,
+      profilePicture,
     };
     dispatch(editPrivateProfileForUser(newData, navigate));
   };
@@ -330,6 +339,23 @@ function PrivateProfileEdit() {
             className="form profedit__form"
             onSubmit={submitHanlder}
           >
+            <div className="form__field">
+              <label htmlFor="formInput#image">
+                <img
+                  className="avatar avatar--xl dev__avatar"
+                  src="https://i.ibb.co/MSYvp3n/Chimera-and-Bellerophon.jpg"
+                />
+              </label>
+              <input
+                style={{ display: "none" }}
+                className="input input--text"
+                id="formInput#image"
+                type="file"
+                name="file"
+                accept="image/png, image/jpeg"
+                onChange={(e) => uploadProfileImage(e)}
+              />
+            </div>
             <div className="form__field">
               <label htmlFor="formInput#text">First Name: </label>
               <input
