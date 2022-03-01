@@ -7,6 +7,12 @@ import {
   EDIT_PRIVATE_PROFILE_REQUEST,
   EDIT_PRIVATE_PROFILE_SUCCESS,
   EDIT_PRIVATE_PROFILE_FAIL,
+  PUBLIC_PROFILE_REQUEST,
+  PUBLIC_PROFILE_SUCCESS,
+  PUBLIC_PROFILE_FAIL,
+  PUBLIC_PROFILE_LIST_REQUEST,
+  PUBLIC_PROFILE_LIST_SUCCESS,
+  PUBLIC_PROFILE_LIST_FAIL,
 } from "../constants/profileConstants";
 
 import {
@@ -88,3 +94,63 @@ export const editPrivateProfileForUser =
       });
     }
   };
+
+export const getPublicProfileById = (profilePublicId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PUBLIC_PROFILE_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    const response = await axios.get(
+      `http://localhost:8080/profiles/public/${profilePublicId}`,
+      config
+    );
+
+    dispatch({
+      type: PUBLIC_PROFILE_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PUBLIC_PROFILE_FAIL,
+      payload: error.response.data,
+    });
+  }
+};
+
+export const getPublicProfileList = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PUBLIC_PROFILE_LIST_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+      params: {
+        userId: userId,
+      },
+    };
+    const response = await axios.get(
+      `http://localhost:8080/profiles/public`,
+      config
+    );
+
+    dispatch({
+      type: PUBLIC_PROFILE_LIST_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PUBLIC_PROFILE_LIST_FAIL,
+      payload: error.response.data,
+    });
+  }
+};

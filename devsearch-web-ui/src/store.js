@@ -5,6 +5,8 @@ import { userRegisterReducer, userLoginReducer } from "./reducers/userReducers";
 import {
   privateProfileReducer,
   editPrivateProfileReducer,
+  publicProfileReducer,
+  publicProfileListReducer,
 } from "./reducers/profileReducers";
 
 const reducer = combineReducers({
@@ -12,6 +14,8 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   privateProfile: privateProfileReducer,
   editPrivateProfile: editPrivateProfileReducer,
+  publicProfile: publicProfileReducer,
+  publicProfileList: publicProfileListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

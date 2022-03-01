@@ -31,7 +31,11 @@ function PrivateProfileEdit() {
   const [socialLinkedIn, setSocialLinkedIn] = useState("");
   const [socialWebsite, setSocialWebsite] = useState("");
   const [profilePictureUrl, setProfilePictureUrl] = useState("");
-  const [profilePictureBase64, setProfilePictureBase64] = useState(""); // used for upload
+  // used for upload
+  const [profilePictureBase64, setProfilePictureBase64] = useState("");
+  // this is done because there is no need to reupload the picture to
+  //the File Service every time when update request is send to the backend (it is limited free account)
+  const [newProfilePictureUpload, setNewProfilePictureUpload] = useState(false);
 
   const [validFirstName, setValidFirstName] = useState(true);
   const [validLastName, setValidLastName] = useState(true);
@@ -97,15 +101,21 @@ function PrivateProfileEdit() {
         setSocialTwitter(profile.socialTwitter);
         setSocialLinkedIn(profile.socialLinkedIn);
         setSocialWebsite(profile.setSocialWebsite);
+        setProfilePictureUrl(profile.profilePictureUrl);
       }
     }
   }, [dispatch, navigate, userInfo, profile]);
 
+  const goBack = () => {
+    navigate("/profile/private");
+  };
+
   const uploadProfileImage = async (e) => {
     let file = e.target.files[0];
     let base64Picture = await getBase64FromFile(file);
-    console.log(base64Picture.length);
 
+    setProfilePictureUrl(base64Picture);
+    setNewProfilePictureUpload(true);
     setProfilePictureBase64(base64Picture);
   };
 
@@ -138,6 +148,7 @@ function PrivateProfileEdit() {
       socialLinkedIn,
       socialWebsite,
       profilePictureBase64,
+      newProfilePictureUpload,
     };
     dispatch(editPrivateProfileForUser(newData, navigate));
   };
@@ -347,10 +358,11 @@ function PrivateProfileEdit() {
                 <img
                   className="avatar avatar--xl dev__avatar"
                   src={
-                    profile.profilePictureUrl
-                      ? profile.profilePictureUrl
+                    profilePictureUrl
+                      ? profilePictureUrl
                       : "../../../images/user-default.png"
                   }
+                  alt=""
                 />
               </label>
               <input
@@ -586,6 +598,12 @@ function PrivateProfileEdit() {
                 className="btn btn--sub btn--lg"
                 type="submit"
                 value="Save"
+              />
+              <input
+                className="btn btn--sub btn--lg"
+                type="button"
+                value="Cancel"
+                onClick={goBack}
               />
             </div>
           </form>

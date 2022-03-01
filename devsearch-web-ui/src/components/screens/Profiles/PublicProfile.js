@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { getPrivateProfileForUser } from "../../../actions/profileActions";
+import { getPublicProfileById } from "../../../actions/profileActions";
 
 import { AUTH_USER_ID } from "../../../constants/userConstants";
 
@@ -10,23 +10,28 @@ import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 import { Link } from "react-router-dom";
 
-function PrivateProfile() {
+function PublicProfile() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const privateProfile = useSelector((state) => state.privateProfile);
-  const { loading, error, profile } = privateProfile;
+  const publicProfile = useSelector((state) => state.publicProfile);
+  const { loading, error, profile } = publicProfile;
+
+  const [canSendMessage, setCanSendMessage] = useState(true);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { profilePublicId } = useParams();
+
   useEffect(() => {
     if (!userInfo) {
-      navigate("/login");
+      setCanSendMessage(false);
     } else {
       const userId = userInfo[AUTH_USER_ID];
-      dispatch(getPrivateProfileForUser(userId));
     }
+
+    dispatch(getPublicProfileById(profilePublicId));
   }, []);
 
   return (
@@ -37,12 +42,6 @@ function PrivateProfile() {
             <div className="column column--1of3">
               <div className="card text-center">
                 <div className="card__body dev">
-                  <Link
-                    to="/profile/private/edit"
-                    className="tag tag--pill tag--main settings__btn"
-                  >
-                    <i className="im im-edit"></i> Edit
-                  </Link>
                   <img
                     className="avatar avatar--xl dev__avatar"
                     src={
@@ -126,6 +125,11 @@ function PrivateProfile() {
                       </li>
                     )}
                   </ul>
+                  {canSendMessage && (
+                    <a href="#" className="btn btn--sub btn--lg">
+                      Send Message
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -345,4 +349,4 @@ function PrivateProfile() {
   );
 }
 
-export default PrivateProfile;
+export default PublicProfile;
