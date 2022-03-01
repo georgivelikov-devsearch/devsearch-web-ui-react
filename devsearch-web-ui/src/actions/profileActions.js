@@ -18,6 +18,8 @@ import {
 import {
   PRIVATE_PROFILE_URL,
   EDIT_PRIVATE_PROFILE_URL,
+  PUBLIC_PROFILE_URL,
+  PUBLIC_PROFILE_LIST_URL,
 } from "../constants/urlConstants";
 
 import { AUTH_HEADER } from "../constants/userConstants";
@@ -40,10 +42,7 @@ export const getPrivateProfileForUser =
         },
       };
 
-      const response = await axios.get(
-        `http://localhost:8080/profiles/user/${userId}`,
-        config
-      );
+      const response = await axios.get(PRIVATE_PROFILE_URL(userId), config);
 
       dispatch({
         type: PRIVATE_PROFILE_SUCCESS,
@@ -76,7 +75,7 @@ export const editPrivateProfileForUser =
       };
 
       const response = await axios.put(
-        `http://localhost:8080/profiles`,
+        EDIT_PRIVATE_PROFILE_URL,
         newProfileData,
         config
       );
@@ -108,7 +107,7 @@ export const getPublicProfileById = (profilePublicId) => async (dispatch) => {
     };
 
     const response = await axios.get(
-      `http://localhost:8080/profiles/public/${profilePublicId}`,
+      PUBLIC_PROFILE_URL(profilePublicId),
       config
     );
 
@@ -138,10 +137,7 @@ export const getPublicProfileList = (userId) => async (dispatch) => {
         userId: userId,
       },
     };
-    const response = await axios.get(
-      `http://localhost:8080/profiles/public`,
-      config
-    );
+    const response = await axios.get(PUBLIC_PROFILE_LIST_URL, config);
 
     dispatch({
       type: PUBLIC_PROFILE_LIST_SUCCESS,
