@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/screens/Home/Header";
 import Footer from "./components/screens/Home/Footer";
 import Index from "./components/screens/Home/Index";
@@ -17,7 +17,8 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Navigate to="/developers/1" />}></Route>
+          <Route path="/developers/:page" element={<Index />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/profile/private" element={<PrivateProfile />} />

@@ -14,7 +14,7 @@ function Header() {
   return (
     <header className="header">
       <div className="container container--narrow">
-        <Link className="header__logo" to="/">
+        <Link className="header__logo" to="/developers/1">
           <img src="/images/logo.svg" alt="DevSearch Logo" />
         </Link>
         <nav className="header__nav">
@@ -25,7 +25,7 @@ function Header() {
           </label>
           <ul className="header__menu">
             <li className="header__menuItem">
-              <Link to="/">Developers</Link>
+              <Link to="/developers/1">Developers</Link>
             </li>
             <li className="header__menuItem">
               <Link to="/projects">Projects</Link>
