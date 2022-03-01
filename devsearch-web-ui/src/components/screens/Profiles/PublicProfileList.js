@@ -9,6 +9,7 @@ import { AUTH_USER_ID } from "../../../constants/userConstants";
 import PublicProfileShort from "./PublicProfileShort";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
+import Paging from "../Home/Paging";
 
 function PublicProfileList() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -52,6 +53,7 @@ function PublicProfileList() {
           <Loader />
         )}
       </div>
+      <Paging />
     </section>
   );
 }
