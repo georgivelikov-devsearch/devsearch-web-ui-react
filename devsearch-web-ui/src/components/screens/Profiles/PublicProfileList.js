@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { getPublicProfileList } from "../../../actions/profileActions";
 
@@ -18,16 +18,19 @@ function PublicProfileList() {
   const publicProfileList = useSelector((state) => state.publicProfileList);
   const { error, profiles } = publicProfileList;
 
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    let page = searchParams.get("page");
     let userId = null;
     if (userInfo) {
       userId = userInfo[AUTH_USER_ID];
     }
 
-    dispatch(getPublicProfileList(userId));
-  }, [dispatch]);
+    dispatch(getPublicProfileList(userId, page));
+    window.scrollTo(0, 0);
+  }, [searchParams]);
 
   return (
     <section class="devlist">

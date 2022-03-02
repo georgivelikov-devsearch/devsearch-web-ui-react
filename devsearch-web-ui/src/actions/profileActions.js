@@ -123,7 +123,7 @@ export const getPublicProfileById = (profilePublicId) => async (dispatch) => {
   }
 };
 
-export const getPublicProfileList = (userId) => async (dispatch) => {
+export const getPublicProfileList = (userId, page) => async (dispatch) => {
   try {
     dispatch({
       type: PUBLIC_PROFILE_LIST_REQUEST,
@@ -135,6 +135,7 @@ export const getPublicProfileList = (userId) => async (dispatch) => {
       },
       params: {
         userId: userId,
+        page: page,
       },
     };
     const response = await axios.get(PUBLIC_PROFILE_LIST_URL, config);
