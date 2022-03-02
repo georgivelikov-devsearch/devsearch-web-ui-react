@@ -17,8 +17,11 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Navigate to="/developers/1" />}></Route>
-          <Route path="/developers/:page" element={<Index />} />
+          <Route
+            path="/"
+            element={<Navigate to="/developers?page=1" />}
+          ></Route>
+          <Route path="/developers" element={<Index />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/profile/private" element={<PrivateProfile />} />

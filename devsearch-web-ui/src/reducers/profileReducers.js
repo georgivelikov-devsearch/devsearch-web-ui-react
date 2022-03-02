@@ -57,7 +57,12 @@ export const publicProfileListReducer = (state = {}, action) => {
     case PUBLIC_PROFILE_LIST_REQUEST:
       return { loading: true };
     case PUBLIC_PROFILE_LIST_SUCCESS:
-      return { loading: false, profiles: action.payload };
+      return {
+        loading: false,
+        profiles: action.payload.profiles,
+        page: action.payload.page,
+        totalPages: action.payload.totalPages,
+      };
     case PUBLIC_PROFILE_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:

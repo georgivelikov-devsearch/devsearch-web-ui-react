@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { logout } from "../../../actions/userActions";
+import { Link } from "react-router-dom";
 
 function Header() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -14,7 +14,7 @@ function Header() {
   return (
     <header className="header">
       <div className="container container--narrow">
-        <Link className="header__logo" to="/developers/1">
+        <Link className="header__logo" to="/developers?page=1">
           <img src="/images/logo.svg" alt="DevSearch Logo" />
         </Link>
         <nav className="header__nav">
@@ -25,7 +25,7 @@ function Header() {
           </label>
           <ul className="header__menu">
             <li className="header__menuItem">
-              <Link to="/developers/1">Developers</Link>
+              <Link to="/developers?page=1">Developers</Link>
             </li>
             <li className="header__menuItem">
               <Link to="/projects">Projects</Link>
