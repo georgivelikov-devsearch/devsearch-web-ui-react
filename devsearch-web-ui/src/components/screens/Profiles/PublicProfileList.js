@@ -16,7 +16,7 @@ function PublicProfileList() {
   const { userInfo } = userLogin;
 
   const publicProfileList = useSelector((state) => state.publicProfileList);
-  const { error, profiles } = publicProfileList;
+  const { error, profiles, currentPage, totalPages } = publicProfileList;
 
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ function PublicProfileList() {
 
     dispatch(getPublicProfileList(userId, page));
     window.scrollTo(0, 0);
-  }, [searchParams]);
+  }, [dispatch, searchParams, userInfo]);
 
   return (
     <section class="devlist">
@@ -56,7 +56,7 @@ function PublicProfileList() {
           <Loader />
         )}
       </div>
-      <Paging />
+      <Paging totalPages={totalPages} currentPage={currentPage} />
     </section>
   );
 }

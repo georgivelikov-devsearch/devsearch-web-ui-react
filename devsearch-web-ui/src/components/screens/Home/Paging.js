@@ -2,70 +2,105 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-function Paging() {
+function Paging({ totalPages, currentPage }) {
+  console.log("totalPages: " + totalPages);
+  console.log(currentPage);
+  const pageLimit = 10;
+
+  let pageList = [];
+
+  const buildList = (start, end, selectedPage, list) => {
+    for (let index = start; index <= end; index++) {
+      let pageNumber = index;
+      let pageNumberStr = pageNumber.toString();
+      if (pageNumber < 10) {
+        pageNumberStr = "0" + pageNumberStr;
+      }
+
+      let link = `/developers?page=${pageNumber}`;
+      let btnClass = "btn";
+      if (selectedPage === pageNumber) {
+        btnClass = "btn btn--sub";
+      }
+
+      let pageLink = (
+        <li>
+          <Link to={link} className={btnClass}>
+            {pageNumberStr}
+          </Link>
+        </li>
+      );
+
+      list.push(pageLink);
+    }
+  };
+
+  if (totalPages <= pageLimit) {
+    buildList(1, totalPages, currentPage, pageList);
+  } else {
+    let startPage = currentPage - pageLimit / 2 + 1;
+    if (startPage <= 0) {
+      startPage = 1;
+    }
+
+    let endPage = startPage + pageLimit - 1;
+    if (endPage > totalPages) {
+      let diff = endPage - totalPages;
+      startPage -= diff;
+      endPage = totalPages;
+    }
+
+    buildList(startPage, endPage, currentPage, pageList);
+  }
+
   return (
     <div class="pagination">
       <ul class="container">
+        {/* <li>
+          {currentPage == 1 ? (
+            <Link to="" className="btn btn--disabled">
+              &#10094; &#10094;
+            </Link>
+          ) : (
+            <Link to="/developers?page=1" className="btn">
+              &#10094; &#10094;
+            </Link>
+          )}
+        </li> */}
         <li>
-          <a href="#" class="btn btn--disabled">
-            &#10094; Prev
-          </a>
+          {currentPage == 1 ? (
+            <Link to="" className="btn btn--disabled">
+              &#10094; Prev
+            </Link>
+          ) : (
+            <Link to={`/developers?page=${currentPage - 1}`} className="btn">
+              &#10094; Prev
+            </Link>
+          )}
         </li>
+        {pageList}
         <li>
-          <Link to="/developers?page=1" className="btn btn--sub">
-            01
-          </Link>
+          {currentPage == totalPages ? (
+            <Link to="" className="btn btn--disabled">
+              &#10095; Next
+            </Link>
+          ) : (
+            <Link to={`/developers?page=${currentPage + 1}`} className="btn">
+              &#10095; Next
+            </Link>
+          )}
         </li>
-        <li>
-          <Link to="/developers?page=2" className="btn">
-            02
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=3" className="btn">
-            03
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=4" className="btn">
-            04
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=5" className="btn">
-            05
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=6" className="btn">
-            06
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=7" className="btn">
-            07
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=8" className="btn">
-            08
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=9" className="btn">
-            09
-          </Link>
-        </li>
-        <li>
-          <Link to="/developers?page=10" className="btn">
-            10
-          </Link>
-        </li>
-        <li>
-          <a href="#" class="btn" className="btn">
-            Next &#10095;
-          </a>
-        </li>
+        {/* <li>
+          {currentPage == totalPages ? (
+            <Link to="" className="btn btn--disabled">
+              &#10095; &#10095;
+            </Link>
+          ) : (
+            <Link to={`/developers?page=${totalPages}`} className="btn">
+              &#10095; &#10095;
+            </Link>
+          )}
+        </li> */}
       </ul>
     </div>
   );
