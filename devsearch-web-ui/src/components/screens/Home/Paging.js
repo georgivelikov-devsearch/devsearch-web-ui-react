@@ -68,7 +68,7 @@ function Paging({ totalPages, currentPage }) {
           )}
         </li> */}
         <li>
-          {currentPage == 1 ? (
+          {currentPage === 1 ? (
             <Link to="" className="btn btn--disabled">
               &#10094; Prev
             </Link>
@@ -80,7 +80,7 @@ function Paging({ totalPages, currentPage }) {
         </li>
         {pageList}
         <li>
-          {currentPage == totalPages ? (
+          {currentPage === totalPages ? (
             <Link to="" className="btn btn--disabled">
               Next &#10095;
             </Link>
