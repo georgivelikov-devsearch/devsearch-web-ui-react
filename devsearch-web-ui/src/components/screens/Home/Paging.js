@@ -38,7 +38,7 @@ function Paging({ totalPages, currentPage }) {
   if (totalPages <= pageLimit) {
     buildList(1, totalPages, currentPage, pageList);
   } else {
-    let startPage = currentPage - pageLimit / 2 + 1;
+    let startPage = currentPage - Math.round(pageLimit / 2) + 1;
     if (startPage <= 0) {
       startPage = 1;
     }
