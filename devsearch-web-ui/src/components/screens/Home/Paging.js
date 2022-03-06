@@ -82,11 +82,11 @@ function Paging({ totalPages, currentPage }) {
         <li>
           {currentPage == totalPages ? (
             <Link to="" className="btn btn--disabled">
-              &#10095; Next
+              Next &#10095;
             </Link>
           ) : (
             <Link to={`/developers?page=${currentPage + 1}`} className="btn">
-              &#10095; Next
+              Next &#10095;
             </Link>
           )}
         </li>
