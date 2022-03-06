@@ -123,31 +123,33 @@ export const getPublicProfileById = (profilePublicId) => async (dispatch) => {
   }
 };
 
-export const getPublicProfileList = (userId, page) => async (dispatch) => {
-  try {
-    dispatch({
-      type: PUBLIC_PROFILE_LIST_REQUEST,
-    });
+export const getPublicProfileList =
+  (userId, page, searchText) => async (dispatch) => {
+    try {
+      dispatch({
+        type: PUBLIC_PROFILE_LIST_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "content-type": "application/json",
-      },
-      params: {
-        userId: userId,
-        page: page,
-      },
-    };
-    const response = await axios.get(PUBLIC_PROFILE_LIST_URL, config);
+      const config = {
+        headers: {
+          "content-type": "application/json",
+        },
+        params: {
+          userId: userId,
+          page: page,
+          searchText: searchText,
+        },
+      };
+      const response = await axios.get(PUBLIC_PROFILE_LIST_URL, config);
 
-    dispatch({
-      type: PUBLIC_PROFILE_LIST_SUCCESS,
-      payload: response.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: PUBLIC_PROFILE_LIST_FAIL,
-      payload: error.response.data,
-    });
-  }
-};
+      dispatch({
+        type: PUBLIC_PROFILE_LIST_SUCCESS,
+        payload: response.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PUBLIC_PROFILE_LIST_FAIL,
+        payload: error.response.data,
+      });
+    }
+  };

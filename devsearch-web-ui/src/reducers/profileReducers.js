@@ -60,7 +60,6 @@ export const publicProfileListReducer = (state = {}, action) => {
       return {
         loading: false,
         profiles: action.payload.profiles,
-        currentPage: action.payload.currentPage,
         totalPages: action.payload.totalPages,
       };
     case PUBLIC_PROFILE_LIST_FAIL:

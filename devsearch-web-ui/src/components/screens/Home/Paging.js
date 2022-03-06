@@ -2,11 +2,8 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-function Paging({ totalPages, currentPage }) {
-  console.log("totalPages: " + totalPages);
-  console.log(currentPage);
+function Paging({ totalPages, currentPage, searchText }) {
   const pageLimit = 10;
-
   let pageList = [];
 
   const buildList = (start, end, selectedPage, list) => {
@@ -18,6 +15,10 @@ function Paging({ totalPages, currentPage }) {
       }
 
       let link = `/developers?page=${pageNumber}`;
+      if (searchText) {
+        link = `/developers?page=${pageNumber}&searchText=${searchText}`;
+      }
+
       let btnClass = "btn";
       if (selectedPage === pageNumber) {
         btnClass = "btn btn--sub";
