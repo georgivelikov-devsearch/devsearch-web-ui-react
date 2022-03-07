@@ -26,20 +26,15 @@ import {
 import { AUTH_HEADER } from "../constants/userConstants";
 
 export const getPrivateProfileForUser =
-  (userId) => async (dispatch, getState) => {
+  (userId, authHeader) => async (dispatch) => {
     try {
       dispatch({
         type: PRIVATE_PROFILE_REQUEST,
       });
-
-      const {
-        userLogin: { userInfo },
-      } = getState();
-
       const config = {
         headers: {
           "content-type": "application/json",
-          Authorization: userInfo[AUTH_HEADER],
+          Authorization: authHeader,
         },
       };
 
@@ -58,20 +53,16 @@ export const getPrivateProfileForUser =
   };
 
 export const editPrivateProfileForUser =
-  (newProfileData, navigate) => async (dispatch, getState) => {
+  (newProfileData, authHeader, navigate) => async (dispatch) => {
     try {
       dispatch({
         type: EDIT_PRIVATE_PROFILE_REQUEST,
       });
 
-      const {
-        userLogin: { userInfo },
-      } = getState();
-
       const config = {
         headers: {
           "content-type": "application/json",
-          Authorization: userInfo[AUTH_HEADER],
+          Authorization: authHeader,
         },
       };
 

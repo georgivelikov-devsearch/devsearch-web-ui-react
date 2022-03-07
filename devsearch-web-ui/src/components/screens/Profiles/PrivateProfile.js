@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getPrivateProfileForUser } from "../../../actions/profileActions";
 
-import { AUTH_USER_ID } from "../../../constants/userConstants";
+import { AUTH_USER_ID, AUTH_HEADER } from "../../../constants/userConstants";
 
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
@@ -25,7 +25,8 @@ function PrivateProfile() {
       navigate("/login");
     } else {
       const userId = userInfo[AUTH_USER_ID];
-      dispatch(getPrivateProfileForUser(userId));
+      const authHeader = userInfo[AUTH_HEADER];
+      dispatch(getPrivateProfileForUser(userId, authHeader));
     }
   }, []);
 

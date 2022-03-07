@@ -16,7 +16,7 @@ import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
-import { AUTH_USER_ID } from "../../../constants/userConstants";
+import { AUTH_USER_ID, AUTH_HEADER } from "../../../constants/userConstants";
 
 function PrivateProfileEdit() {
   const [firstName, setFirstName] = useState("");
@@ -88,7 +88,8 @@ function PrivateProfileEdit() {
     } else {
       if (!profile) {
         let userId = userInfo[AUTH_USER_ID];
-        dispatch(getPrivateProfileForUser(userId));
+        let authHeader = userInfo[AUTH_HEADER];
+        dispatch(getPrivateProfileForUser(userId, authHeader));
       } else {
         setFirstName(profile.firstName);
         setLastName(profile.lastName);
@@ -132,6 +133,12 @@ function PrivateProfileEdit() {
       return;
     }
 
+    if (!userInfo) {
+      navigate("/login");
+    }
+
+    let authHeader = userInfo[AUTH_HEADER];
+
     // Update profile
     const profilePrivateId = profile.profilePrivateId;
     const newData = {
@@ -150,7 +157,7 @@ function PrivateProfileEdit() {
       profilePictureBase64,
       newProfilePictureUpload,
     };
-    dispatch(editPrivateProfileForUser(newData, navigate));
+    dispatch(editPrivateProfileForUser(newData, authHeader, navigate));
   };
 
   const validateFields = () => {

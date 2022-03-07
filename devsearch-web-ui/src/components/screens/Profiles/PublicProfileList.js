@@ -47,7 +47,7 @@ function PublicProfileList() {
 
     dispatch(getPublicProfileList(userId, page, searchText));
     window.scrollTo(0, 0);
-  }, [dispatch, userInfo, searchParams, searchPublicProfileList]);
+  }, [dispatch, userInfo, searchParams, searchParameters]);
 
   const submitSearch = (e) => {
     e.preventDefault();
