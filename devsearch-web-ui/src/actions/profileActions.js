@@ -13,6 +13,7 @@ import {
   PUBLIC_PROFILE_LIST_REQUEST,
   PUBLIC_PROFILE_LIST_SUCCESS,
   PUBLIC_PROFILE_LIST_FAIL,
+  UPDATE_SEARCH_FOR_PUBLIC_PROFILE_LIST,
 } from "../constants/profileConstants";
 
 import {
@@ -152,4 +153,12 @@ export const getPublicProfileList =
         payload: error.response.data,
       });
     }
+  };
+
+export const updateSearchForPublicProfileList =
+  (searchText) => async (dispatch) => {
+    dispatch({
+      type: UPDATE_SEARCH_FOR_PUBLIC_PROFILE_LIST,
+      payload: { searchText },
+    });
   };

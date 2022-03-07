@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-function Paging({ totalPages, currentPage, searchText }) {
+function Paging({ totalPages, currentPage }) {
   const pageLimit = 10;
   let pageList = [];
 
@@ -15,9 +15,6 @@ function Paging({ totalPages, currentPage, searchText }) {
       }
 
       let link = `/developers?page=${pageNumber}`;
-      if (searchText) {
-        link = `/developers?page=${pageNumber}&searchText=${searchText}`;
-      }
 
       let btnClass = "btn";
       if (selectedPage === pageNumber) {
@@ -25,7 +22,7 @@ function Paging({ totalPages, currentPage, searchText }) {
       }
 
       let pageLink = (
-        <li>
+        <li key={pageNumber}>
           <Link to={link} className={btnClass}>
             {pageNumberStr}
           </Link>
@@ -81,7 +78,7 @@ function Paging({ totalPages, currentPage, searchText }) {
         </li>
         {pageList}
         <li>
-          {currentPage === totalPages ? (
+          {currentPage === totalPages || totalPages === 0 ? (
             <Link to="" className="btn btn--disabled">
               Next &#10095;
             </Link>

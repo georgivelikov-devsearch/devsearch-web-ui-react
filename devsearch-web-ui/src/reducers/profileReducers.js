@@ -11,6 +11,7 @@ import {
   PUBLIC_PROFILE_LIST_REQUEST,
   PUBLIC_PROFILE_LIST_SUCCESS,
   PUBLIC_PROFILE_LIST_FAIL,
+  UPDATE_SEARCH_FOR_PUBLIC_PROFILE_LIST,
 } from "../constants/profileConstants";
 
 export const privateProfileReducer = (state = {}, action) => {
@@ -61,9 +62,22 @@ export const publicProfileListReducer = (state = {}, action) => {
         loading: false,
         profiles: action.payload.profiles,
         totalPages: action.payload.totalPages,
+        searchParameters: action.searchParameters,
       };
     case PUBLIC_PROFILE_LIST_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const searchPublicProfileListReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_SEARCH_FOR_PUBLIC_PROFILE_LIST:
+      console.log(action);
+      return {
+        searchParameters: action.payload,
+      };
     default:
       return state;
   }
