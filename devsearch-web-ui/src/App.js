@@ -37,7 +37,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </div>
   );
