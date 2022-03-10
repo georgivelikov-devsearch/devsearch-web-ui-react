@@ -55,6 +55,7 @@ function PrivateProfile() {
                   <h2 className="dev__name">
                     {profile.firstName} {profile.lastName}
                   </h2>
+                  <p className="dev__username">({profile.displayUsername})</p>
                   <p className="dev__title">{profile.shortIntro}</p>
                   <p className="dev__location">
                     {profile.locationCity && profile.locationCountry ? (
