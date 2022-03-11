@@ -76,7 +76,11 @@ function PrivateProfile() {
                       <li>
                         <a
                           title="Github"
-                          href={profile.socialGithub}
+                          href={
+                            profile.socialGithub.startsWith("https://")
+                              ? profile.socialGithub
+                              : "https://" + profile.socialGithub
+                          }
                           target="_blank"
                         >
                           <i className="im im-github"></i>
@@ -87,7 +91,11 @@ function PrivateProfile() {
                       <li>
                         <a
                           title="Youtube"
-                          href={profile.socialYoutube}
+                          href={
+                            profile.socialYoutube.startsWith("https://")
+                              ? profile.socialYoutube
+                              : "https://" + profile.socialYoutube
+                          }
                           target="_blank"
                         >
                           <i className="im im-youtube"></i>
@@ -98,7 +106,11 @@ function PrivateProfile() {
                       <li>
                         <a
                           title="Twitter"
-                          href={profile.socialTwitter}
+                          href={
+                            profile.socialTwitter.startsWith("https://")
+                              ? profile.socialTwitter
+                              : "https://" + profile.socialTwitter
+                          }
                           target="_blank"
                         >
                           <i className="im im-twitter"></i>
@@ -109,7 +121,11 @@ function PrivateProfile() {
                       <li>
                         <a
                           title="LinkedIn"
-                          href={profile.socialLinkedIn}
+                          href={
+                            profile.socialLinkedIn.startsWith("https://")
+                              ? profile.socialLinkedIn
+                              : "https://" + profile.socialLinkedIn
+                          }
                           target="_blank"
                         >
                           <i className="im im-linkedin"></i>
