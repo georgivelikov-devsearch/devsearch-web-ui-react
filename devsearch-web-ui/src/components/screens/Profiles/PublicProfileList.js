@@ -35,16 +35,19 @@ function PublicProfileList() {
   //TODO fix clean search when clicking on icon
   useEffect(() => {
     const page = searchParams.get("page");
+    const search = searchParams.get("search");
+    console.log("searchVal" + search);
     let userId = null;
     if (userInfo) {
       userId = userInfo[AUTH_USER_ID];
     }
 
     let searchText = "";
-    if (searchParameters && searchParameters.searchText) {
+    if (searchParameters && searchParameters.searchText && search != null) {
       searchText = searchParameters.searchText;
-      setText(searchText);
     }
+
+    setText(searchText);
 
     dispatch(getPublicProfileList(userId, page, searchText));
     window.scrollTo(0, 0);
@@ -53,7 +56,7 @@ function PublicProfileList() {
   const submitSearch = (e) => {
     e.preventDefault();
     dispatch(updateSearchForPublicProfileList(text));
-    navigate("/developers?page=1");
+    navigate("/developers?page=1&search");
   };
 
   return (

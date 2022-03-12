@@ -14,7 +14,7 @@ function Paging({ totalPages, currentPage }) {
         pageNumberStr = "0" + pageNumberStr;
       }
 
-      let link = `/developers?page=${pageNumber}`;
+      let link = `/developers?page=${pageNumber}&search`;
 
       let btnClass = "btn";
       if (selectedPage === pageNumber) {
@@ -71,7 +71,10 @@ function Paging({ totalPages, currentPage }) {
               &#10094; Prev
             </Link>
           ) : (
-            <Link to={`/developers?page=${currentPage - 1}`} className="btn">
+            <Link
+              to={`/developers?page=${currentPage - 1}&search`}
+              className="btn"
+            >
               &#10094; Prev
             </Link>
           )}
@@ -83,7 +86,10 @@ function Paging({ totalPages, currentPage }) {
               Next &#10095;
             </Link>
           ) : (
-            <Link to={`/developers?page=${currentPage + 1}`} className="btn">
+            <Link
+              to={`/developers?page=${currentPage + 1}&search`}
+              className="btn"
+            >
               Next &#10095;
             </Link>
           )}
