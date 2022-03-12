@@ -40,12 +40,8 @@ function PublicProfileList() {
     }
 
     let searchText = "";
-    if (
-      searchPublicProfileList.searchParameters &&
-      searchPublicProfileList.searchParameters.searchText
-    ) {
-      searchText = searchPublicProfileList.searchParameters.searchText;
-      console.log(searchPublicProfileList.searchParameters.searchText);
+    if (searchParameters && searchParameters.searchText) {
+      searchText = searchParameters.searchText;
       setText(searchText);
     }
 
