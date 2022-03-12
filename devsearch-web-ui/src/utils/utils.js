@@ -13,8 +13,6 @@ export const getErrorResponse = (error, serviceName) => {
 
   let serviceUnvailableMsg = `${serviceName} Service Unavailable`;
   let serviceUnvailableBadNetworkMsg = `Application is temporarily unavailable. Please excuse us!`;
-  console.log(error);
-  console.log(error.response);
   if (error.response) {
     if (error.response.data.message) {
       errorRes = error.response.data;
