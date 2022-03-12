@@ -40,8 +40,12 @@ function PublicProfileList() {
     }
 
     let searchText = "";
-    if (searchParameters && searchParameters.searchText) {
-      searchText = searchParameters.searchText;
+    if (
+      searchPublicProfileList.searchParameters &&
+      searchPublicProfileList.searchParameters.searchText
+    ) {
+      searchText = searchPublicProfileList.searchParameters.searchText;
+      console.log(searchPublicProfileList.searchParameters.searchText);
       setText(searchText);
     }
 
@@ -80,7 +84,7 @@ function PublicProfileList() {
                   type="text"
                   name="text"
                   placeholder="Search by developer name"
-                  defaultValue=""
+                  value={text}
                   onChange={(e) => setText(e.target.value)}
                 />
               </div>
