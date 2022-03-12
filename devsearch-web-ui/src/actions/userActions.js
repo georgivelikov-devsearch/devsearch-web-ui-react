@@ -49,9 +49,19 @@ export const login = (username, password) => async (dispatch) => {
 
     localStorage.setItem("userInfo", JSON.stringify(getNewUserInfo(response)));
   } catch (error) {
+    let errorRes;
+    if (error.response.status === 503) {
+      errorRes = {
+        message: "Login Service is unavailable",
+        additionalInformation: "Login Service is unavailable",
+      };
+    } else {
+      errorRes = error.response.data;
+    }
+
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload: error.response.data,
+      payload: errorRes,
     });
   }
 };
@@ -95,9 +105,19 @@ export const register = (userData, navigate) => async (dispatch) => {
 
     navigate("/login");
   } catch (error) {
+    let errorRes;
+    if (error.response.status === 503) {
+      errorRes = {
+        message: "Register Service is unavailable",
+        additionalInformation: "Register Service is unavailable",
+      };
+    } else {
+      errorRes = error.response.data;
+    }
+
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload: error.response.data,
+      payload: errorRes,
     });
   }
 };
