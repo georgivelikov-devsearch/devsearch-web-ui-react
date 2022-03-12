@@ -7,3 +7,29 @@ export const getBase64FromFile = async (file) => {
 
   return result_base64;
 };
+
+export const getErrorResponse = (error, serviceName) => {
+  let errorRes;
+
+  let serviceUnvailableMsg = `${serviceName} Service Unavailable`;
+  let serviceUnvailableBadNetworkMsg = `Application is temporarily unavailable. Please excuse us!`;
+  console.log(error);
+  console.log(error.response);
+  if (error.response) {
+    if (error.response.data.message) {
+      errorRes = error.response.data;
+    } else {
+      errorRes = {
+        message: serviceUnvailableMsg,
+        additionalInformation: serviceUnvailableMsg,
+      };
+    }
+  } else {
+    errorRes = {
+      message: serviceUnvailableBadNetworkMsg,
+      additionalInformation: serviceUnvailableBadNetworkMsg,
+    };
+  }
+
+  return errorRes;
+};

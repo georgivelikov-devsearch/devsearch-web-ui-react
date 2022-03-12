@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getErrorResponse } from "../utils/utils";
 
 import {
   PRIVATE_PROFILE_REQUEST,
@@ -45,9 +46,10 @@ export const getPrivateProfileForUser =
         payload: response.data,
       });
     } catch (error) {
+      let errorRes = getErrorResponse(error, "Profile");
       dispatch({
         type: PRIVATE_PROFILE_FAIL,
-        payload: error.response.data,
+        payload: errorRes,
       });
     }
   };
@@ -79,9 +81,10 @@ export const editPrivateProfileForUser =
 
       navigate("/profile/private");
     } catch (error) {
+      let errorRes = getErrorResponse(error, "Profile");
       dispatch({
         type: EDIT_PRIVATE_PROFILE_FAIL,
-        payload: error.response.data,
+        payload: errorRes,
       });
     }
   };
@@ -108,9 +111,10 @@ export const getPublicProfileById = (profilePublicId) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
+    let errorRes = getErrorResponse(error, "Profile");
     dispatch({
       type: PUBLIC_PROFILE_FAIL,
-      payload: error.response.data,
+      payload: errorRes,
     });
   }
 };
@@ -139,9 +143,10 @@ export const getPublicProfileList =
         payload: response.data,
       });
     } catch (error) {
+      let errorRes = getErrorResponse(error, "Profile");
       dispatch({
         type: PUBLIC_PROFILE_LIST_FAIL,
-        payload: error.response.data,
+        payload: errorRes,
       });
     }
   };
