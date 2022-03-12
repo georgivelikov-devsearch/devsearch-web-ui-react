@@ -36,7 +36,7 @@ function PublicProfileList() {
   useEffect(() => {
     const page = searchParams.get("page");
     const search = searchParams.get("search");
-    console.log("searchVal" + search);
+
     let userId = null;
     if (userInfo) {
       userId = userInfo[AUTH_USER_ID];
