@@ -32,6 +32,7 @@ function PublicProfileList() {
   );
   const { searchParameters } = searchPublicProfileList;
 
+  //TODO fix clean search when clicking on icon
   useEffect(() => {
     const page = searchParams.get("page");
     let userId = null;
