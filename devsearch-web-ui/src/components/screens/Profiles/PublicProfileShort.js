@@ -26,6 +26,7 @@ function PublicProfileShort({ profile }) {
               <h3>
                 {profile.firstName} {profile.lastName}
               </h3>
+              <p className="dev__username">({profile.displayUsername})</p>
               <h5>{profile.shortIntro}</h5>
             </div>
           </div>
