@@ -1,4 +1,6 @@
 import axios from "axios";
+import jwt from "jwt-decode";
+
 import { getErrorResponse } from "../utils/utils";
 
 import {
@@ -43,12 +45,17 @@ export const login = (username, password) => async (dispatch) => {
       config
     );
 
+    const newUser = getNewUserInfo(response);
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: getNewUserInfo(response),
+      payload: newUser,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(getNewUserInfo(response)));
+    // Split Auth header "Beader <token_value>"
+    let token = response.headers[AUTH_HEADER].split(" ")[1];
+    let x = jwt(token);
+    console.log(x);
+    localStorage.setItem("userInfo", JSON.stringify(newUser));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Login");
 

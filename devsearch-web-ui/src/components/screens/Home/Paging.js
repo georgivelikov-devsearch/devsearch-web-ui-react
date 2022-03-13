@@ -2,9 +2,19 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-function Paging({ totalPages, currentPage }) {
+function Paging({ totalPages, currentPage, root, search }) {
   const pageLimit = 10;
   let pageList = [];
+
+  // 'search' paramtere in the url 'http://<host>:<port>/<root>?page=1&search' does not have value, or more precisely has value "",
+  // but indicates searching operation. When the url is 'http://<host>:<port>/<root>?page=1' it means that there is not search and this
+  // requires clean new list for pagination. 'search' parameter in that case is null
+  let backLink = `/${root}?page=${currentPage - 1}`;
+  let nextLink = `/${root}?page=${currentPage + 1}`;
+  if (search) {
+    backLink = `/${root}?page=${currentPage - 1}&search=true`;
+    nextLink = `/${root}?page=${currentPage + 1}&search=true`;
+  }
 
   const buildList = (start, end, selectedPage, list) => {
     for (let index = start; index <= end; index++) {
@@ -14,7 +24,10 @@ function Paging({ totalPages, currentPage }) {
         pageNumberStr = "0" + pageNumberStr;
       }
 
-      let link = `/developers?page=${pageNumber}&search`;
+      let link = `/${root}?page=${pageNumber}`;
+      if (search) {
+        link = `/${root}?page=${pageNumber}&search=true`;
+      }
 
       let btnClass = "btn";
       if (selectedPage === pageNumber) {
@@ -71,10 +84,7 @@ function Paging({ totalPages, currentPage }) {
               &#10094; Prev
             </Link>
           ) : (
-            <Link
-              to={`/developers?page=${currentPage - 1}&search`}
-              className="btn"
-            >
+            <Link to={backLink} className="btn">
               &#10094; Prev
             </Link>
           )}
@@ -86,10 +96,7 @@ function Paging({ totalPages, currentPage }) {
               Next &#10095;
             </Link>
           ) : (
-            <Link
-              to={`/developers?page=${currentPage + 1}&search`}
-              className="btn"
-            >
+            <Link to={nextLink} className="btn">
               Next &#10095;
             </Link>
           )}

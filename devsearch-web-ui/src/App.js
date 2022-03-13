@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/screens/Home/Header";
-import Footer from "./components/screens/Home/Footer";
-import Index from "./components/screens/Home/Index";
+import Developers from "./components/screens/Home/Developers";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
 import PrivateProfile from "./components/screens/Profiles/PrivateProfile";
@@ -21,7 +20,7 @@ function App() {
             path="/"
             element={<Navigate to="/developers?page=1" />}
           ></Route>
-          <Route path="/developers" element={<Index />} />
+          <Route path="/developers" element={<Developers isAdmin={true} />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/profile/private" element={<PrivateProfile />} />

@@ -43,7 +43,7 @@ function PublicProfileList() {
     }
 
     let searchText = "";
-    if (searchParameters && searchParameters.searchText && search != null) {
+    if (searchParameters && searchParameters.searchText && search) {
       searchText = searchParameters.searchText;
     }
 
@@ -56,7 +56,12 @@ function PublicProfileList() {
   const submitSearch = (e) => {
     e.preventDefault();
     dispatch(updateSearchForPublicProfileList(text));
-    navigate("/developers?page=1&search");
+    if (text == null || text.trim() === "") {
+      //no search indicator needed
+      navigate("/developers?page=1");
+    } else {
+      navigate("/developers?page=1&search=true");
+    }
   };
 
   return (
@@ -127,6 +132,8 @@ function PublicProfileList() {
         <Paging
           totalPages={Number(totalPages)}
           currentPage={Number(searchParams.get("page"))}
+          root={"developers"}
+          search={searchParams.get("search")}
         />
       </section>
     </div>

@@ -1,7 +1,8 @@
 import React from "react";
 import PublicProfileList from "../Profiles/PublicProfileList";
 
-function Index() {
+function Developers({ isAdmin }) {
+  console.log("isAdmin: " + isAdmin);
   return (
     <main class="home">
       <PublicProfileList />
@@ -9,4 +10,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default Developers;
