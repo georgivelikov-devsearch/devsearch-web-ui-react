@@ -1,15 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../actions/userActions";
+import { useState, useEffect } from "react";
+import { login, logout } from "../../../actions/userActions";
+import UserService from "../../../services/identity/keycloakUserService";
+import Keycloak from "keycloak-js";
+import { useKeycloak } from "@react-keycloak/web";
+
 import { Link } from "react-router-dom";
 
 function Header() {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
   const dispatch = useDispatch();
 
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
+  const { keycloak, initialized } = useKeycloak();
 
   return (
     <header className="header">
@@ -30,25 +31,35 @@ function Header() {
             <li className="header__menuItem">
               <Link to="/projects">Projects</Link>
             </li>
-            {userInfo ? (
-              <>
-                <li className="header__menuItem">
-                  <Link to="/inbox">Inbox</Link>
-                </li>
-                <li className="header__menuItem">
-                  <Link to="/profile/private">My Profile</Link>
-                </li>
-                <li className="header__menuItem">
-                  <Link to="/" onClick={logoutHandler} className="btn btn--sub">
-                    Logout
-                  </Link>
-                </li>
-              </>
-            ) : (
+            {initialized && keycloak.authenticated && (
               <li className="header__menuItem">
-                <Link to="/login" className="btn btn--sub">
+                <Link to="/inbox">Inbox</Link>
+              </li>
+            )}
+            {initialized && keycloak.authenticated && (
+              <li className="header__menuItem">
+                <Link to="/profile/private">My Profile</Link>
+              </li>
+            )}
+            {initialized && keycloak.authenticated && (
+              <li className="header__menuItem">
+                <button
+                  onClick={() => keycloak.logout()}
+                  className="btn btn--sub"
+                >
+                  Logout
+                </button>
+              </li>
+            )}
+
+            {initialized && !keycloak.authenticated && (
+              <li className="header__menuItem">
+                <button
+                  onClick={() => keycloak.login()}
+                  className="btn btn--sub"
+                >
                   Login / Sign Up
-                </Link>
+                </button>
               </li>
             )}
           </ul>

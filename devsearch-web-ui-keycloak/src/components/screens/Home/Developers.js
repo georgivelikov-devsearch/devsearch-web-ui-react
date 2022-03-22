@@ -1,10 +1,9 @@
 import React from "react";
 import PublicProfileList from "../Profiles/PublicProfileList";
 
-function Developers({ isAdmin }) {
-  console.log("isAdmin: " + isAdmin);
+function Developers() {
   return (
-    <main class="home">
+    <main className="home">
       <PublicProfileList />
     </main>
   );
