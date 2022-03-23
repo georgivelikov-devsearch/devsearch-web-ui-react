@@ -20,6 +20,7 @@ const initService = (onAuthenticatedCallback) => {
         console.log("user is authenticated..!");
       }
 
+      // renders the app
       onAuthenticatedCallback();
     })
     .catch(console.error);
