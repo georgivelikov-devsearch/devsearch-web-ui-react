@@ -8,7 +8,8 @@ import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "./services/identity/keycloak";
 //import UserService from "./services/identity/keycloakUserService";
 let initOptions = {
-  //onLoad: "login-required",
+  onLoad: "check-sso",
+  silentCheckSsoRedirectUri: window.location.origin + "/silent-check-sso.html",
   pkceMethod: "S256",
 };
 
