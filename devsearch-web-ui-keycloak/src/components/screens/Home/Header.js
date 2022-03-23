@@ -1,17 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { login, logout } from "../../../actions/userActions";
 import UserService from "../../../services/identity/keycloakUserService";
-import Keycloak from "keycloak-js";
-import { useKeycloak } from "@react-keycloak/web";
 
 import { Link } from "react-router-dom";
 
 function Header() {
-  const dispatch = useDispatch();
-
-  const { keycloak, initialized } = useKeycloak();
-
   return (
     <header className="header">
       <div className="container container--narrow">
@@ -31,31 +22,30 @@ function Header() {
             <li className="header__menuItem">
               <Link to="/projects">Projects</Link>
             </li>
-            {initialized && keycloak.authenticated && (
+            {UserService.isLoggedIn() && (
               <li className="header__menuItem">
                 <Link to="/inbox">Inbox</Link>
               </li>
             )}
-            {initialized && keycloak.authenticated && (
+            {UserService.isLoggedIn() && (
               <li className="header__menuItem">
                 <Link to="/profile/private">My Profile</Link>
               </li>
             )}
-            {initialized && keycloak.authenticated && (
+            {UserService.isLoggedIn() && (
               <li className="header__menuItem">
                 <button
-                  onClick={() => keycloak.logout()}
+                  onClick={() => UserService.doLogout()}
                   className="btn btn--sub"
                 >
                   Logout
                 </button>
               </li>
             )}
-
-            {initialized && !keycloak.authenticated && (
+            {!UserService.isLoggedIn() && (
               <li className="header__menuItem">
                 <button
-                  onClick={() => keycloak.login()}
+                  onClick={() => UserService.doLogin()}
                   className="btn btn--sub"
                 >
                   Login / Sign Up

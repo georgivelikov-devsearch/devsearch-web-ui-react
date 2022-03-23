@@ -7,24 +7,10 @@ var kc = new Keycloak({
 });
 
 const initService = (onAuthenticatedCallback) => {
-  const unprotectedInitOptions = {
-    pkceMethod: "S256",
-  };
-
-  const protectedInitOptions = {
-    onLoad: "login-required",
-    pkceMethod: "S256",
-  };
-
-  let initOptions = {};
-  console.log(window.location);
-
   kc.init({
-    //onLoad: "check-sso",
-    //onLoad: "login-required",
-    //silentCheckSsoRedirectUri:
-    //window.location.origin + "/silent-check-sso.html",
-    //silentCheckSsoRedirectUri: "http://localhost:3000",
+    onLoad: "check-sso",
+    silentCheckSsoRedirectUri:
+      window.location.origin + "/silent-check-sso.html",
     pkceMethod: "S256",
   })
     .then((authenticated) => {
@@ -34,11 +20,7 @@ const initService = (onAuthenticatedCallback) => {
         console.log("user is authenticated..!");
       }
 
-      console.log("HERE");
-      //console.log(onAuthenticatedCallback);
-      console.log(kc);
       onAuthenticatedCallback();
-      kc.updateToken();
     })
     .catch(console.error);
 };
@@ -52,7 +34,7 @@ const getToken = () => kc.token;
 const isLoggedIn = () => kc.authenticated;
 
 const updateToken = (successCallback) =>
-  kc.updateToken(20).then(successCallback).catch(doLogin);
+  kc.updateToken(6).then(successCallback).catch(doLogin);
 
 const getUsername = () => kc.tokenParsed?.preferred_username;
 
