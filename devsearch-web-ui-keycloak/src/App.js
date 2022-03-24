@@ -3,10 +3,9 @@ import Header from "./components/screens/Home/Header";
 import Developers from "./components/screens/Home/Developers";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
-import PrivateProfile from "./components/screens/Profiles/PrivateProfile";
-import PrivateProfileEdit from "./components/screens/Profiles/PrivateProfileEdit";
+import Profile from "./components/screens/Profiles/Profile";
+import ProfileEdit from "./components/screens/Profiles/ProfileEdit";
 import PublicProfile from "./components/screens/Profiles/PublicProfile";
-import UserService from "./services/identity/keycloakUserService";
 
 function App() {
   return (
@@ -21,15 +20,9 @@ function App() {
           <Route path="/developers" element={<Developers />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
-          <Route path="/profile/private" element={<PrivateProfile />} />
-          <Route
-            path="/profile/private/edit"
-            element={<PrivateProfileEdit />}
-          />
-          <Route
-            path="/profile/public/:profilePublicId"
-            element={<PublicProfile />}
-          />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/profile/:username/edit" element={<ProfileEdit />} />
+          <Route path="/profile/public/:username" element={<PublicProfile />} />
         </Routes>
       </BrowserRouter>
     </div>

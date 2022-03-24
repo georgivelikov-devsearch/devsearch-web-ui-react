@@ -9,12 +9,12 @@ import {
 
 import { AUTH_USER_ID } from "../../../constants/userConstants";
 
-import PublicProfileShort from "./PublicProfileShort";
+import PublicProfileShort from "./ProfileShort";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 import Paging from "../Home/Paging";
 
-function PublicProfileList() {
+function ProfileList() {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ function PublicProfileList() {
   const searchPublicProfileList = useSelector(
     (state) => state.searchPublicProfileList
   );
+
   const { searchParameters } = searchPublicProfileList;
 
   //TODO fix clean search when clicking on icon
@@ -140,4 +141,4 @@ function PublicProfileList() {
   );
 }
 
-export default PublicProfileList;
+export default ProfileList;

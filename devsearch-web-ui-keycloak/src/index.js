@@ -4,7 +4,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import store from "./store";
-import UserService from "./services/identity/keycloakUserService";
+import UserService from "./services/identity/keycloak/keycloakUserService";
 
 const renderApp = () =>
   ReactDOM.render(

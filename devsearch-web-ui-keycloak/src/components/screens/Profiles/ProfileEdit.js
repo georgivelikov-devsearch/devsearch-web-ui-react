@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  getPrivateProfileForUser,
-  editPrivateProfileForUser,
+  getUserProfile,
+  editUserProfile,
 } from "../../../actions/profileActions";
 
 import { validateStringLength } from "../../../utils/validator";
@@ -16,9 +16,7 @@ import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
-import { AUTH_USER_ID, AUTH_HEADER } from "../../../constants/userConstants";
-
-function PrivateProfileEdit() {
+function ProfileEdit() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [shortIntro, setShortIntro] = useState("");
@@ -70,45 +68,38 @@ function PrivateProfileEdit() {
   const [validSocialWebsiteErrMessage, setValidSocialWebsiteErrMessage] =
     useState(true);
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userProfile = useSelector((state) => state.userProfile);
+  const { loading, error, profile } = userProfile;
 
-  const privateProfile = useSelector((state) => state.privateProfile);
-  const { loading, error, profile } = privateProfile;
-
-  const editPrivateProfile = useSelector((state) => state.editPrivateProfile);
-  const { editLoading, editError } = editPrivateProfile;
+  const userProfileForEdit = useSelector((state) => state.editUserProfile);
+  const { editLoading, editError } = userProfileForEdit;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!userInfo) {
-      navigate("/login");
+    //TODO Check for login
+
+    if (!profile) {
+      dispatch(getUserProfile());
     } else {
-      if (!profile) {
-        let userId = userInfo[AUTH_USER_ID];
-        let authHeader = userInfo[AUTH_HEADER];
-        dispatch(getPrivateProfileForUser(userId, authHeader));
-      } else {
-        setFirstName(profile.firstName);
-        setLastName(profile.lastName);
-        setShortIntro(profile.shortIntro);
-        setAbout(profile.about);
-        setLocationCity(profile.locationCity);
-        setLocationCountry(profile.locationCountry);
-        setSocialGithub(profile.socialGithub);
-        setSocialYoutube(profile.socialYoutube);
-        setSocialTwitter(profile.socialTwitter);
-        setSocialLinkedIn(profile.socialLinkedIn);
-        setSocialWebsite(profile.setSocialWebsite);
-        setProfilePictureUrl(profile.profilePictureUrl);
-      }
+      setFirstName(profile.firstName);
+      setLastName(profile.lastName);
+      setShortIntro(profile.shortIntro);
+      setAbout(profile.about);
+      setLocationCity(profile.locationCity);
+      setLocationCountry(profile.locationCountry);
+      setSocialGithub(profile.socialGithub);
+      setSocialYoutube(profile.socialYoutube);
+      setSocialTwitter(profile.socialTwitter);
+      setSocialLinkedIn(profile.socialLinkedIn);
+      setSocialWebsite(profile.setSocialWebsite);
+      setProfilePictureUrl(profile.profilePictureUrl);
     }
-  }, [dispatch, navigate, userInfo, profile]);
+  }, [dispatch, navigate, profile]);
 
   const goBack = () => {
-    navigate("/profile/private");
+    navigate("/profile/" + profile.username);
   };
 
   const uploadProfileImage = async (e) => {
@@ -133,16 +124,12 @@ function PrivateProfileEdit() {
       return;
     }
 
-    if (!userInfo) {
-      navigate("/login");
-    }
-
-    let authHeader = userInfo[AUTH_HEADER];
-
     // Update profile
-    const profilePrivateId = profile.profilePrivateId;
+    const profileId = profile.profileId;
+    const username = profile.username;
     const newData = {
-      profilePrivateId,
+      profileId,
+      username,
       firstName,
       lastName,
       shortIntro,
@@ -157,7 +144,7 @@ function PrivateProfileEdit() {
       profilePictureBase64,
       newProfilePictureUpload,
     };
-    dispatch(editPrivateProfileForUser(newData, authHeader, navigate));
+    dispatch(editUserProfile(newData, navigate));
   };
 
   const validateFields = () => {
@@ -620,4 +607,4 @@ function PrivateProfileEdit() {
   );
 }
 
-export default PrivateProfileEdit;
+export default ProfileEdit;

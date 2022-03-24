@@ -1,17 +1,17 @@
 import Keycloak from "keycloak-js";
+import keycloakConfig from "./keycloakConfig";
 
 var kc = new Keycloak({
-  url: "http://localhost:8080",
-  realm: "devsearch",
-  clientId: "devsearch-cli",
+  url: keycloakConfig.url,
+  realm: keycloakConfig.realm,
+  clientId: keycloakConfig.clientId,
 });
 
 const initService = (onAuthenticatedCallback) => {
   kc.init({
-    onLoad: "check-sso",
-    silentCheckSsoRedirectUri:
-      window.location.origin + "/silent-check-sso.html",
-    pkceMethod: "S256",
+    onLoad: keycloakConfig.checkSso,
+    silentCheckSsoRedirectUri: keycloakConfig.silentCheckSsoRedirectUri,
+    pkceMethod: keycloakConfig.pkceMethod,
   })
     .then((authenticated) => {
       if (!authenticated) {

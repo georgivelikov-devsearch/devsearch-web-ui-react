@@ -1,4 +1,4 @@
-import UserService from "../../../services/identity/keycloakUserService";
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
 import { Link } from "react-router-dom";
 

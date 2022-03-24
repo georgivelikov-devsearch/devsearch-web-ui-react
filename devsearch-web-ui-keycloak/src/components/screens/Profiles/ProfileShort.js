@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-function PublicProfileShort({ profile }) {
+
+function ProfileShort({ profile }) {
   return (
     <div className="column card">
       <div className="dev">
         <Link
           to={
             profile.sender
-              ? "/profile/private"
-              : `/profile/public/${profile.profilePublicId}`
+              ? `/profile/${profile.username}`
+              : `/profile/public/${profile.username}`
           }
           className="card__body"
         >
@@ -26,7 +27,7 @@ function PublicProfileShort({ profile }) {
               <h3>
                 {profile.firstName} {profile.lastName}
               </h3>
-              <p className="dev__username">({profile.displayUsername})</p>
+              <p className="dev__username">({profile.username})</p>
               <h5>{profile.shortIntro}</h5>
             </div>
           </div>
@@ -57,4 +58,4 @@ function PublicProfileShort({ profile }) {
   );
 }
 
-export default PublicProfileShort;
+export default ProfileShort;

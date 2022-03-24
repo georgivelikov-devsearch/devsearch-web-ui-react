@@ -1,33 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { getPrivateProfileForUser } from "../../../actions/profileActions";
-
-import { AUTH_USER_ID, AUTH_HEADER } from "../../../constants/userConstants";
-
+import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-import { Link } from "react-router-dom";
+import { getProfileForUser } from "../../../actions/profileActions";
 
-function PrivateProfile() {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const privateProfile = useSelector((state) => state.privateProfile);
-  const { loading, error, profile } = privateProfile;
+function Profile() {
+  const userProfile = useSelector((state) => state.userProfile);
+  const { loading, error, profile } = userProfile;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userInfo) {
-      navigate("/login");
-    } else {
-      const userId = userInfo[AUTH_USER_ID];
-      const authHeader = userInfo[AUTH_HEADER];
-      dispatch(getPrivateProfileForUser(userId, authHeader));
-    }
+    //TODO Check if user is logged in?
+    dispatch(getProfileForUser());
   }, []);
 
   return (
@@ -55,7 +43,7 @@ function PrivateProfile() {
                   <h2 className="dev__name">
                     {profile.firstName} {profile.lastName}
                   </h2>
-                  <p className="dev__username">({profile.displayUsername})</p>
+                  <p className="dev__username">({profile.username})</p>
                   <p className="dev__title">{profile.shortIntro}</p>
                   <p className="dev__location">
                     {profile.locationCity && profile.locationCountry ? (
@@ -363,4 +351,4 @@ function PrivateProfile() {
   );
 }
 
-export default PrivateProfile;
+export default Profile;
