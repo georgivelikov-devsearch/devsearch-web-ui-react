@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-import { getProfileForUser } from "../../../actions/profileActions";
+import { getUserProfile } from "../../../actions/profileActions";
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
 function Profile() {
-  const userProfile = useSelector((state) => state.userProfile);
+  const userProfile = useSelector((state) => state.profile);
   const { loading, error, profile } = userProfile;
 
   const dispatch = useDispatch();
@@ -15,7 +16,8 @@ function Profile() {
 
   useEffect(() => {
     //TODO Check if user is logged in?
-    dispatch(getProfileForUser());
+    let username = UserService.getUsername();
+    dispatch(getUserProfile(username));
   }, []);
 
   return (

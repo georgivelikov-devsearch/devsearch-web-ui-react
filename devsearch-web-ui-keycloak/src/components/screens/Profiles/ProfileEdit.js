@@ -68,10 +68,10 @@ function ProfileEdit() {
   const [validSocialWebsiteErrMessage, setValidSocialWebsiteErrMessage] =
     useState(true);
 
-  const userProfile = useSelector((state) => state.userProfile);
+  const userProfile = useSelector((state) => state.profile);
   const { loading, error, profile } = userProfile;
 
-  const userProfileForEdit = useSelector((state) => state.editUserProfile);
+  const userProfileForEdit = useSelector((state) => state.editProfile);
   const { editLoading, editError } = userProfileForEdit;
 
   const navigate = useNavigate();
@@ -124,6 +124,7 @@ function ProfileEdit() {
       return;
     }
 
+    console.log(profile);
     // Update profile
     const profileId = profile.profileId;
     const username = profile.username;
@@ -144,7 +145,7 @@ function ProfileEdit() {
       profilePictureBase64,
       newProfilePictureUpload,
     };
-    dispatch(editUserProfile(newData, navigate));
+    dispatch(editUserProfile(newData, username, navigate));
   };
 
   const validateFields = () => {

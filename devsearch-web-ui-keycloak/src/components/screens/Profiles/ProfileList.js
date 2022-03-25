@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
-  getPublicProfileList,
+  getProfileList,
   updateSearchForPublicProfileList,
 } from "../../../actions/profileActions";
-
-import { AUTH_USER_ID } from "../../../constants/userConstants";
 
 import PublicProfileShort from "./ProfileShort";
 import Message from "../../common/Message";
@@ -21,27 +19,17 @@ function ProfileList() {
 
   const [text, setText] = useState("");
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const profileList = useSelector((state) => state.profileList);
+  const { error, profiles, totalPages } = profileList;
 
-  const publicProfileList = useSelector((state) => state.publicProfileList);
-  const { error, profiles, totalPages } = publicProfileList;
+  const searchProfileList = useSelector((state) => state.searchProfileList);
 
-  const searchPublicProfileList = useSelector(
-    (state) => state.searchPublicProfileList
-  );
-
-  const { searchParameters } = searchPublicProfileList;
+  const { searchParameters } = searchProfileList;
 
   //TODO fix clean search when clicking on icon
   useEffect(() => {
     const page = searchParams.get("page");
     const search = searchParams.get("search");
-
-    let userId = null;
-    if (userInfo) {
-      userId = userInfo[AUTH_USER_ID];
-    }
 
     let searchText = "";
     if (searchParameters && searchParameters.searchText && search) {
@@ -50,9 +38,9 @@ function ProfileList() {
 
     setText(searchText);
 
-    dispatch(getPublicProfileList(userId, page, searchText));
+    dispatch(getProfileList(page, searchText));
     window.scrollTo(0, 0);
-  }, [dispatch, userInfo, searchParams, searchParameters]);
+  }, [dispatch, searchParams, searchParameters]);
 
   const submitSearch = (e) => {
     e.preventDefault();

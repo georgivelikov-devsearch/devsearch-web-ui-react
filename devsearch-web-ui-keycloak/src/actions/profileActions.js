@@ -1,4 +1,6 @@
 import axios from "axios";
+import HttpService from "../services/http/axios/AxiosHttpService";
+import UserService from "../services/identity/keycloak/keycloakUserService";
 import { getErrorResponse } from "../utils/utils";
 
 import {
@@ -19,24 +21,25 @@ import {
 
 import {
   PROFILE_URL,
-  EDIT_PROFILE_URL,
   PUBLIC_PROFILE_URL,
   PROFILE_LIST_URL,
 } from "../constants/urlConstants";
 
-export const getUserProfile = () => async (dispatch) => {
+export const getUserProfile = (username) => async (dispatch) => {
   try {
     dispatch({
       type: PROFILE_REQUEST,
     });
+
     const config = {
       headers: {
         "content-type": "application/json",
-        Authorization: authHeader,
+        Authorization: `Bearer ${UserService.getToken()}`,
       },
     };
 
-    const response = await axios.get(PROFILE_URL(userId), config);
+    const url = PROFILE_URL(username);
+    const response = await axios.get(url, config);
 
     dispatch({
       type: PROFILE_SUCCESS,
@@ -52,7 +55,7 @@ export const getUserProfile = () => async (dispatch) => {
 };
 
 export const editUserProfile =
-  (newProfileData, navigate) => async (dispatch) => {
+  (newProfileData, username, navigate) => async (dispatch) => {
     try {
       dispatch({
         type: EDIT_PROFILE_REQUEST,
@@ -61,22 +64,20 @@ export const editUserProfile =
       const config = {
         headers: {
           "content-type": "application/json",
-          Authorization: authHeader,
+          Authorization: `Bearer ${UserService.getToken()}`,
         },
       };
 
-      const response = await axios.put(
-        EDIT_PROFILE_URL,
-        newProfileData,
-        config
-      );
+      const url = PROFILE_URL(username);
+      console.log(url);
+      const response = await axios.put(url, newProfileData, config);
 
       dispatch({
         type: EDIT_PROFILE_SUCCESS,
         payload: response.data,
       });
 
-      navigate("/profile/" + newProfileData.username);
+      navigate("/profile/" + username);
     } catch (error) {
       let errorRes = getErrorResponse(error, "Profile");
       dispatch({
@@ -86,8 +87,8 @@ export const editUserProfile =
     }
   };
 
-export const getPublicUserProfile = () => async (dispatch) => {
-  try {
+export const getPublicUserProfile = (username) => async (dispatch) => {
+  /* try {
     dispatch({
       type: PUBLIC_PROFILE_REQUEST,
     });
@@ -98,10 +99,7 @@ export const getPublicUserProfile = () => async (dispatch) => {
       },
     };
 
-    const response = await axios.get(
-      PUBLIC_PROFILE_URL(profilePublicId),
-      config
-    );
+    const response = await axios.get(PUBLIC_PROFILE_URL(username), config);
 
     dispatch({
       type: PUBLIC_PROFILE_SUCCESS,
@@ -113,40 +111,39 @@ export const getPublicUserProfile = () => async (dispatch) => {
       type: PUBLIC_PROFILE_FAIL,
       payload: errorRes,
     });
-  }
+  } */
 };
 
-export const getProfileList =
-  (userId, page, searchText) => async (dispatch) => {
-    try {
-      dispatch({
-        type: PROFILE_LIST_REQUEST,
-      });
+export const getProfileList = (page, searchText) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PROFILE_LIST_REQUEST,
+    });
 
-      const config = {
-        headers: {
-          "content-type": "application/json",
-        },
-        params: {
-          userId: userId,
-          page: page,
-          searchText: searchText,
-        },
-      };
-      const response = await axios.get(PROFILE_LIST_URL, config);
+    const config = {
+      headers: {
+        "content-type": "application/json",
+      },
+      params: {
+        page: page,
+        searchText: searchText,
+      },
+    };
 
-      dispatch({
-        type: PROFILE_LIST_SUCCESS,
-        payload: response.data,
-      });
-    } catch (error) {
-      let errorRes = getErrorResponse(error, "Profile");
-      dispatch({
-        type: PROFILE_LIST_FAIL,
-        payload: errorRes,
-      });
-    }
-  };
+    const response = await axios.get(PROFILE_LIST_URL, config);
+
+    dispatch({
+      type: PROFILE_LIST_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    let errorRes = getErrorResponse(error, "Profile");
+    dispatch({
+      type: PROFILE_LIST_FAIL,
+      payload: errorRes,
+    });
+  }
+};
 
 export const updateSearchForPublicProfileList =
   (searchText) => async (dispatch) => {

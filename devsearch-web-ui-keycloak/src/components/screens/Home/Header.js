@@ -29,7 +29,9 @@ function Header() {
             )}
             {UserService.isLoggedIn() && (
               <li className="header__menuItem">
-                <Link to="/profile/private">My Profile</Link>
+                <Link to={`/profile/${UserService.getUsername()}`}>
+                  My Profile
+                </Link>
               </li>
             )}
             {UserService.isLoggedIn() && (

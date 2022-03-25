@@ -5,11 +5,11 @@ let URL = `${GW_HTTP_PROT}://${GW_HOST}:${GW_PORT_HTTP_PORT}`;
 
 // Profile
 export const PROFILE_URL = (username) => {
-  return `${URL}/profiles/${username}`;
+  return `${URL}/profiles/user/${username}`;
 };
 
 export const PUBLIC_PROFILE_URL = (username) => {
-  return `${URL}/profiles/public/${username}`;
+  return `${URL}/profiles/public/user/${username}`;
 };
 
-export const PROFILE_LIST_URL = `${URL}/profiles/`;
+export const PROFILE_LIST_URL = `${URL}/profiles/public/all`;

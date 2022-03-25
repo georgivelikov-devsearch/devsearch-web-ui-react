@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { getPublicProfileById } from "../../../actions/profileActions";
-
-import { AUTH_USER_ID } from "../../../constants/userConstants";
+import { getPublicUserProfile } from "../../../actions/profileActions";
 
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-import { Link } from "react-router-dom";
 
 function PublicProfile() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -25,13 +22,12 @@ function PublicProfile() {
   const { profilePublicId } = useParams();
 
   useEffect(() => {
+    //TODO CHECK THE LOGIN
     if (!userInfo) {
       setCanSendMessage(false);
-    } else {
-      const userId = userInfo[AUTH_USER_ID];
     }
 
-    dispatch(getPublicProfileById(profilePublicId));
+    dispatch(getPublicUserProfile());
   }, []);
 
   return (
