@@ -45,7 +45,7 @@ export const publicDeveloperReducer = (state = {}, action) => {
     case PUBLIC_DEVELOPER_REQUEST:
       return { loading: true };
     case PUBLIC_DEVELOPER_SUCCESS:
-      return { loading: false, developer: action.payload };
+      return { loading: false, publicDeveloper: action.payload };
     case PUBLIC_DEVELOPER_FAIL:
       return { loading: false, error: action.payload };
     default:

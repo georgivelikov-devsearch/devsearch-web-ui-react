@@ -9,10 +9,10 @@ import Loader from "../../common/Loader";
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
 function DeveloperPublic() {
-  const publicDeveloperState = useSelector((state) => state.publicDeveloper);
-  const { loading, error, developer } = publicDeveloperState;
-
+  const { username } = useParams();
   const [canSendMessage, setCanSendMessage] = useState(true);
+  const publicDeveloperState = useSelector((state) => state.publicDeveloper);
+  const { loading, error, publicDeveloper } = publicDeveloperState;
 
   const dispatch = useDispatch();
 
@@ -21,12 +21,12 @@ function DeveloperPublic() {
       setCanSendMessage(false);
     }
 
-    dispatch(getPublicDeveloper(developer.username));
+    dispatch(getPublicDeveloper(username));
   }, []);
 
   return (
-    <main className="settingsPage developer my-md">
-      {developer && (
+    <main className="settingsPage publicDeveloper my-md">
+      {publicDeveloper && (
         <div className="container">
           <div className="layout">
             <div className="column column--1of3">
@@ -35,80 +35,81 @@ function DeveloperPublic() {
                   <img
                     className="avatar avatar--xl dev__avatar"
                     src={
-                      developer.developerPictureUrl
-                        ? developer.developerPictureUrl
+                      publicDeveloper.developerPictureUrl
+                        ? publicDeveloper.developerPictureUrl
                         : "../../../images/user-default.png"
                     }
                   />
                   <h2 className="dev__name">
-                    {developer.firstName} {developer.lastName}
+                    {publicDeveloper.firstName} {publicDeveloper.lastName}
                   </h2>
-                  <p className="dev__username">({developer.displayUsername})</p>
-                  <p className="dev__title">{developer.shortIntro}</p>
+                  <p className="dev__username">({publicDeveloper.username})</p>
+                  <p className="dev__title">{publicDeveloper.shortIntro}</p>
                   <p className="dev__location">
-                    {developer.locationCity && developer.locationCountry ? (
+                    {publicDeveloper.locationCity &&
+                    publicDeveloper.locationCountry ? (
                       <span>
-                        Based in {developer.locationCity},{" "}
-                        {developer.locationCountry}
+                        Based in {publicDeveloper.locationCity},{" "}
+                        {publicDeveloper.locationCountry}
                       </span>
-                    ) : developer.locationCity ? (
-                      <span>Based in {developer.locationCity}</span>
-                    ) : developer.locationCountry ? (
-                      <span>Based in {developer.locationCountry}</span>
+                    ) : publicDeveloper.locationCity ? (
+                      <span>Based in {publicDeveloper.locationCity}</span>
+                    ) : publicDeveloper.locationCountry ? (
+                      <span>Based in {publicDeveloper.locationCountry}</span>
                     ) : (
                       <span></span>
                     )}
                   </p>
                   <ul className="dev__social">
-                    {developer.socialGithub && (
+                    {publicDeveloper.socialGithub && (
                       <li>
                         <a
                           title="Github"
-                          href={developer.socialGithub}
+                          href={publicDeveloper.socialGithub}
                           target="_blank"
                         >
                           <i className="im im-github"></i>
                         </a>
                       </li>
                     )}
-                    {developer.socialYoutube && (
+                    {publicDeveloper.socialYoutube && (
                       <li>
                         <a
                           title="Youtube"
-                          href={developer.socialYoutube}
+                          href={publicDeveloper.socialYoutube}
                           target="_blank"
                         >
                           <i className="im im-youtube"></i>
                         </a>
                       </li>
                     )}
-                    {developer.socialTwitter && (
+                    {publicDeveloper.socialTwitter && (
                       <li>
                         <a
                           title="Twitter"
-                          href={developer.socialTwitter}
+                          href={publicDeveloper.socialTwitter}
                           target="_blank"
                         >
                           <i className="im im-twitter"></i>
                         </a>
                       </li>
                     )}
-                    {developer.socialLinkedIn && (
+                    {publicDeveloper.socialLinkedIn && (
                       <li>
                         <a
                           title="LinkedIn"
-                          href={developer.socialLinkedIn}
+                          href={publicDeveloper.socialLinkedIn}
                           target="_blank"
                         >
                           <i className="im im-linkedin"></i>
                         </a>
                       </li>
                     )}
-                    {developer.socialWebsite && (
+                    {publicDeveloper.socialWebsite && (
                       <li>
                         <a
                           title="Personal Website"
-                          href={developer.socialWebsite}
+                          href={publicDeveloper.socialWebsite}
                           target="_blank"
                         >
                           <i className="im im-globe"></i>
@@ -127,7 +128,7 @@ function DeveloperPublic() {
             <div className="column column--2of3">
               <div className="devInfo">
                 <h3 className="devInfo__title">About Me</h3>
-                <p className="devInfo__about">{developer.about}</p>
+                <p className="devInfo__about">{publicDeveloper.about}</p>
               </div>
               <div className="settings">
                 <h3 className="settings__title">Skills</h3>

@@ -87,7 +87,7 @@ export const editDeveloper =
   };
 
 export const getPublicDeveloper = (username) => async (dispatch) => {
-  /* try {
+  try {
     dispatch({
       type: PUBLIC_DEVELOPER_REQUEST,
     });
@@ -99,7 +99,7 @@ export const getPublicDeveloper = (username) => async (dispatch) => {
     };
 
     const response = await axios.get(PUBLIC_DEVELOPER_URL(username), config);
-
+    console.log(response.data);
     dispatch({
       type: PUBLIC_DEVELOPER_SUCCESS,
       payload: response.data,
@@ -110,7 +110,7 @@ export const getPublicDeveloper = (username) => async (dispatch) => {
       type: PUBLIC_DEVELOPER_FAIL,
       payload: errorRes,
     });
-  } */
+  }
 };
 
 export const getDeveloperList = (page, searchText) => async (dispatch) => {
@@ -131,7 +131,6 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
 
     const response = await axios.get(DEVELOPER_LIST_URL, config);
 
-    console.log(response.data);
     dispatch({
       type: DEVELOPER_LIST_SUCCESS,
       payload: response.data,

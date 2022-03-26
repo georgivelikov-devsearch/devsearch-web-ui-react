@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
 function DeveloperShort({ developer }) {
+  const [isOwnProfile, setIsOwnProfile] = useState(false);
+
+  useEffect(() => {
+    if (UserService.isLoggedIn()) {
+      if (UserService.getUsername() === developer.username) {
+        setIsOwnProfile(true);
+      }
+    }
+  }, [developer.username]);
+
   return (
     <div className="column card">
       <div className="dev">
         <Link
           to={
-            developer.sender
-              ? `/developer/${developer.username}`
-              : `/developer/public/${developer.username}`
+            isOwnProfile
+              ? `/developers/${developer.username}`
+              : `/developers/public/${developer.username}`
           }
           className="card__body"
         >

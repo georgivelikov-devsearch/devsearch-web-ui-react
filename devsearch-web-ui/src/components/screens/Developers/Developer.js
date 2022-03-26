@@ -15,13 +15,12 @@ function Developer() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!UserService.isLoggedIn()) {
+    if (UserService.isLoggedIn()) {
+      let username = UserService.getUsername();
+      dispatch(getDeveloper(username));
+    } else {
       UserService.doLogin();
-      console.log("Not logged in!");
     }
-
-    let username = UserService.getUsername();
-    dispatch(getDeveloper(username));
   }, []);
 
   return (
