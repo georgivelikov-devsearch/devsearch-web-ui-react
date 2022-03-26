@@ -287,7 +287,7 @@ img {
   align-items: stretch;
 }
 
-.devlist .dev .dev__profile {
+.devlist .dev .dev__devile {
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -341,7 +341,7 @@ img {
   Profile
 ========================*/
 
-.profile .card > .dev {
+.devile .card > .dev {
   padding: 4rem;
 }
 
@@ -819,9 +819,9 @@ img {
 }
 
 /*=======================
-  Profile edit
+  Developer edit
 ========================*/
-.profedit {
+.devedit {
   width: 100%;
   position: relative;
   z-index: 1;
@@ -831,7 +831,7 @@ img {
   align-items: center;
 }
 
-.profedit::after {
+.devedit::after {
   z-index: -1;
   opacity: 0.1;
   content: "";
@@ -844,54 +844,54 @@ img {
   background: url(../images/pattern.jpg);
 }
 
-.profedit > .card {
+.devedit > .card {
   padding: 3rem 4rem;
   width: 95%;
   max-width: 80rem;
 }
 
 @media screen and (min-width: 650px) {
-  .profedit > .card {
+  .devedit > .card {
     padding: 5rem 8rem;
     width: 95%;
     max-width: 80rem;
   }
 }
 
-.profedit__header h3 {
+.devedit__header h3 {
   color: var(--color-sub);
   font-weight: 700;
   margin-top: 1rem;
 }
 
-.profedit__header p {
+.devedit__header p {
   font-weight: 400;
   font-size: 1.8rem;
   margin-bottom: 2rem;
 }
 
-.profedit__form {
+.devedit__form {
   margin: 3rem 0;
 }
 
-.profedit .profedit__form label,
-.profedit .profedit__alternative p {
+.devedit .devedit__form label,
+.devedit .devedit__alternative p {
   font-size: 1.4rem;
   font-weight: 500;
   color: var(--color-sub-light);
 }
 
-.profedit .profedit__actions {
+.devedit .devedit__actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 2.5rem 0;
 }
-.profedit .profedit__actions a {
+.devedit .devedit__actions a {
   text-decoration: underline;
 }
 
-.profedit .reg__alternative a {
+.devedit .reg__alternative a {
   font-size: 2rem;
   font-weight: 500;
 }

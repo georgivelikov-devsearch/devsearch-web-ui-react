@@ -3,20 +3,17 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  getUserProfile,
-  editUserProfile,
-} from "../../../actions/profileActions";
+import { getDeveloper, editDeveloper } from "../../../actions/developerActions";
 
 import { validateStringLength } from "../../../utils/validator";
 import { getBase64FromFile } from "../../../utils/utils";
-import { PROFILE_VALIDATION } from "../../../constants/profileConstants";
+import { DEVELOPER_VALIDATION } from "../../../constants/developerConstants";
 
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
-function ProfileEdit() {
+function DeveloperEdit() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [shortIntro, setShortIntro] = useState("");
@@ -28,12 +25,13 @@ function ProfileEdit() {
   const [socialTwitter, setSocialTwitter] = useState("");
   const [socialLinkedIn, setSocialLinkedIn] = useState("");
   const [socialWebsite, setSocialWebsite] = useState("");
-  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [developerPictureUrl, setDeveloperPictureUrl] = useState("");
   // used for upload
-  const [profilePictureBase64, setProfilePictureBase64] = useState("");
+  const [developerPictureBase64, setDeveloperPictureBase64] = useState("");
   // this is done because there is no need to reupload the picture to
   //the File Service every time when update request is send to the backend (it is limited free account)
-  const [newProfilePictureUpload, setNewProfilePictureUpload] = useState(false);
+  const [newDeveloperPictureUpload, setNewDeveloperPictureUpload] =
+    useState(false);
 
   const [validFirstName, setValidFirstName] = useState(true);
   const [validLastName, setValidLastName] = useState(true);
@@ -68,47 +66,47 @@ function ProfileEdit() {
   const [validSocialWebsiteErrMessage, setValidSocialWebsiteErrMessage] =
     useState(true);
 
-  const userProfile = useSelector((state) => state.profile);
-  const { loading, error, profile } = userProfile;
+  const developerState = useSelector((state) => state.developer);
+  const { loading, error, developer } = developerState;
 
-  const userProfileForEdit = useSelector((state) => state.editProfile);
-  const { editLoading, editError } = userProfileForEdit;
+  const editDeveloperState = useSelector((state) => state.editDeveloper);
+  const { editLoading, editError } = editDeveloperState;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //TODO Check for login
-
-    if (!profile) {
-      dispatch(getUserProfile());
+    if (!UserService.isLoggedIn()) {
+      UserService.doLogin();
+    } else if (!developer) {
+      dispatch(getDeveloper());
     } else {
-      setFirstName(profile.firstName);
-      setLastName(profile.lastName);
-      setShortIntro(profile.shortIntro);
-      setAbout(profile.about);
-      setLocationCity(profile.locationCity);
-      setLocationCountry(profile.locationCountry);
-      setSocialGithub(profile.socialGithub);
-      setSocialYoutube(profile.socialYoutube);
-      setSocialTwitter(profile.socialTwitter);
-      setSocialLinkedIn(profile.socialLinkedIn);
-      setSocialWebsite(profile.setSocialWebsite);
-      setProfilePictureUrl(profile.profilePictureUrl);
+      setFirstName(developer.firstName);
+      setLastName(developer.lastName);
+      setShortIntro(developer.shortIntro);
+      setAbout(developer.about);
+      setLocationCity(developer.locationCity);
+      setLocationCountry(developer.locationCountry);
+      setSocialGithub(developer.socialGithub);
+      setSocialYoutube(developer.socialYoutube);
+      setSocialTwitter(developer.socialTwitter);
+      setSocialLinkedIn(developer.socialLinkedIn);
+      setSocialWebsite(developer.setSocialWebsite);
+      setDeveloperPictureUrl(developer.developerPictureUrl);
     }
-  }, [dispatch, navigate, profile]);
+  }, [dispatch, navigate, developer]);
 
   const goBack = () => {
-    navigate("/profile/" + profile.username);
+    navigate("/developer/" + developer.username);
   };
 
-  const uploadProfileImage = async (e) => {
+  const uploadDeveloperImage = async (e) => {
     let file = e.target.files[0];
     let base64Picture = await getBase64FromFile(file);
 
-    setProfilePictureUrl(base64Picture);
-    setNewProfilePictureUpload(true);
-    setProfilePictureBase64(base64Picture);
+    setDeveloperPictureUrl(base64Picture);
+    setNewDeveloperPictureUpload(true);
+    setDeveloperPictureBase64(base64Picture);
   };
 
   const submitHanlder = (e) => {
@@ -124,12 +122,12 @@ function ProfileEdit() {
       return;
     }
 
-    console.log(profile);
-    // Update profile
-    const profileId = profile.profileId;
-    const username = profile.username;
+    console.log(developer);
+    // Update developer
+    const developerId = developer.developerId;
+    const username = developer.username;
     const newData = {
-      profileId,
+      developerId,
       username,
       firstName,
       lastName,
@@ -142,17 +140,20 @@ function ProfileEdit() {
       socialTwitter,
       socialLinkedIn,
       socialWebsite,
-      profilePictureBase64,
-      newProfilePictureUpload,
+      developerPictureBase64,
+      newDeveloperPictureUpload,
     };
-    dispatch(editUserProfile(newData, username, navigate));
+
+    dispatch(editDeveloper(newData, username)).then(
+      navigate("/developer/" + username)
+    );
   };
 
   const validateFields = () => {
     let isValid = validateStringLength(
       firstName,
-      PROFILE_VALIDATION.FIRSTNAME_MIN_LENGTH,
-      PROFILE_VALIDATION.FIRSTNAME_MAX_LENGTH,
+      DEVELOPER_VALIDATION.FIRSTNAME_MIN_LENGTH,
+      DEVELOPER_VALIDATION.FIRSTNAME_MAX_LENGTH,
       "First Name"
     );
     setValidFirstName(isValid.result);
@@ -163,8 +164,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       lastName,
-      PROFILE_VALIDATION.LASTNAME_MIN_LENGTH,
-      PROFILE_VALIDATION.LASTNAME_MAX_LENGTH,
+      DEVELOPER_VALIDATION.LASTNAME_MIN_LENGTH,
+      DEVELOPER_VALIDATION.LASTNAME_MAX_LENGTH,
       "Last Name"
     );
     setValidLastName(isValid.result);
@@ -175,8 +176,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       shortIntro,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.SHORTINTRO_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.SHORTINTRO_MAX_LENGTH,
       "Short Intro"
     );
     setValidShortIntro(isValid.result);
@@ -187,8 +188,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       about,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.ABOUT_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.ABOUT_MAX_LENGTH,
       "About Info"
     );
     setValidAbout(isValid.result);
@@ -199,8 +200,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       locationCity,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.CITY_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.CITY_MAX_LENGTH,
       "City"
     );
     setValidLocationCity(isValid.result);
@@ -211,8 +212,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       locationCountry,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.COUTRY_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.COUTRY_MAX_LENGTH,
       "Country"
     );
     setValidLocationCountry(isValid.result);
@@ -223,8 +224,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       socialGithub,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.SOCIAL_MAX_LENGTH,
       "Github link"
     );
     setValidSocialGithub(isValid.result);
@@ -235,8 +236,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       socialYoutube,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.SOCIAL_MAX_LENGTH,
       "Youtube link"
     );
     setValidSocialYoutube(isValid.result);
@@ -247,8 +248,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       socialTwitter,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.SOCIAL_MAX_LENGTH,
       "Twitter link"
     );
     setValidSocialTwitter(isValid.result);
@@ -259,8 +260,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       socialLinkedIn,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.SOCIAL_MAX_LENGTH,
       "LinkedIn link"
     );
     setValidSocialLinkedIn(isValid.result);
@@ -271,8 +272,8 @@ function ProfileEdit() {
 
     isValid = validateStringLength(
       socialWebsite,
-      PROFILE_VALIDATION.NO_MIN_LENGTH,
-      PROFILE_VALIDATION.SOCIAL_MAX_LENGTH,
+      DEVELOPER_VALIDATION.NO_MIN_LENGTH,
+      DEVELOPER_VALIDATION.SOCIAL_MAX_LENGTH,
       "Website link"
     );
     setValidSocialWebsite(isValid.result);
@@ -311,12 +312,12 @@ function ProfileEdit() {
   };
 
   return (
-    <div className="profedit">
+    <div className="devedit">
       <div className="card">
-        <div className="profedit__header text-center">
+        <div className="devedit__header text-center">
           <HomeIcon />
-          <h3>Edit Profile</h3>
-          <p>Edit your profile</p>
+          <h3>Edit Developer</h3>
+          <p>Edit your developer</p>
         </div>
         {error && (
           <Message
@@ -342,10 +343,10 @@ function ProfileEdit() {
           />
         )}
         {editLoading && <Loader />}
-        {profile && (
+        {developer && (
           <form
             action="#"
-            className="form profedit__form"
+            className="form devedit__form"
             onSubmit={submitHanlder}
           >
             <div className="form__field">
@@ -353,8 +354,8 @@ function ProfileEdit() {
                 <img
                   className="avatar avatar--xl dev__avatar"
                   src={
-                    profilePictureUrl
-                      ? profilePictureUrl
+                    developerPictureUrl
+                      ? developerPictureUrl
                       : "../../../images/user-default.png"
                   }
                   alt=""
@@ -367,7 +368,7 @@ function ProfileEdit() {
                 type="file"
                 name="file"
                 accept="image/png, image/jpeg"
-                onChange={(e) => uploadProfileImage(e)}
+                onChange={(e) => uploadDeveloperImage(e)}
               />
             </div>
             <div className="form__field">
@@ -378,7 +379,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="First Name"
-                defaultValue={profile.firstName}
+                defaultValue={developer.firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
@@ -398,7 +399,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Last Name"
-                defaultValue={profile.lastName}
+                defaultValue={developer.lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
             </div>
@@ -417,7 +418,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="City"
-                defaultValue={profile.locationCity}
+                defaultValue={developer.locationCity}
                 onChange={(e) => setLocationCity(e.target.value)}
               />
             </div>
@@ -437,7 +438,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Country"
-                defaultValue={profile.locationCountry}
+                defaultValue={developer.locationCountry}
                 onChange={(e) => setLocationCountry(e.target.value)}
               />
             </div>
@@ -457,7 +458,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Short Intro"
-                defaultValue={profile.shortIntro}
+                defaultValue={developer.shortIntro}
                 onChange={(e) => setShortIntro(e.target.value)}
               />
             </div>
@@ -477,7 +478,7 @@ function ProfileEdit() {
                 type="textarea"
                 name="text"
                 placeholder="About"
-                defaultValue={profile.about}
+                defaultValue={developer.about}
                 onChange={(e) => setAbout(e.target.value)}
               />
             </div>
@@ -496,7 +497,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Github"
-                defaultValue={profile.socialGithub}
+                defaultValue={developer.socialGithub}
                 onChange={(e) => setSocialGithub(e.target.value)}
               />
             </div>
@@ -516,7 +517,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Youtube"
-                defaultValue={profile.socialYoutube}
+                defaultValue={developer.socialYoutube}
                 onChange={(e) => setSocialYoutube(e.target.value)}
               />
             </div>
@@ -536,7 +537,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Twitter"
-                defaultValue={profile.socialTwitter}
+                defaultValue={developer.socialTwitter}
                 onChange={(e) => setSocialTwitter(e.target.value)}
               />
             </div>
@@ -556,7 +557,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="LinkedIn"
-                defaultValue={profile.socialLinkedIn}
+                defaultValue={developer.socialLinkedIn}
                 onChange={(e) => setSocialLinkedIn(e.target.value)}
               />
             </div>
@@ -576,7 +577,7 @@ function ProfileEdit() {
                 type="text"
                 name="text"
                 placeholder="Website"
-                defaultValue={profile.socialWebsite}
+                defaultValue={developer.socialWebsite}
                 onChange={(e) => setSocialWebsite(e.target.value)}
               />
             </div>
@@ -588,7 +589,7 @@ function ProfileEdit() {
               />
             )}
 
-            <div className="profedit__actions">
+            <div className="devedit__actions">
               <input
                 className="btn btn--sub btn--lg"
                 type="submit"
@@ -608,4 +609,4 @@ function ProfileEdit() {
   );
 }
 
-export default ProfileEdit;
+export default DeveloperEdit;

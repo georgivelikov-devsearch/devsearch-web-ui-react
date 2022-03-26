@@ -1,10 +1,10 @@
 import React from "react";
-import ProfileList from "../Profiles/ProfileList";
+import DeveloperList from "../Developers/DeveloperList";
 
 function Developers() {
   return (
     <main className="home">
-      <ProfileList />
+      <DeveloperList />
     </main>
   );
 }

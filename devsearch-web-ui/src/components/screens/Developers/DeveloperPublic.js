@@ -1,38 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import { getPublicUserProfile } from "../../../actions/profileActions";
+import { getPublicDeveloper } from "../../../actions/developerActions";
 
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
-function PublicProfile() {
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const publicProfile = useSelector((state) => state.publicProfile);
-  const { loading, error, profile } = publicProfile;
+function DeveloperPublic() {
+  const publicDeveloperState = useSelector((state) => state.publicDeveloper);
+  const { loading, error, developer } = publicDeveloperState;
 
   const [canSendMessage, setCanSendMessage] = useState(true);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { profilePublicId } = useParams();
 
   useEffect(() => {
-    //TODO CHECK THE LOGIN
-    if (!userInfo) {
+    if (!UserService.isLoggedIn()) {
       setCanSendMessage(false);
     }
 
-    dispatch(getPublicUserProfile());
+    dispatch(getPublicDeveloper(developer.username));
   }, []);
 
   return (
-    <main className="settingsPage profile my-md">
-      {profile && (
+    <main className="settingsPage developer my-md">
+      {developer && (
         <div className="container">
           <div className="layout">
             <div className="column column--1of3">
@@ -41,80 +35,80 @@ function PublicProfile() {
                   <img
                     className="avatar avatar--xl dev__avatar"
                     src={
-                      profile.profilePictureUrl
-                        ? profile.profilePictureUrl
+                      developer.developerPictureUrl
+                        ? developer.developerPictureUrl
                         : "../../../images/user-default.png"
                     }
                   />
                   <h2 className="dev__name">
-                    {profile.firstName} {profile.lastName}
+                    {developer.firstName} {developer.lastName}
                   </h2>
-                  <p className="dev__username">({profile.displayUsername})</p>
-                  <p className="dev__title">{profile.shortIntro}</p>
+                  <p className="dev__username">({developer.displayUsername})</p>
+                  <p className="dev__title">{developer.shortIntro}</p>
                   <p className="dev__location">
-                    {profile.locationCity && profile.locationCountry ? (
+                    {developer.locationCity && developer.locationCountry ? (
                       <span>
-                        Based in {profile.locationCity},{" "}
-                        {profile.locationCountry}
+                        Based in {developer.locationCity},{" "}
+                        {developer.locationCountry}
                       </span>
-                    ) : profile.locationCity ? (
-                      <span>Based in {profile.locationCity}</span>
-                    ) : profile.locationCountry ? (
-                      <span>Based in {profile.locationCountry}</span>
+                    ) : developer.locationCity ? (
+                      <span>Based in {developer.locationCity}</span>
+                    ) : developer.locationCountry ? (
+                      <span>Based in {developer.locationCountry}</span>
                     ) : (
                       <span></span>
                     )}
                   </p>
                   <ul className="dev__social">
-                    {profile.socialGithub && (
+                    {developer.socialGithub && (
                       <li>
                         <a
                           title="Github"
-                          href={profile.socialGithub}
+                          href={developer.socialGithub}
                           target="_blank"
                         >
                           <i className="im im-github"></i>
                         </a>
                       </li>
                     )}
-                    {profile.socialYoutube && (
+                    {developer.socialYoutube && (
                       <li>
                         <a
                           title="Youtube"
-                          href={profile.socialYoutube}
+                          href={developer.socialYoutube}
                           target="_blank"
                         >
                           <i className="im im-youtube"></i>
                         </a>
                       </li>
                     )}
-                    {profile.socialTwitter && (
+                    {developer.socialTwitter && (
                       <li>
                         <a
                           title="Twitter"
-                          href={profile.socialTwitter}
+                          href={developer.socialTwitter}
                           target="_blank"
                         >
                           <i className="im im-twitter"></i>
                         </a>
                       </li>
                     )}
-                    {profile.socialLinkedIn && (
+                    {developer.socialLinkedIn && (
                       <li>
                         <a
                           title="LinkedIn"
-                          href={profile.socialLinkedIn}
+                          href={developer.socialLinkedIn}
                           target="_blank"
                         >
                           <i className="im im-linkedin"></i>
                         </a>
                       </li>
                     )}
-                    {profile.socialWebsite && (
+                    {developer.socialWebsite && (
                       <li>
                         <a
                           title="Personal Website"
-                          href={profile.socialWebsite}
+                          href={developer.socialWebsite}
                           target="_blank"
                         >
                           <i className="im im-globe"></i>
@@ -133,7 +127,7 @@ function PublicProfile() {
             <div className="column column--2of3">
               <div className="devInfo">
                 <h3 className="devInfo__title">About Me</h3>
-                <p className="devInfo__about">{profile.about}</p>
+                <p className="devInfo__about">{developer.about}</p>
               </div>
               <div className="settings">
                 <h3 className="settings__title">Skills</h3>
@@ -346,4 +340,4 @@ function PublicProfile() {
   );
 }
 
-export default PublicProfile;
+export default DeveloperPublic;

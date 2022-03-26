@@ -3,9 +3,9 @@ import Header from "./components/screens/Home/Header";
 import Developers from "./components/screens/Home/Developers";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
-import Profile from "./components/screens/Profiles/Profile";
-import ProfileEdit from "./components/screens/Profiles/ProfileEdit";
-import PublicProfile from "./components/screens/Profiles/PublicProfile";
+import Developer from "./components/screens/Developers/Developer";
+import DeveloperEdit from "./components/screens/Developers/DeveloperEdit";
+import DeveloperPublic from "./components/screens/Developers/DeveloperPublic";
 
 function App() {
   return (
@@ -20,9 +20,12 @@ function App() {
           <Route path="/developers" element={<Developers />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
-          <Route path="/profile/:username" element={<Profile />} />
-          <Route path="/profile/:username/edit" element={<ProfileEdit />} />
-          <Route path="/profile/public/:username" element={<PublicProfile />} />
+          <Route path="/developer/:username" element={<Developer />} />
+          <Route path="/developer/:username/edit" element={<DeveloperEdit />} />
+          <Route
+            path="/developer/public/:username"
+            element={<DeveloperPublic />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -4,32 +4,36 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-import { getUserProfile } from "../../../actions/profileActions";
+import { getDeveloper } from "../../../actions/developerActions";
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
-function Profile() {
-  const userProfile = useSelector((state) => state.profile);
-  const { loading, error, profile } = userProfile;
+function Developer() {
+  const developerState = useSelector((state) => state.developer);
+  const { loading, error, developer } = developerState;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    //TODO Check if user is logged in?
+    if (!UserService.isLoggedIn()) {
+      UserService.doLogin();
+      console.log("Not logged in!");
+    }
+
     let username = UserService.getUsername();
-    dispatch(getUserProfile(username));
+    dispatch(getDeveloper(username));
   }, []);
 
   return (
-    <main className="settingsPage profile my-md">
-      {profile && (
+    <main className="settingsPage developer my-md">
+      {developer && (
         <div className="container">
           <div className="layout">
             <div className="column column--1of3">
               <div className="card text-center">
                 <div className="card__body dev">
                   <Link
-                    to="/profile/private/edit"
+                    to="/developer/private/edit"
                     className="tag tag--pill tag--main settings__btn"
                   >
                     <i className="im im-edit"></i> Edit
@@ -37,39 +41,39 @@ function Profile() {
                   <img
                     className="avatar avatar--xl dev__avatar"
                     src={
-                      profile.profilePictureUrl
-                        ? profile.profilePictureUrl
+                      developer.developerPictureUrl
+                        ? developer.developerPictureUrl
                         : "../../../images/user-default.png"
                     }
                   />
                   <h2 className="dev__name">
-                    {profile.firstName} {profile.lastName}
+                    {developer.firstName} {developer.lastName}
                   </h2>
-                  <p className="dev__username">({profile.username})</p>
-                  <p className="dev__title">{profile.shortIntro}</p>
+                  <p className="dev__username">({developer.username})</p>
+                  <p className="dev__title">{developer.shortIntro}</p>
                   <p className="dev__location">
-                    {profile.locationCity && profile.locationCountry ? (
+                    {developer.locationCity && developer.locationCountry ? (
                       <span>
-                        Based in {profile.locationCity},{" "}
-                        {profile.locationCountry}
+                        Based in {developer.locationCity},{" "}
+                        {developer.locationCountry}
                       </span>
-                    ) : profile.locationCity ? (
-                      <span>Based in {profile.locationCity}</span>
-                    ) : profile.locationCountry ? (
-                      <span>Based in {profile.locationCountry}</span>
+                    ) : developer.locationCity ? (
+                      <span>Based in {developer.locationCity}</span>
+                    ) : developer.locationCountry ? (
+                      <span>Based in {developer.locationCountry}</span>
                     ) : (
                       <span></span>
                     )}
                   </p>
                   <ul className="dev__social">
-                    {profile.socialGithub && (
+                    {developer.socialGithub && (
                       <li>
                         <a
                           title="Github"
                           href={
-                            profile.socialGithub.startsWith("https://")
-                              ? profile.socialGithub
-                              : "https://" + profile.socialGithub
+                            developer.socialGithub.startsWith("https://")
+                              ? developer.socialGithub
+                              : "https://" + developer.socialGithub
                           }
                           target="_blank"
                         >
@@ -77,14 +81,14 @@ function Profile() {
                         </a>
                       </li>
                     )}
-                    {profile.socialYoutube && (
+                    {developer.socialYoutube && (
                       <li>
                         <a
                           title="Youtube"
                           href={
-                            profile.socialYoutube.startsWith("https://")
-                              ? profile.socialYoutube
-                              : "https://" + profile.socialYoutube
+                            developer.socialYoutube.startsWith("https://")
+                              ? developer.socialYoutube
+                              : "https://" + developer.socialYoutube
                           }
                           target="_blank"
                         >
@@ -92,14 +96,14 @@ function Profile() {
                         </a>
                       </li>
                     )}
-                    {profile.socialTwitter && (
+                    {developer.socialTwitter && (
                       <li>
                         <a
                           title="Twitter"
                           href={
-                            profile.socialTwitter.startsWith("https://")
-                              ? profile.socialTwitter
-                              : "https://" + profile.socialTwitter
+                            developer.socialTwitter.startsWith("https://")
+                              ? developer.socialTwitter
+                              : "https://" + developer.socialTwitter
                           }
                           target="_blank"
                         >
@@ -107,14 +111,14 @@ function Profile() {
                         </a>
                       </li>
                     )}
-                    {profile.socialLinkedIn && (
+                    {developer.socialLinkedIn && (
                       <li>
                         <a
                           title="LinkedIn"
                           href={
-                            profile.socialLinkedIn.startsWith("https://")
-                              ? profile.socialLinkedIn
-                              : "https://" + profile.socialLinkedIn
+                            developer.socialLinkedIn.startsWith("https://")
+                              ? developer.socialLinkedIn
+                              : "https://" + developer.socialLinkedIn
                           }
                           target="_blank"
                         >
@@ -122,11 +126,11 @@ function Profile() {
                         </a>
                       </li>
                     )}
-                    {profile.socialWebsite && (
+                    {developer.socialWebsite && (
                       <li>
                         <a
                           title="Personal Website"
-                          href={profile.socialWebsite}
+                          href={developer.socialWebsite}
                           target="_blank"
                         >
                           <i className="im im-globe"></i>
@@ -140,7 +144,7 @@ function Profile() {
             <div className="column column--2of3">
               <div className="devInfo">
                 <h3 className="devInfo__title">About Me</h3>
-                <p className="devInfo__about">{profile.about}</p>
+                <p className="devInfo__about">{developer.about}</p>
               </div>
               <div className="settings">
                 <h3 className="settings__title">Skills</h3>
@@ -353,4 +357,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Developer;

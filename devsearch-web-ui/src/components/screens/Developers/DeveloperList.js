@@ -3,28 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
-  getProfileList,
-  updateSearchForPublicProfileList,
-} from "../../../actions/profileActions";
+  getDeveloperList,
+  updateSearchForPublicDeveloperList,
+} from "../../../actions/developerActions";
 
-import PublicProfileShort from "./ProfileShort";
+import PublicDeveloperShort from "./DeveloperShort";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 import Paging from "../Home/Paging";
 
-function ProfileList() {
+function DeveloperList() {
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [text, setText] = useState("");
 
-  const profileList = useSelector((state) => state.profileList);
-  const { error, profiles, totalPages } = profileList;
+  const developerList = useSelector((state) => state.developerList);
+  const { error, developers, totalPages } = developerList;
 
-  const searchProfileList = useSelector((state) => state.searchProfileList);
+  const searchDeveloperList = useSelector((state) => state.searchDeveloperList);
 
-  const { searchParameters } = searchProfileList;
+  const { searchParameters } = searchDeveloperList;
 
   //TODO fix clean search when clicking on icon
   useEffect(() => {
@@ -38,13 +38,13 @@ function ProfileList() {
 
     setText(searchText);
 
-    dispatch(getProfileList(page, searchText));
+    dispatch(getDeveloperList(page, searchText));
     window.scrollTo(0, 0);
   }, [dispatch, searchParams, searchParameters]);
 
   const submitSearch = (e) => {
     e.preventDefault();
-    dispatch(updateSearchForPublicProfileList(text));
+    dispatch(updateSearchForPublicDeveloperList(text));
     if (text == null || text.trim() === "") {
       //no search indicator needed
       navigate("/developers?page=1");
@@ -94,13 +94,13 @@ function ProfileList() {
       </section>
       <section class="devlist">
         <div class="container">
-          {profiles ? (
+          {developers ? (
             <div class="grid grid--three">
               {" "}
-              {profiles.map((profile) => (
-                <PublicProfileShort
-                  key={profile.profilePublicId}
-                  profile={profile}
+              {developers.map((developer) => (
+                <PublicDeveloperShort
+                  key={developer.developerPublicId}
+                  developer={developer}
                 />
               ))}
             </div>
@@ -129,4 +129,4 @@ function ProfileList() {
   );
 }
 
-export default ProfileList;
+export default DeveloperList;

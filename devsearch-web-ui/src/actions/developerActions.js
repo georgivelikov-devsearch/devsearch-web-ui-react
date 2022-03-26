@@ -54,7 +54,7 @@ export const getDeveloper = (username) => async (dispatch) => {
 };
 
 export const editDeveloper =
-  (newDeveloperData, username, navigate) => async (dispatch) => {
+  (newDeveloperData, username) => async (dispatch) => {
     try {
       dispatch({
         type: EDIT_DEVELOPER_REQUEST,
@@ -74,8 +74,6 @@ export const editDeveloper =
         type: EDIT_DEVELOPER_SUCCESS,
         payload: response.data,
       });
-
-      navigate("/developer/" + username);
     } catch (error) {
       let errorRes = getErrorResponse(error, "Developers");
       dispatch({
