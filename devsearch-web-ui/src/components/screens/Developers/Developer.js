@@ -33,7 +33,7 @@ function Developer() {
               <div className="card text-center">
                 <div className="card__body dev">
                   <Link
-                    to="/developer/private/edit"
+                    to={`/developers/${UserService.getUsername()}/edit`}
                     className="tag tag--pill tag--main settings__btn"
                   >
                     <i className="im im-edit"></i> Edit

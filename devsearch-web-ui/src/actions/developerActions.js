@@ -16,6 +16,7 @@ import {
   DEVELOPER_LIST_SUCCESS,
   DEVELOPER_LIST_FAIL,
   UPDATE_SEARCH_FOR_DEVELOPER_LIST,
+  NAVIGATE_AFTER_EDIT,
 } from "../constants/developerConstants";
 
 import {
@@ -54,7 +55,7 @@ export const getDeveloper = (username) => async (dispatch) => {
 };
 
 export const editDeveloper =
-  (newDeveloperData, username) => async (dispatch) => {
+  (newDeveloperData, username, navigate) => async (dispatch) => {
     try {
       dispatch({
         type: EDIT_DEVELOPER_REQUEST,
@@ -74,6 +75,8 @@ export const editDeveloper =
         type: EDIT_DEVELOPER_SUCCESS,
         payload: response.data,
       });
+
+      navigate(NAVIGATE_AFTER_EDIT(username));
     } catch (error) {
       let errorRes = getErrorResponse(error, "Developers");
       dispatch({
@@ -128,6 +131,7 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
 
     const response = await axios.get(DEVELOPER_LIST_URL, config);
 
+    console.log(response.data);
     dispatch({
       type: DEVELOPER_LIST_SUCCESS,
       payload: response.data,

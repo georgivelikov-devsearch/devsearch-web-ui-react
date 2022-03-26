@@ -20,10 +20,13 @@ function App() {
           <Route path="/developers" element={<Developers />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
-          <Route path="/developer/:username" element={<Developer />} />
-          <Route path="/developer/:username/edit" element={<DeveloperEdit />} />
+          <Route path="/developers/:username" element={<Developer />} />
           <Route
-            path="/developer/public/:username"
+            path="/developers/:username/edit"
+            element={<DeveloperEdit />}
+          />
+          <Route
+            path="/developers/public/:username"
             element={<DeveloperPublic />}
           />
         </Routes>

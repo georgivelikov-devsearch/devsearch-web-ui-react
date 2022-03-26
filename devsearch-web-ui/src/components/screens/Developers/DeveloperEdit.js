@@ -13,6 +13,8 @@ import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
+
 function DeveloperEdit() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -97,7 +99,7 @@ function DeveloperEdit() {
   }, [dispatch, navigate, developer]);
 
   const goBack = () => {
-    navigate("/developer/" + developer.username);
+    navigate("/developers/" + developer.username);
   };
 
   const uploadDeveloperImage = async (e) => {
@@ -144,9 +146,7 @@ function DeveloperEdit() {
       newDeveloperPictureUpload,
     };
 
-    dispatch(editDeveloper(newData, username)).then(
-      navigate("/developer/" + username)
-    );
+    dispatch(editDeveloper(newData, username, navigate));
   };
 
   const validateFields = () => {

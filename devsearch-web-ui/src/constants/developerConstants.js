@@ -17,6 +17,10 @@ export const DEVELOPER_LIST_FAIL = "DEVELOPER_LIST_FAIL";
 export const UPDATE_SEARCH_FOR_DEVELOPER_LIST =
   "UPDATE_SEARCH_FOR_PUBLIC_DEVELOPER_LIST";
 
+export const NAVIGATE_AFTER_EDIT = (username) => {
+  return `/developers/${username}`;
+};
+
 const NO_MIN_LENGTH = 0;
 
 const FIRSTNAME_MIN_LENGTH = 1;
