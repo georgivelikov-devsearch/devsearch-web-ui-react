@@ -1,34 +1,33 @@
 import axios from "axios";
-import HttpService from "../services/http/axios/AxiosHttpService";
 import UserService from "../services/identity/keycloak/keycloakUserService";
 import { getErrorResponse } from "../utils/utils";
 
 import {
-  PROFILE_REQUEST,
-  PROFILE_SUCCESS,
-  PROFILE_FAIL,
-  EDIT_PROFILE_REQUEST,
-  EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAIL,
-  PUBLIC_PROFILE_REQUEST,
-  PUBLIC_PROFILE_SUCCESS,
-  PUBLIC_PROFILE_FAIL,
-  PROFILE_LIST_REQUEST,
-  PROFILE_LIST_SUCCESS,
-  PROFILE_LIST_FAIL,
-  UPDATE_SEARCH_FOR_PROFILE_LIST,
-} from "../constants/profileConstants";
+  DEVELOPER_REQUEST,
+  DEVELOPER_SUCCESS,
+  DEVELOPER_FAIL,
+  EDIT_DEVELOPER_REQUEST,
+  EDIT_DEVELOPER_SUCCESS,
+  EDIT_DEVELOPER_FAIL,
+  PUBLIC_DEVELOPER_REQUEST,
+  PUBLIC_DEVELOPER_SUCCESS,
+  PUBLIC_DEVELOPER_FAIL,
+  DEVELOPER_LIST_REQUEST,
+  DEVELOPER_LIST_SUCCESS,
+  DEVELOPER_LIST_FAIL,
+  UPDATE_SEARCH_FOR_DEVELOPER_LIST,
+} from "../constants/developerConstants";
 
 import {
-  PROFILE_URL,
-  PUBLIC_PROFILE_URL,
-  PROFILE_LIST_URL,
+  DEVELOPER_URL,
+  PUBLIC_DEVELOPER_URL,
+  DEVELOPER_LIST_URL,
 } from "../constants/urlConstants";
 
-export const getUserProfile = (username) => async (dispatch) => {
+export const getDeveloper = (username) => async (dispatch) => {
   try {
     dispatch({
-      type: PROFILE_REQUEST,
+      type: DEVELOPER_REQUEST,
     });
 
     const config = {
@@ -38,27 +37,27 @@ export const getUserProfile = (username) => async (dispatch) => {
       },
     };
 
-    const url = PROFILE_URL(username);
+    const url = DEVELOPER_URL(username);
     const response = await axios.get(url, config);
 
     dispatch({
-      type: PROFILE_SUCCESS,
+      type: DEVELOPER_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    let errorRes = getErrorResponse(error, "Profile");
+    let errorRes = getErrorResponse(error, "Developers");
     dispatch({
-      type: PROFILE_FAIL,
+      type: DEVELOPER_FAIL,
       payload: errorRes,
     });
   }
 };
 
-export const editUserProfile =
-  (newProfileData, username, navigate) => async (dispatch) => {
+export const editDeveloper =
+  (newDeveloperData, username, navigate) => async (dispatch) => {
     try {
       dispatch({
-        type: EDIT_PROFILE_REQUEST,
+        type: EDIT_DEVELOPER_REQUEST,
       });
 
       const config = {
@@ -68,29 +67,28 @@ export const editUserProfile =
         },
       };
 
-      const url = PROFILE_URL(username);
-      console.log(url);
-      const response = await axios.put(url, newProfileData, config);
+      const url = DEVELOPER_URL(username);
+      const response = await axios.put(url, newDeveloperData, config);
 
       dispatch({
-        type: EDIT_PROFILE_SUCCESS,
+        type: EDIT_DEVELOPER_SUCCESS,
         payload: response.data,
       });
 
-      navigate("/profile/" + username);
+      navigate("/developer/" + username);
     } catch (error) {
-      let errorRes = getErrorResponse(error, "Profile");
+      let errorRes = getErrorResponse(error, "Developers");
       dispatch({
-        type: EDIT_PROFILE_FAIL,
+        type: EDIT_DEVELOPER_FAIL,
         payload: errorRes,
       });
     }
   };
 
-export const getPublicUserProfile = (username) => async (dispatch) => {
+export const getPublicDeveloper = (username) => async (dispatch) => {
   /* try {
     dispatch({
-      type: PUBLIC_PROFILE_REQUEST,
+      type: PUBLIC_DEVELOPER_REQUEST,
     });
 
     const config = {
@@ -99,25 +97,25 @@ export const getPublicUserProfile = (username) => async (dispatch) => {
       },
     };
 
-    const response = await axios.get(PUBLIC_PROFILE_URL(username), config);
+    const response = await axios.get(PUBLIC_DEVELOPER_URL(username), config);
 
     dispatch({
-      type: PUBLIC_PROFILE_SUCCESS,
+      type: PUBLIC_DEVELOPER_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    let errorRes = getErrorResponse(error, "Profile");
+    let errorRes = getErrorResponse(error, "DEVELOPER");
     dispatch({
-      type: PUBLIC_PROFILE_FAIL,
+      type: PUBLIC_DEVELOPER_FAIL,
       payload: errorRes,
     });
   } */
 };
 
-export const getProfileList = (page, searchText) => async (dispatch) => {
+export const getDeveloperList = (page, searchText) => async (dispatch) => {
   try {
     dispatch({
-      type: PROFILE_LIST_REQUEST,
+      type: DEVELOPER_LIST_REQUEST,
     });
 
     const config = {
@@ -130,25 +128,25 @@ export const getProfileList = (page, searchText) => async (dispatch) => {
       },
     };
 
-    const response = await axios.get(PROFILE_LIST_URL, config);
+    const response = await axios.get(DEVELOPER_LIST_URL, config);
 
     dispatch({
-      type: PROFILE_LIST_SUCCESS,
+      type: DEVELOPER_LIST_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    let errorRes = getErrorResponse(error, "Profile");
+    let errorRes = getErrorResponse(error, "Developers");
     dispatch({
-      type: PROFILE_LIST_FAIL,
+      type: DEVELOPER_LIST_FAIL,
       payload: errorRes,
     });
   }
 };
 
-export const updateSearchForPublicProfileList =
+export const updateSearchForPublicDeveloperList =
   (searchText) => async (dispatch) => {
     dispatch({
-      type: UPDATE_SEARCH_FOR_PROFILE_LIST,
+      type: UPDATE_SEARCH_FOR_DEVELOPER_LIST,
       payload: { searchText },
     });
   };

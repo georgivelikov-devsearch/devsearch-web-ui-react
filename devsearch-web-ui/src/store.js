@@ -3,19 +3,19 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import {
-  profileReducer,
-  editProfileReducer,
-  publicProfileReducer,
-  profileListReducer,
-  searchProfileListReducer,
-} from "./reducers/profileReducers";
+  developerReducer,
+  editDeveloperReducer,
+  publicDeveloperReducer,
+  developerListReducer,
+  searchDeveloperListReducer,
+} from "./reducers/developerReducers";
 
 const reducer = combineReducers({
-  profile: profileReducer,
-  editProfile: editProfileReducer,
-  publicProfile: publicProfileReducer,
-  profileList: profileListReducer,
-  searchProfileList: searchProfileListReducer,
+  developer: developerReducer,
+  editDeveloper: editDeveloperReducer,
+  publicDeveloper: publicDeveloperReducer,
+  developerList: developerListReducer,
+  searchDeveloperList: searchDeveloperListReducer,
 });
 
 const initialState = {};
