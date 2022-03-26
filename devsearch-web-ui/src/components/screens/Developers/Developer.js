@@ -1,28 +1,9 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-import { getDeveloper } from "../../../actions/developerActions";
-import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
-function Developer() {
-  const developerState = useSelector((state) => state.developer);
-  const { loading, error, developer } = developerState;
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (UserService.isLoggedIn()) {
-      let username = UserService.getUsername();
-      dispatch(getDeveloper(username));
-    } else {
-      UserService.doLogin();
-    }
-  }, []);
-
+function Developer({ loading, error, developer, canSendMessage, canEdit }) {
   return (
     <main className="settingsPage developer my-md">
       {developer && (
@@ -31,12 +12,14 @@ function Developer() {
             <div className="column column--1of3">
               <div className="card text-center">
                 <div className="card__body dev">
-                  <Link
-                    to={`/developers/${UserService.getUsername()}/edit`}
-                    className="tag tag--pill tag--main settings__btn"
-                  >
-                    <i className="im im-edit"></i> Edit
-                  </Link>
+                  {canEdit && (
+                    <Link
+                      to={`/developers/${developer.username}/edit`}
+                      className="tag tag--pill tag--main settings__btn"
+                    >
+                      <i className="im im-edit"></i> Edit
+                    </Link>
+                  )}
                   <img
                     className="avatar avatar--xl dev__avatar"
                     src={
@@ -137,6 +120,11 @@ function Developer() {
                       </li>
                     )}
                   </ul>
+                  {canSendMessage && (
+                    <a href="#" className="btn btn--sub btn--lg">
+                      Send Message
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

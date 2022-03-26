@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
-
-import {
-  getDeveloperList,
-  updateSearchForPublicDeveloperList,
-} from "../../../actions/developerActions";
+import React from "react";
 
 import PublicDeveloperShort from "./DeveloperShort";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
-import Paging from "../Home/Paging";
 
 function DeveloperList({ developers, error }) {
   return (

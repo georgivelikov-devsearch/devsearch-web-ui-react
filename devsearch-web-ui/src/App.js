@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/screens/Home/Header";
-import Developers from "./components/screens/Home/Developers";
+import Header from "./components/common/Header";
+import Developers from "./components/screens/Developers/Developers";
 import Projects from "./components/screens/Projects";
 import Inbox from "./components/screens/Inbox";
-import Developer from "./components/screens/Developers/Developer";
+import DeveloperPrivate from "./components/screens/Developers/DeveloperPrivate";
 import DeveloperEdit from "./components/screens/Developers/DeveloperEdit";
 import DeveloperPublic from "./components/screens/Developers/DeveloperPublic";
 
@@ -20,7 +20,7 @@ function App() {
           <Route path="/developers" element={<Developers />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
-          <Route path="/developers/:username" element={<Developer />} />
+          <Route path="/developers/:username" element={<DeveloperPrivate />} />
           <Route
             path="/developers/:username/edit"
             element={<DeveloperEdit />}

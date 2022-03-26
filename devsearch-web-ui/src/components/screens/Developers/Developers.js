@@ -7,8 +7,8 @@ import {
   updateSearchForPublicDeveloperList,
 } from "../../../actions/developerActions";
 
-import DeveloperList from "../Developers/DeveloperList";
-import Paging from "../Home/Paging";
+import DeveloperList from "./DeveloperList";
+import Paging from "../../common/Paging";
 
 function Developers() {
   const [searchParams] = useSearchParams();
