@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
+import Skills from "./Skills";
 
 function Developer({ loading, error, developer, canSendMessage, canEdit }) {
   return (
@@ -133,93 +134,7 @@ function Developer({ loading, error, developer, canSendMessage, canEdit }) {
                 <h3 className="devInfo__title">About Me</h3>
                 <p className="devInfo__about">{developer.about}</p>
               </div>
-              <div className="settings">
-                <h3 className="settings__title">Skills</h3>
-                <a
-                  className="tag tag--pill tag--sub settings__btn tag--lg"
-                  href="#"
-                >
-                  <i className="im im-plus"></i> Add Skill
-                </a>
-              </div>
-
-              <table className="settings__table">
-                <tr>
-                  <td className="settings__tableInfo">
-                    <h4>JavaScript</h4>
-                    <p>
-                      Consectetur adipisicing elit. Natus nam dolore aut sed
-                      vitae eos architecto unde tempore exercitationem
-                      fugiat?...
-                    </p>
-                  </td>
-                  <td className="settings__tableActions">
-                    <a
-                      className="tag tag--pill tag--main settings__btn"
-                      href="#"
-                    >
-                      <i className="im im-edit"></i> Edit
-                    </a>
-                    <a
-                      className="tag tag--pill tag--main settings__btn"
-                      href="#"
-                    >
-                      <i className="im im-x-mark-circle-o"></i>
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="settings__tableInfo">
-                    <h4>Python</h4>
-                    <p>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Est, suscipit...
-                    </p>
-                  </td>
-                  <td className="settings__tableActions">
-                    <a
-                      className="tag tag--pill tag--main settings__btn"
-                      href="#"
-                    >
-                      <i className="im im-edit"></i> Edit
-                    </a>
-                    <a
-                      className="tag tag--pill tag--main settings__btn"
-                      href="#"
-                    >
-                      <i className="im im-x-mark-circle-o"></i>
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="settings__tableInfo">
-                    <h4>Django</h4>
-                    <p>
-                      Amet consectetur adipisicing elit. Lorem ipsum dolor sit
-                      amet consectetur adipisicing elit. Quod, odio Est,
-                      suscipit...
-                    </p>
-                  </td>
-                  <td className="settings__tableActions">
-                    <a
-                      className="tag tag--pill tag--main settings__btn"
-                      href="#"
-                    >
-                      <i className="im im-edit"></i> Edit
-                    </a>
-                    <a
-                      className="tag tag--pill tag--main settings__btn"
-                      href="#"
-                    >
-                      <i className="im im-x-mark-circle-o"></i>
-                      Delete
-                    </a>
-                  </td>
-                </tr>
-              </table>
-
+              <Skills developer={developer} canEdit={canEdit} />
               <div className="settings">
                 <h3 className="settings__title">Projects</h3>
                 <a

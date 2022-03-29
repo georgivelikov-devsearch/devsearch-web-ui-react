@@ -111,7 +111,7 @@ function DeveloperEdit() {
     setDeveloperPictureBase64(base64Picture);
   };
 
-  const submitHanlder = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
 
     // Clear all previous values for validation
@@ -347,7 +347,7 @@ function DeveloperEdit() {
           <form
             action="#"
             className="form devedit__form"
-            onSubmit={submitHanlder}
+            onSubmit={submitHandler}
           >
             <div className="form__field">
               <label htmlFor="formInput#image">
