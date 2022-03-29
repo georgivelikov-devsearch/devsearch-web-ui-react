@@ -98,62 +98,25 @@ function Skills({ developer, canEdit }) {
         </form>
       )}
       <table className="settings__table">
-        <tr>
-          <td className="settings__tableInfo">
-            <h4>JavaScript</h4>
-            <p>
-              Consectetur adipisicing elit. Natus nam dolore aut sed vitae eos
-              architecto unde tempore exercitationem fugiat?...
-            </p>
-          </td>
-          {canEdit && (
-            <td className="settings__tableActions">
-              <a className="tag tag--pill tag--main settings__btn" href="#">
-                <i className="im im-edit"></i> Edit
-              </a>
-              <a className="tag tag--pill tag--main settings__btn" href="#">
-                <i className="im im-x-mark-circle-o"></i>
-                Delete
-              </a>
+        {developer.skillDescriptions.map((skillDescription, index) => (
+          <tr>
+            <td className="settings__tableInfo">
+              <h4>{skillDescription.skill.skillName}</h4>
+              <p>{skillDescription.description}</p>
             </td>
-          )}
-        </tr>
-        <tr>
-          <td className="settings__tableInfo">
-            <h4>Python</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Est,
-              suscipit...
-            </p>
-          </td>
-          <td className="settings__tableActions">
-            <a className="tag tag--pill tag--main settings__btn" href="#">
-              <i className="im im-edit"></i> Edit
-            </a>
-            <a className="tag tag--pill tag--main settings__btn" href="#">
-              <i className="im im-x-mark-circle-o"></i>
-              Delete
-            </a>
-          </td>
-        </tr>
-        <tr>
-          <td className="settings__tableInfo">
-            <h4>Django</h4>
-            <p>
-              Amet consectetur adipisicing elit. Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Quod, odio Est, suscipit...
-            </p>
-          </td>
-          <td className="settings__tableActions">
-            <a className="tag tag--pill tag--main settings__btn" href="#">
-              <i className="im im-edit"></i> Edit
-            </a>
-            <a className="tag tag--pill tag--main settings__btn" href="#">
-              <i className="im im-x-mark-circle-o"></i>
-              Delete
-            </a>
-          </td>
-        </tr>
+            {canEdit && (
+              <td className="settings__tableActions">
+                <div className="tag tag--pill tag--main settings__btn">
+                  <i className="im im-edit"></i> Edit
+                </div>
+                <div className="tag tag--pill tag--main settings__btn">
+                  <i className="im im-x-mark-circle-o"></i>
+                  Delete
+                </div>
+              </td>
+            )}
+          </tr>
+        ))}
       </table>
     </div>
   );
