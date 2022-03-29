@@ -1,23 +1,32 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import Message from "../../common/Message";
 function Skills({ developer, canEdit }) {
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
   const [skillName, setSkillName] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
+  const [validSkillName, setValidSkillName] = useState(true);
+  const [validSkillNameErrMessage, setValidSkillNameErrMessage] = useState("");
 
   const toggleSkillPanel = () => {
     setSkillName("");
     setSkillDescription("");
     setIsSkillPanelOpen(!isSkillPanelOpen);
+    setValidSkillName(true);
+    setValidSkillNameErrMessage("");
   };
 
   const submitSkillHandler = (e) => {
     e.preventDefault();
-    console.log(developer);
-    let message = `Dev: ${developer.developerId} Skill: ${skillName} Descr: ${skillDescription}`;
-    alert(message);
-    //Validate for skill name
+    console.log(skillName);
+    if (skillName == null || skillName.trim() === "") {
+      setValidSkillName(false);
+      setValidSkillNameErrMessage("Please enter Skill Name");
+      return;
+    }
+
+    // submit to back end
+    // setIsSkillPanelOpen(false);
   };
   return (
     <div>
@@ -52,6 +61,13 @@ function Skills({ developer, canEdit }) {
               onChange={(e) => setSkillName(e.target.value)}
             />
           </div>
+          {!validSkillName && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={validSkillNameErrMessage}
+            />
+          )}
           <div className="skill__form__field">
             <label className="skill__form__label" htmlFor="formInput#textarea">
               Description:{" "}
