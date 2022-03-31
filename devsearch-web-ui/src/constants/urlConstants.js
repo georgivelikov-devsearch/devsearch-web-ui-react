@@ -13,3 +13,5 @@ export const PUBLIC_DEVELOPER_URL = (username) => {
 };
 
 export const DEVELOPER_LIST_URL = `${URL}/developers/public/all`;
+
+export const SKILL_URL = `${URL}/skills`;

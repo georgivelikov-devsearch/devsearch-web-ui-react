@@ -1,12 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+
 import Message from "../../common/Message";
+
+import { createSkill } from "../../../actions/skillActions";
+
 function Skills({ developer, canEdit }) {
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
   const [skillName, setSkillName] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
   const [validSkillName, setValidSkillName] = useState(true);
   const [validSkillNameErrMessage, setValidSkillNameErrMessage] = useState("");
+
+  const dispatch = useDispatch();
 
   const toggleSkillPanel = () => {
     setSkillName("");
@@ -25,7 +32,16 @@ function Skills({ developer, canEdit }) {
       return;
     }
 
+    const newSkillData = {
+      developerId: developer.developerId,
+      description: skillDescription,
+      skill: {
+        skillName: skillName,
+      },
+    };
+
     // submit to back end
+    dispatch(createSkill(newSkillData, developer));
     // setIsSkillPanelOpen(false);
   };
   return (

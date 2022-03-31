@@ -14,6 +14,12 @@ import {
   UPDATE_SEARCH_FOR_DEVELOPER_LIST,
 } from "../constants/developerConstants";
 
+import {
+  SKILL_REQUEST,
+  SKILL_SUCCESS,
+  SKILL_FAIL,
+} from "../constants/skillConstants";
+
 export const developerReducer = (state = {}, action) => {
   switch (action.type) {
     case DEVELOPER_REQUEST:
@@ -21,6 +27,16 @@ export const developerReducer = (state = {}, action) => {
     case DEVELOPER_SUCCESS:
       return { loading: false, developer: action.payload };
     case DEVELOPER_FAIL:
+      return { loading: false, error: action.payload };
+    case SKILL_REQUEST:
+      return { loading: true };
+    case SKILL_SUCCESS:
+      const { developer, newSkill } = action.payload;
+      console.log(newSkill);
+      console.log(developer);
+      developer.skillDescriptions.push(newSkill);
+      return { loading: false, developer: developer };
+    case SKILL_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;
