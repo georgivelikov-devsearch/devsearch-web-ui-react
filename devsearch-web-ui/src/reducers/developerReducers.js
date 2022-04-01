@@ -18,6 +18,12 @@ import {
   SKILL_REQUEST,
   SKILL_SUCCESS,
   SKILL_FAIL,
+  SKILL_EDIT_REQUEST,
+  SKILL_EDIT_SUCCESS,
+  SKILL_EDIT_FAIL,
+  SKILL_DELETE_REQUEST,
+  SKILL_DELETE_SUCCESS,
+  SKILL_DELET_FAIL,
 } from "../constants/skillConstants";
 
 export const developerReducer = (state = {}, action) => {
@@ -32,11 +38,27 @@ export const developerReducer = (state = {}, action) => {
       return { loading: true };
     case SKILL_SUCCESS:
       const { developer, newSkill } = action.payload;
-      console.log(newSkill);
-      console.log(developer);
       developer.skillDescriptions.push(newSkill);
       return { loading: false, developer: developer };
     case SKILL_FAIL:
+      return { loading: false, error: action.payload };
+    case SKILL_EDIT_REQUEST:
+      return { loading: true };
+    case SKILL_EDIT_SUCCESS:
+      console.log(action.payload);
+      const { editedDeveloper, editedSkill } = action.payload;
+      for (var i = 0; i < editedDeveloper.skillDescriptions.length; i++) {
+        if (
+          editedDeveloper.skillDescriptions[i].skillDescriptionId ===
+          editedSkill.skillDescriptionId
+        ) {
+          editedDeveloper.skillDescriptions[i] = editedSkill;
+          break;
+        }
+      }
+
+      return { loading: false, developer: editedDeveloper };
+    case SKILL_EDIT_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

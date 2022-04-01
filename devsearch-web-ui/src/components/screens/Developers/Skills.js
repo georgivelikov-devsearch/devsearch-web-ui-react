@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import Message from "../../common/Message";
 
-import { createSkill } from "../../../actions/skillActions";
+import { createSkill, editSkill } from "../../../actions/skillActions";
 
 function Skills({ developer, canEdit }) {
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
@@ -12,8 +12,14 @@ function Skills({ developer, canEdit }) {
   const [skillDescription, setSkillDescription] = useState("");
   const [validSkillName, setValidSkillName] = useState(true);
   const [validSkillNameErrMessage, setValidSkillNameErrMessage] = useState("");
+  const [isSkillEditPanelOpen, setIsSkillEditPanelOpen] = useState(false);
+  const [editedSkillDescriptionId, setEditedSkillDescriptionId] = useState("");
+  const [editedSkillName, setEditedSkillName] = useState("");
+  const [editedSkillDescription, setEditedSkillDescription] = useState("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {}, [setEditedSkillName]);
 
   const toggleSkillPanel = () => {
     setSkillName("");
@@ -21,11 +27,38 @@ function Skills({ developer, canEdit }) {
     setIsSkillPanelOpen(!isSkillPanelOpen);
     setValidSkillName(true);
     setValidSkillNameErrMessage("");
+
+    //close Edit panel if needed
+    setIsSkillEditPanelOpen(false);
+    setEditedSkillDescriptionId("");
+    setEditedSkillName("");
+    setEditedSkillDescription("");
   };
 
-  const submitSkillHandler = (e) => {
+  const toggleSkillEditPanel = (skillDescription) => {
+    //close Add panel if needed
+    setSkillName("");
+    setSkillDescription("");
+    setIsSkillPanelOpen(false);
+    setValidSkillName(true);
+    setValidSkillNameErrMessage("");
+
+    if (skillDescription.skillDescriptionId === editedSkillDescriptionId) {
+      setIsSkillEditPanelOpen(false);
+      setEditedSkillDescriptionId("");
+      setEditedSkillName("");
+      setEditedSkillDescription("");
+    } else {
+      setEditedSkillDescriptionId(skillDescription.skillDescriptionId);
+      setEditedSkillName(skillDescription.skill.skillName);
+      setEditedSkillDescription(skillDescription.description);
+      setIsSkillEditPanelOpen(true);
+      console.log(editedSkillDescriptionId);
+    }
+  };
+
+  const createSkillHandler = (e) => {
     e.preventDefault();
-    console.log(skillName);
     if (skillName == null || skillName.trim() === "") {
       setValidSkillName(false);
       setValidSkillNameErrMessage("Please enter Skill Name");
@@ -44,6 +77,25 @@ function Skills({ developer, canEdit }) {
     dispatch(createSkill(newSkillData, developer));
     // setIsSkillPanelOpen(false);
   };
+
+  const editSkillHandler = (e) => {
+    e.preventDefault();
+    console.log(editedSkillDescriptionId);
+    const editedSkillData = {
+      skillDescriptionId: editedSkillDescriptionId,
+      developerId: developer.developerId,
+      description: editedSkillDescription,
+      skill: {
+        skillName: editedSkillName,
+      },
+    };
+
+    console.log(editedSkillData);
+    // submit to back end
+    dispatch(editSkill(editedSkillData, developer));
+    // setIsSkillPanelOpen(false);
+  };
+
   return (
     <div>
       <div className="settings">
@@ -61,7 +113,7 @@ function Skills({ developer, canEdit }) {
         <form
           action="#"
           className="form devedit__form"
-          onSubmit={submitSkillHandler}
+          onSubmit={createSkillHandler}
         >
           <div className="skill__form__field">
             <label className="skill__form__label" htmlFor="formInput#text">
@@ -113,16 +165,68 @@ function Skills({ developer, canEdit }) {
           </div>
         </form>
       )}
+      {isSkillEditPanelOpen && (
+        <form
+          action="#"
+          className="form devedit__form"
+          onSubmit={editSkillHandler}
+        >
+          <div className="skill__form__field">
+            <label className="skill__form__label" htmlFor="formInput#text">
+              Skill:{" "}
+            </label>
+            <input
+              className="input input--text skill__form__input"
+              id="formInput#text"
+              type="text"
+              name="text"
+              placeholder="Skill"
+              value={editedSkillName}
+              disabled
+            />
+          </div>
+          <div className="skill__form__field">
+            <label className="skill__form__label" htmlFor="formInput#textarea">
+              Description:{" "}
+            </label>
+            <textarea
+              className="input input--textarea skill__form__input"
+              id="formInput#textarea"
+              type="textarea"
+              name="text"
+              placeholder="Skill Description"
+              defaultValue={editedSkillDescription}
+              onChange={(e) => setEditedSkillDescription(e.target.value)}
+            />
+          </div>
+          <div className="skill__form__buttons">
+            <input
+              className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
+              type="submit"
+              value="Save"
+            />
+            <input
+              className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
+              type="button"
+              value="Cancel"
+              onClick={toggleSkillEditPanel}
+            />
+          </div>
+        </form>
+      )}
       <table className="settings__table">
         {developer.skillDescriptions.map((skillDescription, index) => (
-          <tr>
+          <tr key={skillDescription.skillDescriptionId}>
             <td className="settings__tableInfo">
               <h4>{skillDescription.skill.skillName}</h4>
               <p>{skillDescription.description}</p>
             </td>
             {canEdit && (
               <td className="settings__tableActions">
-                <div className="tag tag--pill tag--main settings__btn">
+                <div
+                  className="tag tag--pill tag--main settings__btn"
+                  onClick={() => toggleSkillEditPanel(skillDescription)}
+                >
                   <i className="im im-edit"></i> Edit
                 </div>
                 <div className="tag tag--pill tag--main settings__btn">
