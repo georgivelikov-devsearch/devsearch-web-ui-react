@@ -23,7 +23,7 @@ import {
   SKILL_EDIT_FAIL,
   SKILL_DELETE_REQUEST,
   SKILL_DELETE_SUCCESS,
-  SKILL_DELET_FAIL,
+  SKILL_DELETE_FAIL,
 } from "../constants/skillConstants";
 
 export const developerReducer = (state = {}, action) => {
@@ -45,7 +45,6 @@ export const developerReducer = (state = {}, action) => {
     case SKILL_EDIT_REQUEST:
       return { loading: true };
     case SKILL_EDIT_SUCCESS:
-      console.log(action.payload);
       const { editedDeveloper, editedSkill } = action.payload;
       for (var i = 0; i < editedDeveloper.skillDescriptions.length; i++) {
         if (
@@ -59,6 +58,24 @@ export const developerReducer = (state = {}, action) => {
 
       return { loading: false, developer: editedDeveloper };
     case SKILL_EDIT_FAIL:
+      return { loading: false, error: action.payload };
+    case SKILL_DELETE_REQUEST:
+      return { loading: true };
+    case SKILL_DELETE_SUCCESS:
+      const { modifiedDeveloper, deletedSkillDescriptionId } = action.payload;
+      let searchIndex = -1;
+      for (var j = 0; j < modifiedDeveloper.skillDescriptions.length; j++) {
+        if (
+          modifiedDeveloper.skillDescriptions[j].skillDescriptionId ===
+          deletedSkillDescriptionId
+        ) {
+          searchIndex = j;
+          break;
+        }
+      }
+      modifiedDeveloper.skillDescriptions.splice(searchIndex, 1);
+      return { loading: false, developer: modifiedDeveloper };
+    case SKILL_DELETE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

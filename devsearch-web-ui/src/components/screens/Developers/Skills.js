@@ -4,7 +4,11 @@ import { useDispatch } from "react-redux";
 
 import Message from "../../common/Message";
 
-import { createSkill, editSkill } from "../../../actions/skillActions";
+import {
+  createSkill,
+  editSkill,
+  deleteSkill,
+} from "../../../actions/skillActions";
 
 function Skills({ developer, canEdit }) {
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
@@ -80,7 +84,6 @@ function Skills({ developer, canEdit }) {
 
   const editSkillHandler = (e) => {
     e.preventDefault();
-    console.log(editedSkillDescriptionId);
     const editedSkillData = {
       skillDescriptionId: editedSkillDescriptionId,
       developerId: developer.developerId,
@@ -94,6 +97,11 @@ function Skills({ developer, canEdit }) {
     // submit to back end
     dispatch(editSkill(editedSkillData, developer));
     // setIsSkillPanelOpen(false);
+  };
+
+  const deleteSkillHandler = (skillDescription) => {
+    console.log(skillDescription);
+    dispatch(deleteSkill(skillDescription, developer));
   };
 
   return (
@@ -229,7 +237,10 @@ function Skills({ developer, canEdit }) {
                 >
                   <i className="im im-edit"></i> Edit
                 </div>
-                <div className="tag tag--pill tag--main settings__btn">
+                <div
+                  className="tag tag--pill tag--main settings__btn"
+                  onClick={() => deleteSkillHandler(skillDescription)}
+                >
                   <i className="im im-x-mark-circle-o"></i>
                   Delete
                 </div>
