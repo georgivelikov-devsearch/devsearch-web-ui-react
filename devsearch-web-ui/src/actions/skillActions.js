@@ -74,32 +74,36 @@ export const editSkill = (editSkillData, developer) => async (dispatch) => {
   }
 };
 
-export const deleteSkill = (deleteSkillData, developer) => async (dispatch) => {
-  try {
-    dispatch({
-      type: SKILL_DELETE_REQUEST,
-    });
+export const deleteSkill =
+  (skillDescriptionId, developer) => async (dispatch) => {
+    try {
+      dispatch({
+        type: SKILL_DELETE_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${UserService.getToken()}`,
-      },
-    };
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${UserService.getToken()}`,
+        },
+      };
 
-    const url = DELETE_SKILL_URL(deleteSkillData.skillDescriptionId);
-    const response = await axios.delete(url, config);
-    const deletedSkillDescriptionId = deleteSkillData.skillDescriptionId;
-    dispatch({
-      type: SKILL_DELETE_SUCCESS,
-      payload: { modifiedDeveloper: developer, deletedSkillDescriptionId },
-    });
-  } catch (error) {
-    // Skills are part of developer service
-    let errorRes = getErrorResponse(error, "Developers");
-    dispatch({
-      type: SKILL_DELETE_FAIL,
-      payload: errorRes,
-    });
-  }
-};
+      const deleteUrl = DELETE_SKILL_URL(
+        UserService.getUsername(),
+        skillDescriptionId
+      );
+      const response = await axios.delete(deleteUrl, config);
+      const deletedSkillDescriptionId = skillDescriptionId;
+      dispatch({
+        type: SKILL_DELETE_SUCCESS,
+        payload: { modifiedDeveloper: developer, deletedSkillDescriptionId },
+      });
+    } catch (error) {
+      // Skills are part of developer service
+      let errorRes = getErrorResponse(error, "Developers");
+      dispatch({
+        type: SKILL_DELETE_FAIL,
+        payload: errorRes,
+      });
+    }
+  };

@@ -26,6 +26,8 @@ function Skills({ developer, canEdit }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    developer.skillDescriptions.sort((a, b) => a.position - b.position);
+    console.log(developer.skillDescriptions);
     let devTopSkills = developer.skillDescriptions.slice(0, 3);
     setTopSkills(devTopSkills);
   }, [developer]);
@@ -102,8 +104,8 @@ function Skills({ developer, canEdit }) {
     dispatch(editSkill(editedSkillData, developer));
   };
 
-  const deleteSkillHandler = (skillDescription) => {
-    dispatch(deleteSkill(skillDescription, developer));
+  const deleteSkillHandler = (skillDescriptionId) => {
+    dispatch(deleteSkill(skillDescriptionId, developer));
   };
 
   return (
@@ -181,7 +183,7 @@ function Skills({ developer, canEdit }) {
             className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
             onClick={() => toggleSkillEditPanel(skillDescription)}
           >
-            {skillDescription.skill.skillName}
+            {skillDescription.skill.skillName}{" "}
           </div>
         ))}
       </div>
@@ -225,12 +227,20 @@ function Skills({ developer, canEdit }) {
               type="submit"
               value="Save"
             />
-            <input
-              className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
-              type="button"
-              value="Cancel"
-              onClick={() => toggleSkillEditPanel()}
-            />
+            <div>
+              <input
+                className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
+                type="button"
+                value="Delete"
+                onClick={() => deleteSkillHandler(editedSkillDescriptionId)}
+              />
+              <input
+                className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
+                type="button"
+                value="Cancel"
+                onClick={() => toggleSkillEditPanel()}
+              />
+            </div>
           </div>
         </form>
       )}
@@ -251,7 +261,9 @@ function Skills({ developer, canEdit }) {
                 </div>
                 <div
                   className="tag tag--pill tag--main settings__btn"
-                  onClick={() => deleteSkillHandler(skillDescription)}
+                  onClick={() =>
+                    deleteSkillHandler(skillDescription.skillDescriptionId)
+                  }
                 >
                   <i className="im im-x-mark-circle-o"></i>
                   Delete
@@ -268,7 +280,9 @@ function Skills({ developer, canEdit }) {
                 </div>
                 <div
                   className="tag tag--pill tag--main settings__btn hidden"
-                  onClick={() => deleteSkillHandler(skillDescription)}
+                  onClick={() =>
+                    deleteSkillHandler(skillDescription.skillDescriptionId)
+                  }
                 >
                   <i className="im im-x-mark-circle-o"></i>
                   Delete
