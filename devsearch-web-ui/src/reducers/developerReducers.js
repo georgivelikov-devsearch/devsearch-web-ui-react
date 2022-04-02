@@ -24,6 +24,9 @@ import {
   SKILL_DELETE_REQUEST,
   SKILL_DELETE_SUCCESS,
   SKILL_DELETE_FAIL,
+  SKILL_ORDER_REQUEST,
+  SKILL_ORDER_SUCCESS,
+  SKILL_ORDER_FAIL,
 } from "../constants/skillConstants";
 
 export const developerReducer = (state = {}, action) => {
@@ -76,6 +79,14 @@ export const developerReducer = (state = {}, action) => {
       modifiedDeveloper.skillDescriptions.splice(searchIndex, 1);
       return { loading: false, developer: modifiedDeveloper };
     case SKILL_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case SKILL_ORDER_REQUEST:
+      return { loading: true };
+    case SKILL_ORDER_SUCCESS:
+      const { orderedDeveloper, orderedList } = action.payload;
+      orderedDeveloper.skillDescriptions = orderedList;
+      return { loading: false, developer: orderedDeveloper };
+    case SKILL_ORDER_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

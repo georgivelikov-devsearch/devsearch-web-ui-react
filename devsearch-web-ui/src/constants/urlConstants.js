@@ -19,3 +19,7 @@ export const SKILL_URL = `${URL}/skills`;
 export const DELETE_SKILL_URL = (username, skillDescriptionId) => {
   return `${URL}/skills/${username}/${skillDescriptionId}`;
 };
+
+export const ORDER_SKILLS_URL = (username) => {
+  return `${URL}/skills/${username}/order`;
+};

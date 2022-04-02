@@ -12,9 +12,16 @@ import {
   SKILL_DELETE_REQUEST,
   SKILL_DELETE_SUCCESS,
   SKILL_DELETE_FAIL,
+  SKILL_ORDER_REQUEST,
+  SKILL_ORDER_SUCCESS,
+  SKILL_ORDER_FAIL,
 } from "../constants/skillConstants";
 
-import { SKILL_URL, DELETE_SKILL_URL } from "../constants/urlConstants";
+import {
+  SKILL_URL,
+  DELETE_SKILL_URL,
+  ORDER_SKILLS_URL,
+} from "../constants/urlConstants";
 
 export const createSkill = (newSkillData, developer) => async (dispatch) => {
   try {
@@ -107,3 +114,33 @@ export const deleteSkill =
       });
     }
   };
+
+export const orderSkills = (tags, developer) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SKILL_ORDER_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${UserService.getToken()}`,
+      },
+    };
+
+    const orderSkillsUrl = ORDER_SKILLS_URL(UserService.getUsername());
+    const response = await axios.put(orderSkillsUrl, tags, config);
+
+    dispatch({
+      type: SKILL_ORDER_SUCCESS,
+      payload: { orderedDeveloper: developer, orderedList: response.data },
+    });
+  } catch (error) {
+    // Skills are part of developer service
+    let errorRes = getErrorResponse(error, "Developers");
+    dispatch({
+      type: SKILL_ORDER_FAIL,
+      payload: errorRes,
+    });
+  }
+};

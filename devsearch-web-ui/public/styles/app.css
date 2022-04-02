@@ -1063,3 +1063,10 @@ img {
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
+
+.oder__area {
+  margin: 2rem 0rem;
+  padding: 2rem;
+  background-color: white !important;
+  border-radius: 0.7rem;
+}
