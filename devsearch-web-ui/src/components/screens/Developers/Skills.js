@@ -21,9 +21,14 @@ function Skills({ developer, canEdit }) {
   const [editedSkillName, setEditedSkillName] = useState("");
   const [editedSkillDescription, setEditedSkillDescription] = useState("");
 
+  const [topSkills, setTopSkills] = useState([]);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [setEditedSkillName]);
+  useEffect(() => {
+    let devTopSkills = developer.skillDescriptions.slice(0, 3);
+    setTopSkills(devTopSkills);
+  }, [developer]);
 
   const toggleSkillPanel = () => {
     setSkillName("");
@@ -47,7 +52,10 @@ function Skills({ developer, canEdit }) {
     setValidSkillName(true);
     setValidSkillNameErrMessage("");
 
-    if (skillDescription.skillDescriptionId === editedSkillDescriptionId) {
+    if (
+      !skillDescription ||
+      skillDescription.skillDescriptionId === editedSkillDescriptionId
+    ) {
       setIsSkillEditPanelOpen(false);
       setEditedSkillDescriptionId("");
       setEditedSkillName("");
@@ -57,7 +65,6 @@ function Skills({ developer, canEdit }) {
       setEditedSkillName(skillDescription.skill.skillName);
       setEditedSkillDescription(skillDescription.description);
       setIsSkillEditPanelOpen(true);
-      console.log(editedSkillDescriptionId);
     }
   };
 
@@ -69,6 +76,7 @@ function Skills({ developer, canEdit }) {
       return;
     }
 
+    console.log(developer);
     const newSkillData = {
       developerId: developer.developerId,
       description: skillDescription,
@@ -77,9 +85,7 @@ function Skills({ developer, canEdit }) {
       },
     };
 
-    // submit to back end
     dispatch(createSkill(newSkillData, developer));
-    // setIsSkillPanelOpen(false);
   };
 
   const editSkillHandler = (e) => {
@@ -93,14 +99,10 @@ function Skills({ developer, canEdit }) {
       },
     };
 
-    console.log(editedSkillData);
-    // submit to back end
     dispatch(editSkill(editedSkillData, developer));
-    // setIsSkillPanelOpen(false);
   };
 
   const deleteSkillHandler = (skillDescription) => {
-    console.log(skillDescription);
     dispatch(deleteSkill(skillDescription, developer));
   };
 
@@ -173,6 +175,16 @@ function Skills({ developer, canEdit }) {
           </div>
         </form>
       )}
+      <div className="order__skills">
+        {developer.skillDescriptions.map((skillDescription) => (
+          <div
+            className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
+            onClick={() => toggleSkillEditPanel(skillDescription)}
+          >
+            {skillDescription.skill.skillName}
+          </div>
+        ))}
+      </div>
       {isSkillEditPanelOpen && (
         <form
           action="#"
@@ -203,7 +215,7 @@ function Skills({ developer, canEdit }) {
               type="textarea"
               name="text"
               placeholder="Skill Description"
-              defaultValue={editedSkillDescription}
+              value={editedSkillDescription}
               onChange={(e) => setEditedSkillDescription(e.target.value)}
             />
           </div>
@@ -217,13 +229,13 @@ function Skills({ developer, canEdit }) {
               className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
               type="button"
               value="Cancel"
-              onClick={toggleSkillEditPanel}
+              onClick={() => toggleSkillEditPanel()}
             />
           </div>
         </form>
       )}
       <table className="settings__table">
-        {developer.skillDescriptions.map((skillDescription, index) => (
+        {topSkills.map((skillDescription) => (
           <tr key={skillDescription.skillDescriptionId}>
             <td className="settings__tableInfo">
               <h4>{skillDescription.skill.skillName}</h4>
@@ -239,6 +251,23 @@ function Skills({ developer, canEdit }) {
                 </div>
                 <div
                   className="tag tag--pill tag--main settings__btn"
+                  onClick={() => deleteSkillHandler(skillDescription)}
+                >
+                  <i className="im im-x-mark-circle-o"></i>
+                  Delete
+                </div>
+              </td>
+            )}
+            {!canEdit && (
+              <td className="settings__tableActions">
+                <div
+                  className="tag tag--pill tag--main settings__btn hidden"
+                  onClick={() => toggleSkillEditPanel(skillDescription)}
+                >
+                  <i className="im im-edit"></i> Edit
+                </div>
+                <div
+                  className="tag tag--pill tag--main settings__btn hidden"
                   onClick={() => deleteSkillHandler(skillDescription)}
                 >
                   <i className="im im-x-mark-circle-o"></i>

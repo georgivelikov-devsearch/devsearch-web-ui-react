@@ -17,7 +17,7 @@ export const DEVELOPER_LIST_FAIL = "DEVELOPER_LIST_FAIL";
 export const UPDATE_SEARCH_FOR_DEVELOPER_LIST =
   "UPDATE_SEARCH_FOR_PUBLIC_DEVELOPER_LIST";
 
-export const NAVIGATE_AFTER_EDIT = (username) => {
+export const NAVIGATE_TO_PROFILE = (username) => {
   return `/developers/${username}`;
 };
 

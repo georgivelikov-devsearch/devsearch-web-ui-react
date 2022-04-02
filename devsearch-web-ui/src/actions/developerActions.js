@@ -16,7 +16,7 @@ import {
   DEVELOPER_LIST_SUCCESS,
   DEVELOPER_LIST_FAIL,
   UPDATE_SEARCH_FOR_DEVELOPER_LIST,
-  NAVIGATE_AFTER_EDIT,
+  NAVIGATE_TO_PROFILE,
 } from "../constants/developerConstants";
 
 import {
@@ -76,7 +76,7 @@ export const editDeveloper =
         payload: response.data,
       });
 
-      navigate(NAVIGATE_AFTER_EDIT(username));
+      navigate(NAVIGATE_TO_PROFILE(username));
     } catch (error) {
       let errorRes = getErrorResponse(error, "Developers");
       dispatch({

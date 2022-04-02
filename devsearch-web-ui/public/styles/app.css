@@ -610,8 +610,8 @@ img {
 }
 
 .settings__table {
-  margin-top: 3rem;
-  margin-bottom: 5rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
   padding: 0 3rem;
   background: var(--color-white);
 }
@@ -1053,4 +1053,13 @@ img {
   font-size: 1.5rem;
   margin-right: 0.5rem;
   border: 0px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.order__skills {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
