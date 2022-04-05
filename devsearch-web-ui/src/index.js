@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import store from "./store";
+import store from "./store_2";
 import UserService from "./services/identity/keycloak/keycloakUserService";
 
 const renderApp = () =>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { getPublicDeveloper } from "../../../actions/developerActions";
+import { getPublicDeveloper } from "../../../actions/developerActions_2";
 
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 import Developer from "./Developer";
@@ -13,7 +13,7 @@ function DeveloperPublic() {
   const { username } = useParams();
   const [canEdit, setCanEdit] = useState(false);
   const [canSendMessage, setCanSendMessage] = useState(false);
-  const publicDeveloperState = useSelector((state) => state.publicDeveloper);
+  const publicDeveloperState = useSelector((state) => state.developerPublic);
   const { loading, error, publicDeveloper } = publicDeveloperState;
 
   const dispatch = useDispatch();

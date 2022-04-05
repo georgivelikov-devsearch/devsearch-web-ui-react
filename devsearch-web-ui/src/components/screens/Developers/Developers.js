@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   getDeveloperList,
   updateSearchForPublicDeveloperList,
-} from "../../../actions/developerActions";
+} from "../../../actions/developerActions_2";
 
 import DeveloperList from "./DeveloperList";
 import Paging from "../../common/Paging";
@@ -20,11 +20,12 @@ function Developers() {
   const developerList = useSelector((state) => state.developerList);
   const { error, developers, totalPages } = developerList;
 
-  const searchDeveloperList = useSelector((state) => state.searchDeveloperList);
+  const searchDeveloperList = useSelector((state) => state.developerSearchList);
 
   const { searchParameters } = searchDeveloperList;
 
   useEffect(() => {
+    console.log("0");
     const page = searchParams.get("page");
     const search = searchParams.get("search");
 
@@ -34,7 +35,7 @@ function Developers() {
     }
 
     setText(searchText);
-
+    console.log("0");
     dispatch(getDeveloperList(page, searchText));
     window.scrollTo(0, 0);
   }, [dispatch, searchParams, searchParameters]);

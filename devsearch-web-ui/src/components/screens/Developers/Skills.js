@@ -29,12 +29,12 @@ function Skills({ developer, canEdit }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(developer.skillDescriptions);
-    developer.skillDescriptions.sort((a, b) => a.position - b.position);
-    let devTopSkills = developer.skillDescriptions.slice(0, 3);
+    let skills = [...developer.skillDescriptions];
+    skills.sort((a, b) => a.position - b.position);
+    let devTopSkills = skills.slice(0, 3);
     setTopSkills(devTopSkills);
     let tagArray = [];
-    developer.skillDescriptions.forEach((skillDescription) => {
+    skills.forEach((skillDescription) => {
       let newTag = {
         id: skillDescription.skillDescriptionId,
         skillDescriptionId: skillDescription.skillDescriptionId,

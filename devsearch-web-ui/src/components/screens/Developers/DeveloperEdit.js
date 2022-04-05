@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getDeveloper, editDeveloper } from "../../../actions/developerActions";
+import {
+  getDeveloper,
+  editDeveloper,
+} from "../../../actions/developerActions_2";
 
 import { validateStringLength } from "../../../utils/validator";
 import { getBase64FromFile } from "../../../utils/utils";
@@ -71,7 +74,7 @@ function DeveloperEdit() {
   const developerState = useSelector((state) => state.developer);
   const { loading, error, developer } = developerState;
 
-  const editDeveloperState = useSelector((state) => state.editDeveloper);
+  const editDeveloperState = useSelector((state) => state.developerEdit);
   const { editLoading, editError } = editDeveloperState;
 
   const navigate = useNavigate();

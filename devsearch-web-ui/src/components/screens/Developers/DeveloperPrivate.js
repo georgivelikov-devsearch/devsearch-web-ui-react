@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDeveloper } from "../../../actions/developerActions";
+import { getDeveloper } from "../../../actions/developerActions_2";
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 import Developer from "./Developer";
 
