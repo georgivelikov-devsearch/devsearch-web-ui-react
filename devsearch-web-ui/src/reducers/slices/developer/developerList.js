@@ -13,13 +13,15 @@ const developerListSlice = createSlice({
   initialState: {},
   reducers: {
     developerListRequest(state, action) {
-      state.loading = true;
+      return { loading: true };
     },
     developerListSuccess(state, action) {
-      state.loading = false;
-      state.developers = action.payload.developers;
-      state.totalPages = action.payload.totalPages;
-      state.searchParameters = action.searchParameters;
+      return {
+        loading: false,
+        developers: action.payload.developers,
+        totalPages: action.payload.totalPages,
+        searchParameters: action.searchParameters,
+      };
     },
     developerListError(state, action) {
       state.loading = false;

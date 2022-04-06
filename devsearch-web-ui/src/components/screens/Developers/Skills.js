@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Message from "../../common/Message";
+import Loader from "../../common/Loader";
 import { DraggableArea } from "react-draggable-tags";
 
 import {
@@ -10,9 +11,13 @@ import {
   editSkill,
   deleteSkill,
   orderSkills,
-} from "../../../actions/skillActions";
+  clearError,
+} from "../../../actions/skillActions_2";
 
 function Skills({ developer, canEdit }) {
+  const skillsState = useSelector((state) => state.skills);
+  const { loading, skillError, skillDescriptions } = skillsState;
+  const [allSkillDescriptions, setAllSkillDescriptions] = useState([]);
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
   const [skillName, setSkillName] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
@@ -29,8 +34,9 @@ function Skills({ developer, canEdit }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let skills = [...developer.skillDescriptions];
+    let skills = [...skillDescriptions];
     skills.sort((a, b) => a.position - b.position);
+    setAllSkillDescriptions(skills);
     let devTopSkills = skills.slice(0, 3);
     setTopSkills(devTopSkills);
     let tagArray = [];
@@ -45,7 +51,7 @@ function Skills({ developer, canEdit }) {
       tagArray.push(newTag);
     });
     setTags(tagArray);
-  }, [developer]);
+  }, [developer, skillDescriptions]);
 
   const toggleSkillPanel = () => {
     setSkillName("");
@@ -62,6 +68,9 @@ function Skills({ developer, canEdit }) {
     setEditedSkillDescriptionId("");
     setEditedSkillName("");
     setEditedSkillDescription("");
+
+    //clear error if it exists
+    dispatch(clearError());
   };
 
   const toggleOrderPanel = () => {
@@ -124,7 +133,7 @@ function Skills({ developer, canEdit }) {
       },
     };
 
-    dispatch(createSkill(newSkillData, developer));
+    dispatch(createSkill(newSkillData, toggleSkillPanel));
   };
 
   const editSkillHandler = (e) => {
@@ -138,16 +147,20 @@ function Skills({ developer, canEdit }) {
       },
     };
 
-    dispatch(editSkill(editedSkillData, developer));
+    dispatch(editSkill(editedSkillData));
+    toggleSkillEditPanel();
   };
 
   const deleteSkillHandler = (skillDescriptionId) => {
-    dispatch(deleteSkill(skillDescriptionId, developer));
+    dispatch(deleteSkill(skillDescriptionId));
+    if (isSkillEditPanelOpen) {
+      toggleSkillEditPanel();
+    }
   };
 
   const orderSkillsHandler = () => {
-    console.log("TAGS: " + tags);
     dispatch(orderSkills(tags, developer));
+    toggleOrderPanel();
   };
 
   return (
@@ -256,7 +269,17 @@ function Skills({ developer, canEdit }) {
           </div>
         </form>
       )}
-
+      {skillError && (
+        <Message
+          variant="alert alert--error"
+          variantStyle={{
+            width: "100%",
+            display: "inline-block",
+            textAlign: "center",
+          }}
+          message={skillError.message}
+        />
+      )}
       <table className="settings__table">
         {topSkills.map((skillDescription) => (
           <tr key={skillDescription.skillDescriptionId}>
@@ -306,7 +329,7 @@ function Skills({ developer, canEdit }) {
         ))}
       </table>
       <div className="order__skills">
-        {developer.skillDescriptions.map((skillDescription) => (
+        {allSkillDescriptions.map((skillDescription) => (
           <div
             className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
             onClick={() => toggleSkillEditPanel(skillDescription)}
@@ -372,6 +395,7 @@ function Skills({ developer, canEdit }) {
           </div>
         </form>
       )}
+      {loading && <Loader />}
     </div>
   );
 }

@@ -127,7 +127,6 @@ function DeveloperEdit() {
       return;
     }
 
-    console.log(developer);
     // Update developer
     const developerId = developer.developerId;
     const username = developer.username;

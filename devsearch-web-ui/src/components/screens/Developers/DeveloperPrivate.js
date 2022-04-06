@@ -6,8 +6,8 @@ import Developer from "./Developer";
 
 function DeveloperPrivate() {
   const developerState = useSelector((state) => state.developer);
+  const skillsState = useSelector((state) => state.skills);
   const { loading, error, developer } = developerState;
-
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -7,7 +7,9 @@ const developerSearchListSlice = createSlice({
   initialState: {},
   reducers: {
     updateSearchForDeveloperList(state, action) {
-      state.searchParameters = action.payload;
+      return {
+        searchParameters: action.payload,
+      };
     },
   },
 });

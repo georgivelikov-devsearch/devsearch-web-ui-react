@@ -11,15 +11,13 @@ const developerPublicSlice = createSlice({
   initialState: {},
   reducers: {
     developerPublicRequest(state, action) {
-      state.loading = true;
+      return { loading: true };
     },
     developerPublicSuccess(state, action) {
-      state.loading = false;
-      state.publicDeveloper = action.payload;
+      return { loading: false, publicDeveloper: action.payload };
     },
     developerPublicError(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      return { loading: false, error: action.payload };
     },
   },
 });

@@ -6,6 +6,7 @@ import { developerEditActions } from "../reducers/slices/developer/developerEdit
 import { developerListActions } from "../reducers/slices/developer/developerList";
 import { developerPublicActions } from "../reducers/slices/developer/developerPublic";
 import { developerSearchListActions } from "../reducers/slices/developer/developerSearchList";
+import { skillActions } from "../reducers/slices/skills/skill";
 
 import { NAVIGATE_TO_PROFILE } from "../constants/developerConstants";
 
@@ -28,7 +29,10 @@ export const getDeveloper = (username) => async (dispatch) => {
 
     const url = DEVELOPER_URL(username);
     const response = await axios.get(url, config);
+    const developer = response.data;
+    const skills = developer.skillDescriptions;
 
+    dispatch(skillActions.setSkills(skills));
     dispatch(developerActions.developerSuccess(response.data));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
@@ -71,8 +75,10 @@ export const getPublicDeveloper = (username) => async (dispatch) => {
     };
 
     const response = await axios.get(PUBLIC_DEVELOPER_URL(username), config);
-    console.log(response.data);
-    dispatch(developerPublicActions.developerPublicSuccess(response.data));
+    const developer = response.data;
+    const skills = developer.skillDescriptions;
+    dispatch(skillActions.setSkills(skills));
+    dispatch(developerPublicActions.developerPublicSuccess(developer));
   } catch (error) {
     let errorRes = getErrorResponse(error, "DEVELOPER");
     dispatch(developerPublicActions.developerPublicError(errorRes));
