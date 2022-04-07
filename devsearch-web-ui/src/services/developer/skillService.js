@@ -4,6 +4,7 @@ import { getErrorResponse } from "../../utils/utils";
 import { skillActions } from "../../reducers/slices/skills/skill";
 
 import {
+  AUTH_HEADERS_CONFIG,
   SKILL_URL,
   DELETE_SKILL_URL,
   ORDER_SKILLS_URL,
@@ -14,13 +15,7 @@ export const createSkill =
     try {
       dispatch(skillActions.skillRequest());
 
-      const config = {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${UserService.getToken()}`,
-        },
-      };
-
+      const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
       const response = await axios.post(SKILL_URL, newSkillData, config);
       const newSkill = response.data;
       dispatch(skillActions.skillSuccess(newSkill));
@@ -35,13 +30,7 @@ export const editSkill = (editSkillData) => async (dispatch) => {
   try {
     dispatch(skillActions.skillEditRequest());
 
-    const config = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${UserService.getToken()}`,
-      },
-    };
-
+    const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
     const response = await axios.put(SKILL_URL, editSkillData, config);
     const editedSkill = response.data;
     dispatch(skillActions.skillEditSuccess(editedSkill));
@@ -55,13 +44,7 @@ export const deleteSkill = (skillDescriptionId) => async (dispatch) => {
   try {
     dispatch(skillActions.skillDeleteRequest());
 
-    const config = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${UserService.getToken()}`,
-      },
-    };
-
+    const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
     const deleteUrl = DELETE_SKILL_URL(
       UserService.getUsername(),
       skillDescriptionId
@@ -75,17 +58,11 @@ export const deleteSkill = (skillDescriptionId) => async (dispatch) => {
   }
 };
 
-export const orderSkills = (tags, developer) => async (dispatch) => {
+export const orderSkills = (tags) => async (dispatch) => {
   try {
     dispatch(skillActions.skillOrderRequest());
 
-    const config = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${UserService.getToken()}`,
-      },
-    };
-
+    const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
     const orderSkillsUrl = ORDER_SKILLS_URL(UserService.getUsername());
     const response = await axios.put(orderSkillsUrl, tags, config);
 

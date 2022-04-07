@@ -25,7 +25,6 @@ function Developers() {
   const { searchParameters } = searchDeveloperList;
 
   useEffect(() => {
-    console.log("0");
     const page = searchParams.get("page");
     const search = searchParams.get("search");
 
