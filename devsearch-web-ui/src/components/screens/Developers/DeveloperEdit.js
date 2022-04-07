@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getDeveloper,
   editDeveloper,
-} from "../../../actions/developerActions_2";
+} from "../../../services/developer/developerService";
 
 import { validateStringLength } from "../../../utils/validator";
 import { getBase64FromFile } from "../../../utils/utils";

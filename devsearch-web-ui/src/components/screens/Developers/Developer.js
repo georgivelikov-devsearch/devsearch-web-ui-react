@@ -1,10 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
+
+import {
+  getDeveloper,
+  getPublicDeveloper,
+} from "../../../services/developer/developerService";
+
 import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 import Skills from "./Skills";
 
-function Developer({ loading, error, developer, canSendMessage, canEdit }) {
+function Developer() {
+  const dispatch = useDispatch();
+  const { username } = useParams();
+
+  const developerState = useSelector((state) => state.developer);
+  const { loading, error, developer } = developerState;
+  const [canEdit, setCanEdit] = useState(false);
+  const [canSendMessage, setCanSendMessage] = useState(false);
+
+  useEffect(() => {
+    if (UserService.isLoggedIn()) {
+      if (username === UserService.getUsername()) {
+        setCanEdit(true);
+        setCanSendMessage(false);
+        dispatch(getDeveloper(username));
+      } else {
+        setCanEdit(false);
+        setCanSendMessage(true);
+        dispatch(getPublicDeveloper(username));
+      }
+    } else {
+      setCanEdit(false);
+      setCanSendMessage(false);
+      dispatch(getPublicDeveloper(username));
+    }
+  }, [dispatch]);
+
   return (
     <main className="settingsPage developer my-md">
       {developer && (

@@ -12,11 +12,12 @@ import {
   deleteSkill,
   orderSkills,
   clearError,
-} from "../../../actions/skillActions_2";
+} from "../../../services/developer/skillService";
 
 function Skills({ developer, canEdit }) {
   const skillsState = useSelector((state) => state.skills);
   const { loading, skillError, skillDescriptions } = skillsState;
+
   const [allSkillDescriptions, setAllSkillDescriptions] = useState([]);
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
   const [skillName, setSkillName] = useState("");

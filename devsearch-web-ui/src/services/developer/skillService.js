@@ -1,13 +1,13 @@
 import axios from "axios";
-import UserService from "../services/identity/keycloak/keycloakUserService";
-import { getErrorResponse } from "../utils/utils";
-import { skillActions } from "../reducers/slices/skills/skill";
+import UserService from "../identity/keycloak/keycloakUserService";
+import { getErrorResponse } from "../../utils/utils";
+import { skillActions } from "../../reducers/slices/skills/skill";
 
 import {
   SKILL_URL,
   DELETE_SKILL_URL,
   ORDER_SKILLS_URL,
-} from "../constants/urlConstants";
+} from "../../constants/urlConstants";
 
 export const createSkill =
   (newSkillData, successCallback) => async (dispatch) => {
@@ -26,7 +26,6 @@ export const createSkill =
       dispatch(skillActions.skillSuccess(newSkill));
       successCallback();
     } catch (error) {
-      // Skills are part of developer service
       let errorRes = getErrorResponse(error, "Developers");
       dispatch(skillActions.skillError(errorRes));
     }
@@ -44,9 +43,9 @@ export const editSkill = (editSkillData) => async (dispatch) => {
     };
 
     const response = await axios.put(SKILL_URL, editSkillData, config);
-    dispatch(skillActions.skillEditSuccess(response.data));
+    const editedSkill = response.data;
+    dispatch(skillActions.skillEditSuccess(editedSkill));
   } catch (error) {
-    // Skills are part of developer service
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(skillActions.skillEditError(errorRes));
   }
@@ -68,10 +67,9 @@ export const deleteSkill = (skillDescriptionId) => async (dispatch) => {
       skillDescriptionId
     );
 
-    const response = await axios.delete(deleteUrl, config);
+    await axios.delete(deleteUrl, config);
     dispatch(skillActions.skillDeleteSuccess(skillDescriptionId));
   } catch (error) {
-    // Skills are part of developer service
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(skillActions.skillDeleteError(errorRes));
   }
@@ -93,7 +91,6 @@ export const orderSkills = (tags, developer) => async (dispatch) => {
 
     dispatch(skillActions.skillOrderSuccess(response.data));
   } catch (error) {
-    // Skills are part of developer service
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(skillActions.skillOrderError(errorRes));
   }

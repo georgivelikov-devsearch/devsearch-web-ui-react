@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   getDeveloperList,
   updateSearchForPublicDeveloperList,
-} from "../../../actions/developerActions_2";
+} from "../../../services/developer/developerService";
 
 import DeveloperList from "./DeveloperList";
 import Paging from "../../common/Paging";

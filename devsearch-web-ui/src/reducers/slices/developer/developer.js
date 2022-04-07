@@ -13,6 +13,15 @@ const developerSlice = createSlice({
     developerError(state, action) {
       return { loading: false, error: action.payload };
     },
+    developerPublicRequest(state, action) {
+      return { loading: true };
+    },
+    developerPublicSuccess(state, action) {
+      return { loading: false, developer: action.payload };
+    },
+    developerPublicError(state, action) {
+      return { loading: false, error: action.payload };
+    },
   },
 });
 

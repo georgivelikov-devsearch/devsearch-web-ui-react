@@ -23,3 +23,14 @@ export const DELETE_SKILL_URL = (username, skillDescriptionId) => {
 export const ORDER_SKILLS_URL = (username) => {
   return `${URL}/skills/${username}/order`;
 };
+
+export const HEADERS_CONFIG = {
+  "content-type": "application/json",
+};
+
+export const AUTH_HEADERS_CONFIG = (token) => {
+  return {
+    ...HEADERS_CONFIG,
+    Authorization: `Bearer ${token}`,
+  };
+};
