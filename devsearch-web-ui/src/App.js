@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
 import Developers from "./components/screens/Developers/Developers";
-import Projects from "./components/screens/Projects";
+import Projects from "./components/screens/Projects/Projects";
 import Inbox from "./components/screens/Inbox";
 import DeveloperEdit from "./components/screens/Developers/DeveloperEdit";
 import Developer from "./components/screens/Developers/Developer";

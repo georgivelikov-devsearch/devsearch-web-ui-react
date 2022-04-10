@@ -34,7 +34,6 @@ function Developers() {
     }
 
     setText(searchText);
-    console.log("0");
     dispatch(getDeveloperList(page, searchText));
     window.scrollTo(0, 0);
   }, [dispatch, searchParams, searchParameters]);
