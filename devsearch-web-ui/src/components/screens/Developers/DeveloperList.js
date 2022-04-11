@@ -13,7 +13,7 @@ function DeveloperList({ developers, error }) {
             {" "}
             {developers.map((developer) => (
               <PublicDeveloperShort
-                key={developer.developerId}
+                key={developer.publicKey}
                 developer={developer}
               />
             ))}

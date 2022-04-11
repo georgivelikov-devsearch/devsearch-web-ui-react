@@ -25,24 +25,14 @@ function DeveloperShort({ developer }) {
           </div>
           <p className="dev__info">{developer.about}</p>
           <div className="dev__skills">
-            <span className="tag tag--pill tag--main">
-              <small>JavaScript</small>
-            </span>
-            <span className="tag tag--pill tag--main">
-              <small>React</small>
-            </span>
-            <span className="tag tag--pill tag--main">
-              <small>SCSS</small>
-            </span>
-            <span className="tag tag--pill tag--main">
-              <small>Nodejs</small>
-            </span>
-            <span className="tag tag--pill tag--main">
-              <small>Express</small>
-            </span>
-            <span className="tag tag--pill tag--main">
-              <small>GraphQL</small>
-            </span>
+            {developer.skillDescriptions.map((skillDescription) => (
+              <span
+                key={skillDescription.publicKey}
+                className="tag tag--pill tag--main"
+              >
+                <small>{skillDescription.skill.skillName} </small>
+              </span>
+            ))}
           </div>
         </Link>
       </div>

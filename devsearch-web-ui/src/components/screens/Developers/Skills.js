@@ -35,6 +35,9 @@ function Skills({ developer, canEdit }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
     let skills = [...skillDescriptions];
     skills.sort((a, b) => a.position - b.position);
     setAllSkillDescriptions(skills);
@@ -52,7 +55,7 @@ function Skills({ developer, canEdit }) {
       tagArray.push(newTag);
     });
     setTags(tagArray);
-  }, [developer, skillDescriptions]);
+  }, [loading, developer, skillDescriptions]);
 
   const toggleSkillPanel = () => {
     setSkillName("");
@@ -282,56 +285,59 @@ function Skills({ developer, canEdit }) {
         />
       )}
       <table className="settings__table">
-        {topSkills.map((skillDescription) => (
-          <tr key={skillDescription.skillDescriptionId}>
-            <td className="settings__tableInfo">
-              <h4>{skillDescription.skill.skillName}</h4>
-              <p>{skillDescription.description}</p>
-            </td>
-            {canEdit && (
-              <td className="settings__tableActions">
-                <div
-                  className="tag tag--pill tag--main settings__btn"
-                  onClick={() => toggleSkillEditPanel(skillDescription)}
-                >
-                  <i className="im im-edit"></i> Edit
-                </div>
-                <div
-                  className="tag tag--pill tag--main settings__btn"
-                  onClick={() =>
-                    deleteSkillHandler(skillDescription.skillDescriptionId)
-                  }
-                >
-                  <i className="im im-x-mark-circle-o"></i>
-                  Delete
-                </div>
+        <tbody>
+          {topSkills.map((skillDescription) => (
+            <tr key={skillDescription.publicKey}>
+              <td className="settings__tableInfo">
+                <h4>{skillDescription.skill.skillName}</h4>
+                <p>{skillDescription.description}</p>
               </td>
-            )}
-            {!canEdit && (
-              <td className="settings__tableActions">
-                <div
-                  className="tag tag--pill tag--main settings__btn hidden"
-                  onClick={() => toggleSkillEditPanel(skillDescription)}
-                >
-                  <i className="im im-edit"></i> Edit
-                </div>
-                <div
-                  className="tag tag--pill tag--main settings__btn hidden"
-                  onClick={() =>
-                    deleteSkillHandler(skillDescription.skillDescriptionId)
-                  }
-                >
-                  <i className="im im-x-mark-circle-o"></i>
-                  Delete
-                </div>
-              </td>
-            )}
-          </tr>
-        ))}
+              {canEdit && (
+                <td className="settings__tableActions">
+                  <div
+                    className="tag tag--pill tag--main settings__btn"
+                    onClick={() => toggleSkillEditPanel(skillDescription)}
+                  >
+                    <i className="im im-edit"></i> Edit
+                  </div>
+                  <div
+                    className="tag tag--pill tag--main settings__btn"
+                    onClick={() =>
+                      deleteSkillHandler(skillDescription.skillDescriptionId)
+                    }
+                  >
+                    <i className="im im-x-mark-circle-o"></i>
+                    Delete
+                  </div>
+                </td>
+              )}
+              {!canEdit && (
+                <td className="settings__tableActions">
+                  <div
+                    className="tag tag--pill tag--main settings__btn hidden"
+                    onClick={() => toggleSkillEditPanel(skillDescription)}
+                  >
+                    <i className="im im-edit"></i> Edit
+                  </div>
+                  <div
+                    className="tag tag--pill tag--main settings__btn hidden"
+                    onClick={() =>
+                      deleteSkillHandler(skillDescription.skillDescriptionId)
+                    }
+                  >
+                    <i className="im im-x-mark-circle-o"></i>
+                    Delete
+                  </div>
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
       </table>
       <div className="order__skills">
         {allSkillDescriptions.map((skillDescription) => (
           <div
+            key={skillDescription.publicKey}
             className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
             onClick={() => toggleSkillEditPanel(skillDescription)}
           >
