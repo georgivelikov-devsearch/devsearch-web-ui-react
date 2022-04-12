@@ -1,11 +1,12 @@
 import axios from "axios";
 import UserService from "../identity/keycloak/keycloakUserService";
 import { getErrorResponse } from "../../utils/utils";
-import { developerActions } from "../../reducers/slices/developer/developer";
-import { developerEditActions } from "../../reducers/slices/developer/developerEdit";
-import { developerListActions } from "../../reducers/slices/developer/developerList";
-import { developerSearchListActions } from "../../reducers/slices/developer/developerSearchList";
+import { developerActions } from "../../reducers/slices/developers/developer";
+import { developerEditActions } from "../../reducers/slices/developers/developerEdit";
+import { developerListActions } from "../../reducers/slices/developers/developerList";
+import { developerSearchListActions } from "../../reducers/slices/developers/developerSearchList";
 import { skillActions } from "../../reducers/slices/skills/skill";
+import { projectActions } from "../../reducers/slices/projects/project";
 
 import { NAVIGATE_TO_PROFILE } from "../../constants/developerConstants";
 
@@ -26,7 +27,9 @@ export const getDeveloper = (username) => async (dispatch) => {
     const response = await axios.get(url, config);
     const developer = response.data;
     const skills = developer.skillDescriptions;
+    const projects = developer.projects;
 
+    dispatch(projectActions.setProjects(projects));
     dispatch(skillActions.setSkills(skills));
     dispatch(developerActions.developerSuccess(developer));
   } catch (error) {

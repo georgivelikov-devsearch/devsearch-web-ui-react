@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialDeveloperEditState = {
-  editLoading: false,
-  developerEdit: {},
-  editError: {},
-};
-
 const developerEditSlice = createSlice({
   name: "developerEdit",
   initialState: {},

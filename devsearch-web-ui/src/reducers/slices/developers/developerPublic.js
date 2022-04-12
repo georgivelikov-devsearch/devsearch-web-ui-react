@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialDeveloperPublicState = {
-  loading: false,
-  publicDeveloper: {},
-  error: {},
-};
-
 const developerPublicSlice = createSlice({
   name: "developerPublic",
   initialState: {},

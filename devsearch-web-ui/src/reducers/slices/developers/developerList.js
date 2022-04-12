@@ -1,13 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialDeveloperListState = {
-  loading: false,
-  developers: {},
-  totalPages: 0,
-  searchParameters: "",
-  error: {},
-};
-
 const developerListSlice = createSlice({
   name: "developerList",
   initialState: {},

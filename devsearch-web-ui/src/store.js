@@ -1,31 +1,28 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { configureStore } from "@reduxjs/toolkit";
+// import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import developerReducer from "./reducers/slices/developers/developer";
+import developerEditReducer from "./reducers/slices/developers/developerEdit";
+import developerListReducer from "./reducers/slices/developers/developerList";
+import developerPublicReducer from "./reducers/slices/developers/developerPublic";
+import developerSearchListReducer from "./reducers/slices/developers/developerSearchList";
+import skillReducer from "./reducers/slices/skills/skill";
+import projectReducer from "./reducers/slices/projects/project";
 
-import {
-  developerReducer,
-  editDeveloperReducer,
-  publicDeveloperReducer,
-  developerListReducer,
-  searchDeveloperListReducer,
-} from "./reducers/developerReducers";
+// let comboRed = combineReducers({
+//   dev: developerReducer,
+//   skill: skillReducer,
+// });
 
-const reducer = combineReducers({
-  developer: developerReducer,
-  editDeveloper: editDeveloperReducer,
-  publicDeveloper: publicDeveloperReducer,
-  developerList: developerListReducer,
-  searchDeveloperList: searchDeveloperListReducer,
+const store = configureStore({
+  reducer: {
+    developer: developerReducer,
+    developerEdit: developerEditReducer,
+    developerList: developerListReducer,
+    developerPublic: developerPublicReducer,
+    developerSearchList: developerSearchListReducer,
+    skills: skillReducer,
+    projects: projectReducer,
+  },
 });
-
-const initialState = {};
-
-const middleware = [thunk];
-
-const store = createStore(
-  reducer,
-  initialState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
 
 export default store;
