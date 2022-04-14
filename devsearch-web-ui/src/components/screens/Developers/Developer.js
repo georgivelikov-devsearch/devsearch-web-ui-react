@@ -39,7 +39,7 @@ function Developer() {
       setCanSendMessage(false);
       dispatch(getPublicDeveloper(username));
     }
-  }, [dispatch]);
+  }, [dispatch, username]);
 
   return (
     <main className="settingsPage developer my-md">
@@ -173,14 +173,18 @@ function Developer() {
               <Skills developer={developer} canEdit={canEdit} />
               <div className="settings">
                 <h3 className="settings__title">Projects</h3>
-                <a
-                  className="tag tag--pill tag--sub settings__btn tag--lg"
-                  href="#"
-                >
-                  <i className="im im-plus"></i> Add Project
-                </a>
+                {canEdit && (
+                  <Link
+                    className="tag tag--pill tag--sub settings__btn tag--lg"
+                    to={`/developers/${developer.username}/project/new`}
+                  >
+                    <i className="im im-plus"></i> Add Project
+                  </Link>
+                )}
               </div>
-              <DeveloperProjects />
+              {developer.projects && (
+                <DeveloperProjects projects={developer.projects} />
+              )}
             </div>
           </div>
         </div>

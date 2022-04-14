@@ -1070,3 +1070,82 @@ img {
   background-color: white !important;
   border-radius: 0.7rem;
 }
+
+/*=======================
+  ProjectNew
+========================*/
+.projectnew {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.projectnew::after {
+  z-index: -1;
+  opacity: 0.1;
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: url(../images/pattern.jpg);
+}
+
+.projectnew>.card {
+  padding: 3rem 4rem;
+  width: 95%;
+  max-width: 80rem;
+}
+
+@media screen and (min-width: 650px) {
+  .projectnew>.card {
+    padding: 5rem 8rem;
+    width: 95%;
+    max-width: 80rem;
+  }
+}
+
+.projectnew__header h3 {
+  color: var(--color-sub);
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.projectnew__header p {
+  font-weight: 400;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.projectnew__form {
+  margin: 3rem 0;
+}
+
+.projectnew .projectnew__form label,
+.projectnew .projectnew__alternative p {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--color-sub-light);
+}
+
+.projectnew .projectnew__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2.5rem 0;
+}
+
+.projectnew .projectnew__actions a {
+  text-decoration: underline;
+}
+
+.projectnew .reg__alternative a {
+  font-size: 2rem;
+  font-weight: 500;
+}

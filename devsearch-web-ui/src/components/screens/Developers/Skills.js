@@ -15,6 +15,8 @@ import {
 } from "../../../services/developer/skillService";
 
 function Skills({ developer, canEdit }) {
+  const dispatch = useDispatch();
+
   const skillsState = useSelector((state) => state.skills);
   const { loading, skillError, skillDescriptions } = skillsState;
 
@@ -31,8 +33,6 @@ function Skills({ developer, canEdit }) {
   const [isOrderPanelOpen, setIsOrderPanelOpen] = useState(false);
   const [topSkills, setTopSkills] = useState([]);
   const [tags, setTags] = useState([]);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (loading) {

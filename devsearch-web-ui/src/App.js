@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
-import Developers from "./components/screens/Developers/Developers";
-import Projects from "./components/screens/Projects/Projects";
 import Inbox from "./components/screens/Inbox";
+import Developers from "./components/screens/Developers/Developers";
+
 import DeveloperEdit from "./components/screens/Developers/DeveloperEdit";
 import Developer from "./components/screens/Developers/Developer";
+import Projects from "./components/screens/Projects/Projects";
+import ProjectNew from "./components/screens/Projects/ProjectNew";
 
 function App() {
   return (
@@ -20,6 +22,10 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/developers/:username" element={<Developer />} />
+          <Route
+            path="/developers/:username/project/new"
+            element={<ProjectNew />}
+          />
           <Route
             path="/developers/:username/edit"
             element={<DeveloperEdit />}

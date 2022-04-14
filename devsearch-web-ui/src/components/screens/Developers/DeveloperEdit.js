@@ -19,6 +19,9 @@ import Loader from "../../common/Loader";
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
 function DeveloperEdit() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [shortIntro, setShortIntro] = useState("");
@@ -76,9 +79,6 @@ function DeveloperEdit() {
 
   const editDeveloperState = useSelector((state) => state.developerEdit);
   const { editLoading, editError } = editDeveloperState;
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!UserService.isLoggedIn()) {
