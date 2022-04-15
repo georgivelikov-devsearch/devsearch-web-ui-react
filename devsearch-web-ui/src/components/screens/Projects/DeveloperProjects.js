@@ -23,25 +23,12 @@ function DeveloperProjects({ projects, canEdit, developerData }) {
         <div className="grid grid--two">
           {projects &&
             projects.map((project) => (
-              <div className="column">
+              <div className="column" key={project.publicKey}>
                 <ProjectShort
-                  key={project.publicKey}
                   project={project}
+                  developerData={developerData}
+                  canEdit={canEdit}
                 ></ProjectShort>
-                {canEdit && (
-                  <div className="project_buttons">
-                    <Link
-                      className="tag tag--pill tag--sub settings__btn tag--lg"
-                      to={`/developers/${developerData.authorUsername}/project/edit`}
-                      state={developerData}
-                    >
-                      <i className="im"></i> Edit
-                    </Link>
-                    <div className="tag tag--pill tag--sub settings__btn tag--lg project__floatright">
-                      <i className="im"></i> Delete{" "}
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
         </div>
