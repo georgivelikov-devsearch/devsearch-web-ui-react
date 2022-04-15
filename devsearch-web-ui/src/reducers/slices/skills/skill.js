@@ -8,22 +8,16 @@ const skillSlice = createSlice({
       return { skillDescriptions: action.payload };
     },
     clearError(state, actions) {
-      return { ...state, loading: false, skillError: null };
-    },
-    skillRequest(state, action) {
-      return { ...state, loading: true };
+      return { ...state, skillError: null };
     },
     skillSuccess(state, action) {
       const newSkill = action.payload;
       const newSkillDescriptions = [...state.skillDescriptions];
       newSkillDescriptions.push(newSkill);
-      return { loading: false, skillDescriptions: newSkillDescriptions };
+      return { skillDescriptions: newSkillDescriptions };
     },
     skillError(state, action) {
-      return { ...state, loading: false, skillError: action.payload };
-    },
-    skillEditRequest(state, action) {
-      return { ...state, loading: true };
+      return { ...state, skillError: action.payload };
     },
     skillEditSuccess(state, action) {
       let editedSkill = action.payload;
@@ -46,10 +40,7 @@ const skillSlice = createSlice({
       };
     },
     skillEditError(state, action) {
-      return { ...state, loading: false, skillError: action.payload };
-    },
-    skillDeleteRequest(state, action) {
-      return { ...state, loading: true };
+      return { ...state, skillError: action.payload };
     },
     skillDeleteSuccess(state, action) {
       let deletedId = action.payload;
@@ -65,26 +56,21 @@ const skillSlice = createSlice({
       editedSkillDescriptions.splice(searchIndex, 1);
       return {
         ...state,
-        loading: false,
         skillDescriptions: editedSkillDescriptions,
       };
     },
     skillDeleteError(state, action) {
-      return { ...state, loading: false, skillError: action.payload };
-    },
-    skillOrderRequest(state, action) {
-      return { ...state, loading: true };
+      return { ...state, skillError: action.payload };
     },
     skillOrderSuccess(state, action) {
       const orderedSkillDescriptionList = action.payload;
       return {
         ...state,
-        loading: false,
         skillDescriptions: orderedSkillDescriptionList,
       };
     },
     skillOrderError(state, action) {
-      return { ...state, loading: false, skillError: action.payload };
+      return { ...state, skillError: action.payload };
     },
   },
 });
