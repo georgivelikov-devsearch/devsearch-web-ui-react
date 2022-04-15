@@ -10,7 +10,10 @@ import {
 
 import { validateStringLength } from "../../../utils/validator";
 import { getBase64FromFile } from "../../../utils/utils";
-import { DEVELOPER_VALIDATION } from "../../../constants/developerConstants";
+import {
+  DEVELOPER_VALIDATION,
+  NAVIGATE_TO_PROFILE,
+} from "../../../constants/developerConstants";
 
 import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
@@ -57,26 +60,25 @@ function DeveloperEdit() {
   const [validSocialLinkedIn, setValidSocialLinkedIn] = useState(true);
   const [validSocialWebsite, setValidSocialWebsite] = useState(true);
 
-  const [validFirstNameErrMessage, setValidFirstNameErrMessage] =
-    useState(true);
-  const [validLastNameErrMessage, setValidLastNameErrMessage] = useState(true);
+  const [validFirstNameErrMessage, setValidFirstNameErrMessage] = useState("");
+  const [validLastNameErrMessage, setValidLastNameErrMessage] = useState("");
   const [validShortIntroErrMessage, setValidShortIntroErrMessage] =
-    useState(true);
-  const [validAboutErrMessage, setValidAboutErrMessage] = useState(true);
+    useState("");
+  const [validAboutErrMessage, setValidAboutErrMessage] = useState("");
   const [validLocationCityErrMessage, setValidLocationCityErrMessage] =
-    useState(true);
+    useState("");
   const [validLocationCountryErrMessage, setValidLocationCountryErrMessage] =
-    useState(true);
+    useState("");
   const [validSocialGithubErrMessage, setValidSocialGithubErrMessage] =
-    useState(true);
+    useState("");
   const [validSocialYoutubeErrMessage, setValidSocialYoutubeErrMessage] =
-    useState(true);
+    useState("");
   const [validSocialTwitterErrMessage, setValidSocialTwitterErrMessage] =
-    useState(true);
+    useState("");
   const [validSocialLinkedInErrMessage, setValidSocialLinkedInErrMessage] =
-    useState(true);
+    useState("");
   const [validSocialWebsiteErrMessage, setValidSocialWebsiteErrMessage] =
-    useState(true);
+    useState("");
 
   useEffect(() => {
     if (!UserService.isLoggedIn()) {
@@ -100,7 +102,7 @@ function DeveloperEdit() {
   }, [dispatch, navigate, developer]);
 
   const goBack = () => {
-    navigate("/developers/" + developer.username);
+    navigate(NAVIGATE_TO_PROFILE(developer.username));
   };
 
   const uploadDeveloperImage = async (e) => {
@@ -587,7 +589,6 @@ function DeveloperEdit() {
                 message={validSocialWebsiteErrMessage}
               />
             )}
-
             <div className="devedit__actions">
               <input
                 className="btn btn--sub btn--lg"

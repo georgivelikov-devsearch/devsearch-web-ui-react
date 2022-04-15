@@ -4,6 +4,9 @@ const developerSlice = createSlice({
   name: "developer",
   initialState: {},
   reducers: {
+    clearError(state, action) {
+      return { ...state, error: null };
+    },
     developerSuccess(state, action) {
       return { developer: action.payload };
     },

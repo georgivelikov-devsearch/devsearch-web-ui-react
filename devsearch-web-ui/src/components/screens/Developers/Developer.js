@@ -176,6 +176,12 @@ function Developer() {
                   <Link
                     className="tag tag--pill tag--sub settings__btn tag--lg"
                     to={`/developers/${developer.username}/project/new`}
+                    state={{
+                      developerId: developer.developerId,
+                      authorUsername: developer.username,
+                      authorFullname:
+                        developer.firstName + " " + developer.lastName,
+                    }}
                   >
                     <i className="im im-plus"></i> Add Project
                   </Link>

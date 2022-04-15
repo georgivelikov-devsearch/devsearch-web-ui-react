@@ -28,11 +28,10 @@ export const getDeveloper = (username) => async (dispatch) => {
     const response = await axios.get(url, config);
     const developer = response.data;
     const skills = developer.skillDescriptions;
-    const projects = developer.projects;
 
-    dispatch(projectActions.setProjects(projects));
     dispatch(skillActions.setSkills(skills));
     dispatch(developerActions.developerSuccess(developer));
+    dispatch(developerActions.clearError());
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(developerActions.developerError(errorRes));

@@ -23,7 +23,7 @@ const store = configureStore({
     developerPublic: developerPublicReducer,
     developerSearchList: developerSearchListReducer,
     skills: skillReducer,
-    projects: projectReducer,
+    project: projectReducer,
   },
 });
 

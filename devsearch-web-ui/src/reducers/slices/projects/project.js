@@ -1,26 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const projectSlice = createSlice({
-  name: "projects",
+  name: "project",
   initialState: {},
   reducers: {
-    setProjects(state, action) {
-      return { projects: action.payload };
+    projectNewErrorClear(state, actions) {
+      return { ...state, projectNewError: null };
     },
-    clearError(state, actions) {
-      return { ...state, loading: false, projectError: null };
-    },
-    projectRequest(state, action) {
-      return { ...state, loading: true };
-    },
-    projectSuccess(state, action) {
-      const newProject = action.payload;
-      const newProjects = [...state.projects];
-      newProjects.push(newProject);
-      return { loading: false, projects: newProjects };
-    },
-    projectError(state, action) {
-      return { ...state, loading: false, projectError: action.payload };
+    projectNewError(state, action) {
+      return { ...state, projectNewError: action.payload };
     },
   },
 });
