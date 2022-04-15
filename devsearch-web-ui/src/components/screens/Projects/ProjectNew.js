@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
+import { DraggableArea } from "react-draggable-tags";
 
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
@@ -37,6 +38,13 @@ function ProjectNew() {
   });
 
   const [sourceCode, setSourceCode] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tagName, setTagName] = useState({
+    value: "",
+    isValid: true,
+    errorMessage: "",
+  });
+  const [isAddTagOpen, setIsAddTagOpen] = useState(false);
 
   useEffect(() => {
     if (!UserService.isLoggedIn()) {
@@ -44,8 +52,29 @@ function ProjectNew() {
     }
   }, [dispatch, navigate]);
 
-  const goBack = () => {
-    navigate(NAVIGATE_TO_PROFILE(UserService.getUsername()));
+  const addTag = () => {
+    if (!tagName.value) {
+      setTagName({
+        value: "",
+        isValid: false,
+        errorMessage: "Tag Name must have value!",
+      });
+    } else {
+      setTagName({
+        value: "",
+        isValid: true,
+        errorMessage: "",
+      });
+      let newTag = {
+        name: tagName.value,
+      };
+      tags.push(newTag);
+      toggleAddTag();
+    }
+  };
+
+  const toggleAddTag = () => {
+    setIsAddTagOpen(!isAddTagOpen);
   };
 
   const clearValidation = () => {
@@ -96,9 +125,17 @@ function ProjectNew() {
     return true;
   };
 
+  const goBack = () => {
+    navigate(NAVIGATE_TO_PROFILE(UserService.getUsername()));
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
+
+    // Clear old validation state
     clearValidation();
+
+    // Validation
     let isValid = validateFields();
 
     if (!isValid) {
@@ -112,6 +149,7 @@ function ProjectNew() {
       projectName: projectName.value,
       about: about.value,
       sourceCode,
+      //tags,
     };
 
     dispatch(addProject(newData, navigate));
@@ -121,8 +159,8 @@ function ProjectNew() {
     <div className="projectnew">
       <div className="card">
         <div className="projectnew__header text-center">
-          <h3>Add Project</h3>
-          <p>Create new project</p>
+          <h3>Create Project</h3>
+          <p>Add your new project</p>
         </div>
         {loading && <Loader />}
         {projectNewError && (
@@ -190,8 +228,65 @@ function ProjectNew() {
               onChange={(e) => setSourceCode(e.target.value)}
             />
           </div>
+          <div className="settings">
+            <h3 className="settings__title">Tools and Stacks</h3>
+            <div>
+              <div
+                onClick={toggleAddTag}
+                className="tag tag--pill tag--sub settings__btn tag--lg"
+              >
+                <i className="im im-plus"></i> Add Tag
+              </div>
+            </div>
+          </div>
+          {isAddTagOpen && (
+            <div className="form__field">
+              <label htmlFor="formInput#text">Tag: </label>
+              <input
+                className="input input--text"
+                id="formInput#text"
+                type="text"
+                name="text"
+                placeholder="Tag"
+                onChange={(e) =>
+                  setTagName({ ...tagName, value: e.target.value })
+                }
+              />
+              <div
+                onClick={addTag}
+                className="tag tag--pill tag--sub settings__btn tag--lg project__tag__button"
+              >
+                <i className="im im-plus"></i> Add
+              </div>
+            </div>
+          )}
+          {!tagName.isValid && (
+            <Message
+              variant="alert alert--error"
+              variantStyle={{ width: "100%" }}
+              message={tagName.errorMessage}
+            />
+          )}
+          {tags.length !== 0 && (
+            <div className="order__area__project">
+              <DraggableArea
+                tags={tags}
+                render={({ tag, index }) => (
+                  <div className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button">
+                    {tag.name}
+                  </div>
+                )}
+                onChange={(tags) => setTags(tags)}
+              />
+            </div>
+          )}
+
           <div className="projectnew__actions">
-            <input className="btn btn--sub btn--lg" type="submit" value="Add" />
+            <input
+              className="btn btn--sub btn--lg"
+              type="submit"
+              value="Create"
+            />
             <input
               className="btn btn--sub btn--lg"
               type="button"

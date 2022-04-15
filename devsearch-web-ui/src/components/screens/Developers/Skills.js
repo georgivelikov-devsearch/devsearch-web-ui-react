@@ -192,7 +192,7 @@ function Skills({ developer, canEdit }) {
       </div>
       {isOrderPanelOpen && (
         <div>
-          <div className="oder__area">
+          <div className="order__area">
             <DraggableArea
               tags={tags}
               render={({ tag, index }) => (

@@ -117,13 +117,13 @@ function DeveloperEdit() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // Clear all previous values for validation
+    // Clear old validation state
     clearValidation();
 
     // Validation
-    let validationComplete = validateFields();
+    let isValid = validateFields();
 
-    if (!validationComplete) {
+    if (!isValid) {
       return;
     }
 

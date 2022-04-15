@@ -1064,7 +1064,7 @@ img {
   margin-bottom: 1rem;
 }
 
-.oder__area {
+.order__area {
   margin: 2rem 0rem;
   padding: 2rem;
   background-color: white !important;
@@ -1086,8 +1086,25 @@ img {
   padding: 1rem 1rem;
 }
 
+.project__tag__button {
+  margin-top: 1rem;
+}
+
+.project__form__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
 .projectInfo {
   margin-top: 1rem;
+}
+
+.order__area__project {
+  margin: 2rem 0rem;
+  padding: 2rem;
+  background-color: var(--color-bg) !important;
+  border-radius: 0.7rem;
+  border: 1px solid var(--color-light) !important;
 }
 
 .projectnew {
