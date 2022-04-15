@@ -1074,6 +1074,22 @@ img {
 /*=======================
   ProjectNew
 ========================*/
+.project__bold {
+  font-weight: bold
+}
+
+.project__floatright {
+  float: right;
+}
+
+.project_buttons {
+  padding: 1rem 1rem;
+}
+
+.projectInfo {
+  margin-top: 1rem;
+}
+
 .projectnew {
   width: 100%;
   position: relative;

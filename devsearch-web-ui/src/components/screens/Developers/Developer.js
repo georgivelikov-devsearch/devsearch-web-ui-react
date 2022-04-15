@@ -170,26 +170,16 @@ function Developer() {
                 <p className="devInfo__about">{developer.about}</p>
               </div>
               <Skills developer={developer} canEdit={canEdit} />
-              <div className="settings">
-                <h3 className="settings__title">Projects</h3>
-                {canEdit && (
-                  <Link
-                    className="tag tag--pill tag--sub settings__btn tag--lg"
-                    to={`/developers/${developer.username}/project/new`}
-                    state={{
-                      developerId: developer.developerId,
-                      authorUsername: developer.username,
-                      authorFullname:
-                        developer.firstName + " " + developer.lastName,
-                    }}
-                  >
-                    <i className="im im-plus"></i> Add Project
-                  </Link>
-                )}
-              </div>
-              {developer.projects && (
-                <DeveloperProjects projects={developer.projects} />
-              )}
+              <DeveloperProjects
+                projects={developer.projects}
+                canEdit={canEdit}
+                developerData={{
+                  developerId: developer.developerId,
+                  authorUsername: developer.username,
+                  authorFullname:
+                    developer.firstName + " " + developer.lastName,
+                }}
+              />
             </div>
           </div>
         </div>
