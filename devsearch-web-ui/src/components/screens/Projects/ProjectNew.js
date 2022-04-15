@@ -20,7 +20,6 @@ function ProjectNew() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
   const { developerId, authorUsername, authorFullname } = location.state;
   const { loading } = useSelector((state) => state.loading);
   const { projectNewError } = useSelector((state) => state.project);
@@ -50,6 +49,7 @@ function ProjectNew() {
     if (!UserService.isLoggedIn()) {
       UserService.doLogin();
     }
+    console.log("IN HERE !!!");
   }, [dispatch, navigate]);
 
   const addTag = () => {
@@ -65,10 +65,15 @@ function ProjectNew() {
         isValid: true,
         errorMessage: "",
       });
+      //Unique ID is needed for ordering tags properly. This ID shouldn't be send to Backend, cause it may cause problems.
+      let id = Math.floor(Math.random() * 10000000);
       let newTag = {
+        id,
         name: tagName.value,
       };
-      tags.push(newTag);
+      let newTags = [...tags];
+      newTags.push(newTag);
+      setTags(newTags);
       toggleAddTag();
     }
   };
