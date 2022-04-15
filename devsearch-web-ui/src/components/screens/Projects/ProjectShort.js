@@ -2,10 +2,10 @@ import React from "react";
 
 function ProjectShort({ project }) {
   return (
-    <div class="card project">
-      <div class="project">
+    <div className="card project">
+      <div className="project">
         <img
-          class="project__thumbnail"
+          className="project__thumbnail"
           src={
             project.projectPictureUrl
               ? project.projectPictureUrl

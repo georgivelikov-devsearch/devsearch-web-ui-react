@@ -19,11 +19,11 @@ function DeveloperProjects({ projects, canEdit, developerData }) {
           </Link>
         )}
       </div>
-      <div class="projectInfo">
-        <div class="grid grid--two">
+      <div className="projectInfo">
+        <div className="grid grid--two">
           {projects &&
             projects.map((project) => (
-              <div class="column">
+              <div className="column">
                 <ProjectShort
                   key={project.publicKey}
                   project={project}
