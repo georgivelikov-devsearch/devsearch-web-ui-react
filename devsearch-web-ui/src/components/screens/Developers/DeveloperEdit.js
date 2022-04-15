@@ -22,6 +22,10 @@ function DeveloperEdit() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const { error, developer } = useSelector((state) => state.developer);
+  const { loading } = useSelector((state) => state.loading);
+  const { editError } = useSelector((state) => state.developerEdit);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [shortIntro, setShortIntro] = useState("");
@@ -73,12 +77,6 @@ function DeveloperEdit() {
     useState(true);
   const [validSocialWebsiteErrMessage, setValidSocialWebsiteErrMessage] =
     useState(true);
-
-  const developerState = useSelector((state) => state.developer);
-  const { loading, error, developer } = developerState;
-
-  const editDeveloperState = useSelector((state) => state.developerEdit);
-  const { editLoading, editError } = editDeveloperState;
 
   useEffect(() => {
     if (!UserService.isLoggedIn()) {
@@ -344,7 +342,6 @@ function DeveloperEdit() {
             message={editError.message}
           />
         )}
-        {editLoading && <Loader />}
         {developer && (
           <form
             action="#"

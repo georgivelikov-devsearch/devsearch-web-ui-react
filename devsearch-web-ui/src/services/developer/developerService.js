@@ -1,6 +1,7 @@
 import axios from "axios";
 import UserService from "../identity/keycloak/keycloakUserService";
 import { getErrorResponse } from "../../utils/utils";
+import { loadingActions } from "../../reducers/slices/global/loading";
 import { developerActions } from "../../reducers/slices/developers/developer";
 import { developerEditActions } from "../../reducers/slices/developers/developerEdit";
 import { developerListActions } from "../../reducers/slices/developers/developerList";
@@ -20,7 +21,7 @@ import {
 
 export const getDeveloper = (username) => async (dispatch) => {
   try {
-    dispatch(developerActions.developerRequest());
+    dispatch(loadingActions.startLoading());
 
     const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
     const url = DEVELOPER_URL(username);
@@ -35,31 +36,36 @@ export const getDeveloper = (username) => async (dispatch) => {
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(developerActions.developerError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
   }
 };
 
 export const editDeveloper =
   (newDeveloperData, username, navigate) => async (dispatch) => {
     try {
-      dispatch(developerEditActions.developerEditRequest());
+      dispatch(loadingActions.startLoading());
 
       const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
       const url = DEVELOPER_URL(username);
       const response = await axios.put(url, newDeveloperData, config);
-      const editedDeveloper = response.data;
-
-      dispatch(developerEditActions.developerEditSuccess(editedDeveloper));
-
-      navigate(NAVIGATE_TO_PROFILE(username));
+      if (response.status === 200) {
+        dispatch(developerEditActions.developerEditErrorClear());
+        navigate(NAVIGATE_TO_PROFILE(username));
+      } else {
+        throw new Error("Unknown response!");
+      }
     } catch (error) {
       let errorRes = getErrorResponse(error, "Developers");
       dispatch(developerEditActions.developerEditError(errorRes));
+    } finally {
+      dispatch(loadingActions.stopLoading());
     }
   };
 
 export const getPublicDeveloper = (username) => async (dispatch) => {
   try {
-    dispatch(developerActions.developerPublicRequest());
+    dispatch(loadingActions.startLoading());
 
     const config = { headers: HEADERS_CONFIG };
     const url = PUBLIC_DEVELOPER_URL(username);
@@ -71,12 +77,14 @@ export const getPublicDeveloper = (username) => async (dispatch) => {
   } catch (error) {
     let errorRes = getErrorResponse(error, "DEVELOPER");
     dispatch(developerActions.developerPublicError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
   }
 };
 
 export const getDeveloperList = (page, searchText) => async (dispatch) => {
   try {
-    dispatch(developerListActions.developerListRequest);
+    dispatch(loadingActions.startLoading());
 
     const config = {
       headers: HEADERS_CONFIG,
@@ -92,6 +100,8 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(developerListActions.developerListError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
   }
 };
 

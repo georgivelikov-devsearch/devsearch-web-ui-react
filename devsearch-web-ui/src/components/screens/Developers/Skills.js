@@ -17,8 +17,10 @@ import {
 function Skills({ developer, canEdit }) {
   const dispatch = useDispatch();
 
-  const skillsState = useSelector((state) => state.skills);
-  const { loading, skillError, skillDescriptions } = skillsState;
+  const { loading } = useSelector((state) => state.loading);
+  const { skillError, skillDescriptions } = useSelector(
+    (state) => state.skills
+  );
 
   const [allSkillDescriptions, setAllSkillDescriptions] = useState([]);
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);

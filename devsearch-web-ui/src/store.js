@@ -7,6 +7,7 @@ import developerPublicReducer from "./reducers/slices/developers/developerPublic
 import developerSearchListReducer from "./reducers/slices/developers/developerSearchList";
 import skillReducer from "./reducers/slices/skills/skill";
 import projectReducer from "./reducers/slices/projects/project";
+import loadingReducer from "./reducers/slices/global/loading";
 
 // let comboRed = combineReducers({
 //   dev: developerReducer,
@@ -15,6 +16,7 @@ import projectReducer from "./reducers/slices/projects/project";
 
 const store = configureStore({
   reducer: {
+    loading: loadingReducer,
     developer: developerReducer,
     developerEdit: developerEditReducer,
     developerList: developerListReducer,

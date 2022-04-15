@@ -17,9 +17,8 @@ import DeveloperProjects from "../Projects/DeveloperProjects";
 function Developer() {
   const dispatch = useDispatch();
   const { username } = useParams();
-
-  const developerState = useSelector((state) => state.developer);
-  const { loading, error, developer } = developerState;
+  const { error, developer } = useSelector((state) => state.developer);
+  const { loading } = useSelector((state) => state.loading);
   const [canEdit, setCanEdit] = useState(false);
   const [canSendMessage, setCanSendMessage] = useState(false);
 

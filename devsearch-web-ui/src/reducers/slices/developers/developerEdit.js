@@ -4,14 +4,11 @@ const developerEditSlice = createSlice({
   name: "developerEdit",
   initialState: {},
   reducers: {
-    developerEditRequest(state, action) {
-      return { editLoading: true };
-    },
-    developerEditSuccess(state, action) {
-      return { editLoading: false };
-    },
     developerEditError(state, action) {
-      return { editLoading: false, editError: action.payload };
+      return { editError: action.payload };
+    },
+    developerEditErrorClear(state, action) {
+      return { editError: null };
     },
   },
 });

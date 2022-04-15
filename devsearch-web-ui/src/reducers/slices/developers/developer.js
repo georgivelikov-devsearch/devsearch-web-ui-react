@@ -4,23 +4,17 @@ const developerSlice = createSlice({
   name: "developer",
   initialState: {},
   reducers: {
-    developerRequest(state, action) {
-      return { loading: true };
-    },
     developerSuccess(state, action) {
-      return { loading: false, developer: action.payload };
+      return { developer: action.payload };
     },
     developerError(state, action) {
-      return { loading: false, error: action.payload };
-    },
-    developerPublicRequest(state, action) {
-      return { loading: true };
+      return { error: action.payload };
     },
     developerPublicSuccess(state, action) {
-      return { loading: false, developer: action.payload };
+      return { developer: action.payload };
     },
     developerPublicError(state, action) {
-      return { loading: false, error: action.payload };
+      return { error: action.payload };
     },
   },
 });
