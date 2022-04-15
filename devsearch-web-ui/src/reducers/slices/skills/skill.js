@@ -35,7 +35,6 @@ const skillSlice = createSlice({
 
       return {
         ...state,
-        loading: false,
         skillDescriptions: editedSkillDescriptions,
       };
     },
