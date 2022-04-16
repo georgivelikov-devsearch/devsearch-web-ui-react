@@ -23,7 +23,10 @@ function DeveloperProjects({ projects, canEdit, developerData }) {
         <div className="grid grid--two">
           {projects &&
             projects.map((project) => (
-              <div className="column" key={project.publicKey}>
+              <div
+                className="column project__maxheight"
+                key={project.publicKey}
+              >
                 <ProjectShort
                   project={project}
                   developerData={developerData}

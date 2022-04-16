@@ -1082,9 +1082,25 @@ img {
   float: right;
 }
 
+.relative_position {
+  position: relative;
+}
+
+.relative_bottom {
+  position: absolute;
+  bottom: 0;
+}
+
+/* .project_buttons {
+  padding: 1rem 1rem;
+  position: absolute;
+  bottom: 0;
+  margin: 1rem;
+} */
+
 .project_buttons {
   padding: 1rem 1rem;
-}
+} 
 
 .project__tag__button {
   margin-top: 1rem;
@@ -1095,6 +1111,9 @@ img {
   justify-content: space-between;
 }
 
+.project__maxheight {
+  height:100%
+}
 .projectInfo {
   margin-top: 1rem;
 }

@@ -48,6 +48,8 @@ function Skills({ developer, canEdit }) {
     let tagArray = [];
     skills.forEach((skillDescription) => {
       let newTag = {
+        // Unique 'id' is needed for ordering tags properly in 'DraggableArea'.
+        // This 'id' should be send to Backend with care, or shouldn't be send at all, cause it may cause problems.
         id: skillDescription.skillDescriptionId,
         skillDescriptionId: skillDescription.skillDescriptionId,
         position: skillDescription.position,

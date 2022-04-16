@@ -49,8 +49,7 @@ function ProjectNew() {
     if (!UserService.isLoggedIn()) {
       UserService.doLogin();
     }
-    console.log("IN HERE !!!");
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   const addTag = () => {
     if (!tagName.value) {
@@ -65,7 +64,8 @@ function ProjectNew() {
         isValid: true,
         errorMessage: "",
       });
-      //Unique ID is needed for ordering tags properly. This ID shouldn't be send to Backend, cause it may cause problems.
+      // Unique 'id' is needed for ordering tags properly in 'DraggableArea'.
+      // This 'id' should be send to Backend with care, or shouldn't be send at all, cause it may cause problems.
       let id = Math.floor(Math.random() * 10000000);
       let newTag = {
         id,
@@ -154,7 +154,7 @@ function ProjectNew() {
       projectName: projectName.value,
       about: about.value,
       sourceCode,
-      //tags,
+      tags,
     };
 
     dispatch(addProject(newData, navigate));

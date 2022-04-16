@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function ProjectShort({ project, developerData, canEdit }) {
   return (
-    <div>
+    <div className="project__maxheight">
       <div className="card project">
         <div className="project">
           <img
@@ -35,21 +35,21 @@ function ProjectShort({ project, developerData, canEdit }) {
             </div>
           </div>
         </div>
-      </div>
-      {canEdit && (
-        <div className="project_buttons">
-          <Link
-            className="tag tag--pill tag--sub settings__btn tag--lg"
-            to={`/developers/${developerData.authorUsername}/project/edit`}
-            state={developerData}
-          >
-            <i className="im"></i> Edit
-          </Link>
-          <div className="tag tag--pill tag--sub settings__btn tag--lg project__floatright">
-            <i className="im"></i> Delete{" "}
+        {canEdit && (
+          <div className="project_buttons">
+            <Link
+              className="tag tag--pill tag--sub settings__btn tag--lg"
+              to={`/developers/${developerData.authorUsername}/project/edit`}
+              state={developerData}
+            >
+              <i className="im"></i> Edit
+            </Link>
+            <div className="tag tag--pill tag--sub settings__btn tag--lg project__floatright">
+              <i className="im"></i> Delete{" "}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
