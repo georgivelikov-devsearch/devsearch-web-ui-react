@@ -6,10 +6,10 @@ import Loader from "../../common/Loader";
 
 function DeveloperList({ developers, error }) {
   return (
-    <div class="devlist">
-      <div class="container">
+    <div className="devlist">
+      <div className="container">
         {developers ? (
-          <div class="grid grid--three">
+          <div className="grid grid--three">
             {" "}
             {developers.map((developer) => (
               <PublicDeveloperShort

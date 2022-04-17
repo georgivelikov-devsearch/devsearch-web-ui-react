@@ -20,15 +20,37 @@ export const addProject = (newProject, successCallback) => async (dispatch) => {
     const response = await axios.post(PROJECT_URL, newProject, config);
 
     if (response.status === 200) {
-      dispatch(projectActions.projectNewErrorClear());
+      dispatch(projectActions.projectErrorClear());
       successCallback(NAVIGATE_TO_PROFILE(UserService.getUsername()));
     } else {
       throw new Error("Unknown response!");
     }
   } catch (error) {
     let errorRes = getErrorResponse(error, "Projects");
-    dispatch(projectActions.projectNewError(errorRes));
+    dispatch(projectActions.projectError(errorRes));
   } finally {
     dispatch(loadingActions.stopLoading());
   }
 };
+
+export const updateProject =
+  (updatedProject, successCallback) => async (dispatch) => {
+    try {
+      dispatch(loadingActions.startLoading());
+
+      const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
+      const response = await axios.put(PROJECT_URL, updatedProject, config);
+
+      if (response.status === 200) {
+        dispatch(projectActions.projectErrorClear());
+        successCallback(NAVIGATE_TO_PROFILE(UserService.getUsername()));
+      } else {
+        throw new Error("Unknown response!");
+      }
+    } catch (error) {
+      let errorRes = getErrorResponse(error, "Projects");
+      dispatch(projectActions.projectError(errorRes));
+    } finally {
+      dispatch(loadingActions.stopLoading());
+    }
+  };

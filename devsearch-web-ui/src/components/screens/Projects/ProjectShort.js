@@ -28,7 +28,7 @@ function ProjectShort({ project, developerData, canEdit }) {
             </p>
             <div className="project__tags">
               {project.tags.map((tag) => (
-                <span className="tag tag--pill tag--main">
+                <span key={tag.publicKey} className="tag tag--pill tag--main">
                   <small>{tag.name}</small>
                 </span>
               ))}
@@ -40,7 +40,7 @@ function ProjectShort({ project, developerData, canEdit }) {
             <Link
               className="tag tag--pill tag--sub settings__btn tag--lg"
               to={`/developers/${developerData.authorUsername}/project/edit`}
-              state={developerData}
+              state={{ project, developerData }}
             >
               <i className="im"></i> Edit
             </Link>

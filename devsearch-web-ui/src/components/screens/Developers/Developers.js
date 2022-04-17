@@ -67,7 +67,7 @@ function Developers() {
               onSubmit={submitSearch}
             >
               <div className="form__field">
-                <label for="formInput#search">Search Developers </label>
+                <label htmlFor="formInput#search">Search Developers </label>
                 <input
                   className="input input--text"
                   id="formInput#search"
@@ -80,7 +80,7 @@ function Developers() {
               </div>
 
               <input
-                class="btn btn--sub btn--lg"
+                className="btn btn--sub btn--lg"
                 type="submit"
                 value="Search"
               />

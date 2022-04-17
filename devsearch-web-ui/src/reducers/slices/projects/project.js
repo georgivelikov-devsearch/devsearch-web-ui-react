@@ -4,11 +4,11 @@ const projectSlice = createSlice({
   name: "project",
   initialState: {},
   reducers: {
-    projectNewErrorClear(state, actions) {
-      return { ...state, projectNewError: null };
+    projectErrorClear(state, actions) {
+      return { ...state, projectError: null };
     },
-    projectNewError(state, action) {
-      return { ...state, projectNewError: action.payload };
+    projectError(state, action) {
+      return { ...state, projectError: action.payload };
     },
   },
 });

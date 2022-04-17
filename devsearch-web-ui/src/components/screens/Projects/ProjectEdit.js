@@ -14,30 +14,34 @@ import { getBase64FromFile } from "../../../utils/utils";
 import { PROJECT_VALIDATION } from "../../../constants/projectConstants";
 import { NAVIGATE_TO_PROFILE } from "../../../constants/developerConstants";
 
-import { addProject } from "../../../services/project/projectService";
+import { updateProject } from "../../../services/project/projectService";
 
-function ProjectNew() {
+function ProjectEdit() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { developerId, authorUsername, authorFullname } = location.state;
+  const { project, developerData } = location.state;
+  const { developerId, authorUsername, authorFullname } = developerData;
   const { loading } = useSelector((state) => state.loading);
   const { projectError } = useSelector((state) => state.project);
-
   const [projectName, setProjectName] = useState({
-    value: "",
+    value: project.projectName,
     isValid: true,
     errorMessage: "",
   });
-
   const [about, setAbout] = useState({
-    value: "",
+    value: project.about,
     isValid: true,
     errorMessage: "",
   });
-
-  const [sourceCode, setSourceCode] = useState("");
-  const [tags, setTags] = useState([]);
+  const [sourceCode, setSourceCode] = useState(project.sourceCode);
+  const projectTags = [];
+  project.tags.forEach((tag) => {
+    // Tags need 'id' in DraggableArea
+    let editedTag = { ...tag, id: tag.tagId };
+    projectTags.push(editedTag);
+  });
+  const [tags, setTags] = useState(projectTags);
   const [tagName, setTagName] = useState({
     value: "",
     isValid: true,
@@ -81,6 +85,7 @@ function ProjectNew() {
         isValid: true,
         errorMessage: "",
       });
+
       // Unique 'id' is needed for ordering tags properly in 'DraggableArea'.
       // This 'id' should be send to Backend with care, or shouldn't be send at all, cause it may cause problems.
       let id = Math.floor(Math.random() * 10000000);
@@ -164,25 +169,26 @@ function ProjectNew() {
       return;
     }
 
-    const newData = {
+    const updatedData = {
       developerId,
       authorUsername,
       authorFullname,
+      projectId: project.projectId,
       projectName: projectName.value,
       about: about.value,
       sourceCode,
       tags,
     };
 
-    dispatch(addProject(newData, navigate));
+    dispatch(updateProject(updatedData, navigate));
   };
 
   return (
     <div className="projectnew">
       <div className="card">
         <div className="projectnew__header text-center">
-          <h3>Create Project</h3>
-          <p>Add your new project</p>
+          <h3>Edit Project</h3>
+          <p>Update project "{project.projectName}"</p>
         </div>
         {loading && <Loader />}
         {projectError && (
@@ -209,6 +215,7 @@ function ProjectNew() {
               type="text"
               name="text"
               placeholder="Project Name"
+              defaultValue={projectName.value}
               onChange={(e) =>
                 setProjectName({ ...projectName, value: e.target.value })
               }
@@ -229,6 +236,7 @@ function ProjectNew() {
               type="textarea"
               name="text"
               placeholder="About"
+              defaultValue={about.value}
               onChange={(e) => setAbout({ ...about, value: e.target.value })}
             />
           </div>
@@ -247,6 +255,7 @@ function ProjectNew() {
               type="text"
               name="text"
               placeholder="Source Code"
+              defaultValue={sourceCode.value}
               onChange={(e) => setSourceCode(e.target.value)}
             />
           </div>
@@ -294,10 +303,7 @@ function ProjectNew() {
               <DraggableArea
                 tags={tags}
                 render={({ tag, index }) => (
-                  <div
-                    key={tag.id}
-                    className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button"
-                  >
+                  <div className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button">
                     {tag.name}
                   </div>
                 )}
@@ -310,7 +316,7 @@ function ProjectNew() {
             <input
               className="btn btn--sub btn--lg"
               type="submit"
-              value="Create"
+              value="Update"
             />
             <input
               className="btn btn--sub btn--lg"
@@ -325,4 +331,4 @@ function ProjectNew() {
   );
 }
 
-export default ProjectNew;
+export default ProjectEdit;
