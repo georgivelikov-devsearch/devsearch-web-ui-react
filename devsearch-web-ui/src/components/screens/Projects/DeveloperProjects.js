@@ -12,8 +12,8 @@ function DeveloperProjects({ projects, canEdit, developerData }) {
         {canEdit && (
           <Link
             className="tag tag--pill tag--sub settings__btn tag--lg"
-            to={`/developers/${developerData.authorUsername}/project/new`}
-            state={developerData}
+            to={`/developers/${developerData.authorUsername}/project/form`}
+            state={{ developerData }}
           >
             <i className="im im-plus"></i> Add Project
           </Link>

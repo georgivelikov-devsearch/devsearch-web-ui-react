@@ -39,7 +39,7 @@ function ProjectShort({ project, developerData, canEdit }) {
           <div className="project_buttons">
             <Link
               className="tag tag--pill tag--sub settings__btn tag--lg"
-              to={`/developers/${developerData.authorUsername}/project/edit`}
+              to={`/developers/${developerData.authorUsername}/project/form`}
               state={{ project, developerData }}
             >
               <i className="im"></i> Edit
