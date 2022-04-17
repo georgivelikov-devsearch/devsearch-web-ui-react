@@ -24,36 +24,49 @@ function ProjectEdit() {
   const { developerId, authorUsername, authorFullname } = developerData;
   const { loading } = useSelector((state) => state.loading);
   const { projectError } = useSelector((state) => state.project);
-  const [projectName, setProjectName] = useState({
-    value: project.projectName,
-    isValid: true,
-    errorMessage: "",
-  });
-  const [about, setAbout] = useState({
-    value: project.about,
-    isValid: true,
-    errorMessage: "",
-  });
-  const [sourceCode, setSourceCode] = useState(project.sourceCode);
-  const projectTags = [];
-  project.tags.forEach((tag) => {
-    // Tags need 'id' in DraggableArea
-    let editedTag = { ...tag, id: tag.tagId };
-    projectTags.push(editedTag);
-  });
-  const [tags, setTags] = useState(projectTags);
-  const [tagName, setTagName] = useState({
-    value: "",
-    isValid: true,
-    errorMessage: "",
-  });
+
+  console.log("HERE-1!!!");
+  const [projectName, setProjectName] = useState({});
+  const [about, setAbout] = useState({});
+  const [sourceCode, setSourceCode] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tagName, setTagName] = useState({});
   const [isAddTagOpen, setIsAddTagOpen] = useState(false);
 
   useEffect(() => {
     if (!UserService.isLoggedIn()) {
       UserService.doLogin();
     }
-  }, [dispatch]);
+
+    setProjectName({
+      value: project.projectName,
+      isValid: true,
+      errorMessage: "",
+    });
+
+    setAbout({
+      value: project.about,
+      isValid: true,
+      errorMessage: "",
+    });
+
+    setSourceCode(project.sourceCode);
+
+    let projectTags = [];
+    project.tags.forEach((tag) => {
+      // Tags need 'id' in DraggableArea
+      console.log("HERE-2!!!");
+      let editedTag = { ...tag, id: tag.tagId };
+      projectTags.push(editedTag);
+    });
+    setTags(projectTags);
+
+    setTagName({
+      value: "",
+      isValid: true,
+      errorMessage: "",
+    });
+  }, [dispatch, project]);
 
   const addTag = () => {
     if (!tagName.value) {
