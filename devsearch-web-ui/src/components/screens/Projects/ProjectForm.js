@@ -299,7 +299,7 @@ function ProjectForm() {
               type="text"
               name="text"
               placeholder="Source Code"
-              defaultValue={sourceCode.value}
+              defaultValue={sourceCode}
               onChange={(e) => setSourceCode(e.target.value)}
             />
           </div>
