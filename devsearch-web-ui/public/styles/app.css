@@ -1091,6 +1091,9 @@ img {
   bottom: 0;
 }
 
+.icon_margin{
+  margin-left: 0.5rem;
+}
 /* .project_buttons {
   padding: 1rem 1rem;
   position: absolute;

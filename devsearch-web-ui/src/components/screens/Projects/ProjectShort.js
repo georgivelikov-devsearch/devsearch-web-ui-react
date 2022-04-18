@@ -1,7 +1,16 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function ProjectShort({ project, developerData, canEdit }) {
+  const [projectTags, setProjectTags] = useState([]);
+
+  useEffect(() => {
+    let tagsForSort = [...project.tags];
+    tagsForSort.sort((a, b) => a.position - b.position);
+    setProjectTags(tagsForSort);
+  }, [project]);
+
   return (
     <div className="project__maxheight">
       <div className="card project">
@@ -27,7 +36,7 @@ function ProjectShort({ project, developerData, canEdit }) {
               Votes)
             </p>
             <div className="project__tags">
-              {project.tags.map((tag) => (
+              {projectTags.map((tag) => (
                 <span key={tag.publicKey} className="tag tag--pill tag--main">
                   <small>{tag.name}</small>
                 </span>

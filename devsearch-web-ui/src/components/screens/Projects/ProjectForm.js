@@ -76,13 +76,27 @@ function ProjectForm() {
       let projectTags = [];
       project.tags.forEach((tag) => {
         // Tags need 'id' in DraggableArea
-        console.log("HERE-2!!!");
         let editedTag = { ...tag, id: tag.tagId };
         projectTags.push(editedTag);
       });
+      projectTags.sort((a, b) => a.position - b.position);
       setTags(projectTags);
     }
   }, [dispatch, project]);
+
+  const removeTag = (id) => {
+    let searchIndex = -1;
+    for (var i = 0; i < tags.length; i++) {
+      if (tags[i].id === id) {
+        searchIndex = i;
+        break;
+      }
+    }
+
+    let editedTags = [...tags];
+    editedTags.splice(searchIndex, 1);
+    setTags(editedTags);
+  };
 
   const addTag = () => {
     if (!tagName.value) {
@@ -349,6 +363,10 @@ function ProjectForm() {
                 render={({ tag, index }) => (
                   <div className="tag tag--pill tag--sub settings__btn tag--lg skill__form__button">
                     {tag.name}
+                    <i
+                      className="im im-x-mark-circle-o icon_margin"
+                      onClick={() => removeTag(tag.id)}
+                    ></i>
                   </div>
                 )}
                 onChange={(tags) => setTags(tags)}
