@@ -39,3 +39,4 @@ export const ORDER_SKILLS_URL = (username) => {
 
 // Project URLs
 export const PROJECT_URL = `${URL}/projects`;
+export const PROJECTS_URL = `${URL}/projects/public/all`;

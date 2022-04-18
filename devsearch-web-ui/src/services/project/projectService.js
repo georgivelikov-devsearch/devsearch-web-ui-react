@@ -10,6 +10,7 @@ import {
   HEADERS_CONFIG,
   AUTH_HEADERS_CONFIG,
   PROJECT_URL,
+  PROJECTS_URL,
 } from "../../constants/urlConstants";
 
 export const addProject = (newProject, successCallback) => async (dispatch) => {
@@ -54,3 +55,26 @@ export const updateProject =
       dispatch(loadingActions.stopLoading());
     }
   };
+
+export const getAllProjects = (page, searchText) => async (dispatch) => {
+  try {
+    dispatch(loadingActions.startLoading());
+
+    const config = {
+      headers: HEADERS_CONFIG,
+      params: {
+        page: page,
+        searchText: searchText,
+      },
+    };
+
+    const response = await axios.get(PROJECTS_URL, config);
+
+    dispatch(projectActions.projectListSuccess(response.data));
+  } catch (error) {
+    let errorRes = getErrorResponse(error, "Projects");
+    dispatch(projectActions.projectListError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
+  }
+};

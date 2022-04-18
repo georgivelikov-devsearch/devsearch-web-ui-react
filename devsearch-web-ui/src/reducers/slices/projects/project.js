@@ -10,6 +10,20 @@ const projectSlice = createSlice({
     projectError(state, action) {
       return { ...state, projectError: action.payload };
     },
+    projectListSuccess(state, action) {
+      return {
+        ...state,
+        projects: action.payload.projects,
+        totalPages: action.payload.totalPages,
+        searchParameters: action.searchParameters,
+      };
+    },
+    projectListError(state, action) {
+      return {
+        ...state,
+        projectListError: action.payload,
+      };
+    },
   },
 });
 
