@@ -1094,6 +1094,10 @@ img {
 .icon_margin{
   margin-left: 0.5rem;
 }
+
+.full_width{
+  width: 100%;
+}
 /* .project_buttons {
   padding: 1rem 1rem;
   position: absolute;

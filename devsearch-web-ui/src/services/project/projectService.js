@@ -69,7 +69,6 @@ export const getAllProjects = (page, searchText) => async (dispatch) => {
     };
 
     const response = await axios.get(PROJECTS_URL, config);
-
     dispatch(projectActions.projectListSuccess(response.data));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Projects");

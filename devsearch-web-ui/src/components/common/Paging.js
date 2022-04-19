@@ -65,8 +65,8 @@ function Paging({ totalPages, currentPage, root, search }) {
   }
 
   return (
-    <div class="pagination">
-      <ul class="container">
+    <div className="pagination">
+      <ul className="container">
         {/* <li>
           {currentPage == 1 ? (
             <Link to="" className="btn btn--disabled">

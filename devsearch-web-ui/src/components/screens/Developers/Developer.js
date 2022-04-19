@@ -23,6 +23,10 @@ function Developer() {
   const [canSendMessage, setCanSendMessage] = useState(false);
 
   useEffect(() => {
+    if (error) {
+      console.log("ERRRRRRRRRRRRRORR");
+      console.log(error);
+    }
     if (UserService.isLoggedIn()) {
       if (username === UserService.getUsername()) {
         setCanEdit(true);

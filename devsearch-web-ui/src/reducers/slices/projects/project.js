@@ -16,6 +16,7 @@ const projectSlice = createSlice({
         projects: action.payload.projects,
         totalPages: action.payload.totalPages,
         searchParameters: action.searchParameters,
+        projectListError: null,
       };
     },
     projectListError(state, action) {
