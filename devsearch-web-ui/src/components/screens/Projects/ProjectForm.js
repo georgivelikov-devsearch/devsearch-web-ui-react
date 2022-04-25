@@ -33,7 +33,6 @@ function ProjectForm() {
   const { loading } = useSelector((state) => state.loading);
   const { projectError } = useSelector((state) => state.project);
 
-  console.log("HERE-1!!!");
   const [projectName, setProjectName] = useState({
     value: "",
     isValid: true,
@@ -52,6 +51,13 @@ function ProjectForm() {
     errorMessage: "",
   });
   const [isAddTagOpen, setIsAddTagOpen] = useState(false);
+
+  const [projectPictureUrl, setProjectPictureUrl] = useState("");
+  // used for upload
+  const [newProjectPictureUrl, setNewProjectPictureUrl] = useState("");
+  // this is done because there is no need to reupload the picture to
+  //the File Service every time when update request is send to the backend (it is limited free account)
+  const [newProjectPictureUpload, setNewProjectPictureUpload] = useState(false);
 
   useEffect(() => {
     if (!UserService.isLoggedIn()) {
@@ -72,6 +78,8 @@ function ProjectForm() {
       });
 
       setSourceCode(project.sourceCode);
+
+      setProjectPictureUrl(project.projectPictureUrl);
 
       let projectTags = [];
       project.tags.forEach((tag) => {
@@ -199,6 +207,14 @@ function ProjectForm() {
     navigate(NAVIGATE_TO_PROFILE(UserService.getUsername()));
   };
 
+  const uploadProjectImage = async (e) => {
+    let file = e.target.files[0];
+    let base64Picture = await getBase64FromFile(file);
+
+    setProjectPictureUrl(base64Picture);
+    setNewProjectPictureUpload(true);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -220,6 +236,8 @@ function ProjectForm() {
       about: about.value,
       sourceCode,
       tags,
+      projectPictureUrl,
+      newProjectPictureUpload,
     };
 
     if (isNewProject) {
@@ -260,6 +278,28 @@ function ProjectForm() {
             message={projectError.message}
           />
         )}
+        <div className="form__field">
+          <label htmlFor="formInput#image">
+            <img
+              className="avatar avatar--xl dev__avatar"
+              src={
+                projectPictureUrl
+                  ? projectPictureUrl
+                  : "../../../images/project-default.jpg"
+              }
+              alt=""
+            />
+          </label>
+          <input
+            style={{ display: "none" }}
+            className="input input--text"
+            id="formInput#image"
+            type="file"
+            name="file"
+            accept="image/png, image/jpeg"
+            onChange={(e) => uploadProjectImage(e)}
+          />
+        </div>
         <form
           action="#"
           className="form projectnew__form"
