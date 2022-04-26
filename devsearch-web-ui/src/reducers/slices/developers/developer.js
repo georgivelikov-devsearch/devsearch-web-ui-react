@@ -19,6 +19,26 @@ const developerSlice = createSlice({
     developerPublicError(state, action) {
       return { error: action.payload };
     },
+    developerRemoveProjectFromProjectList(state, action) {
+      let { projectId } = action.payload;
+      let projectsArray = [...state.developer.projects];
+      let searchIndex = -1;
+      for (var i = 0; i < projectsArray.length; i++) {
+        if (projectsArray[i].projectId === projectId) {
+          searchIndex = i;
+          break;
+        }
+      }
+
+      projectsArray.splice(searchIndex, 1);
+      let newDev = { ...state.developer };
+      newDev.projects = projectsArray;
+      console.log(newDev);
+      return {
+        ...state,
+        developer: newDev,
+      };
+    },
   },
 });
 

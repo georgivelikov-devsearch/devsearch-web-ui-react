@@ -3,6 +3,7 @@ import UserService from "../identity/keycloak/keycloakUserService";
 import { getErrorResponse } from "../../utils/utils";
 import { loadingActions } from "../../reducers/slices/global/loading";
 import { projectActions } from "../../reducers/slices/projects/project";
+import { developerActions } from "../../reducers/slices/developers/developer";
 
 import { NAVIGATE_TO_PROFILE } from "../../constants/developerConstants";
 
@@ -91,6 +92,9 @@ export const deleteProject = (projectId) => async (dispatch) => {
 
     if (response.status === 200) {
       dispatch(projectActions.projectErrorClear());
+      dispatch(
+        developerActions.developerRemoveProjectFromProjectList({ projectId })
+      );
     } else {
       throw new Error("Unknown response!");
     }
