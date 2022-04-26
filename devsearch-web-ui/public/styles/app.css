@@ -494,6 +494,9 @@ img {
   font-size: 1.4rem;
   font-style: italic;
 }
+.project__author:hover {
+  text-decoration: underline;
+}
 
 .project--rating {
   margin-bottom: 1.6em;

@@ -23,6 +23,7 @@ function Developer() {
   const [canSendMessage, setCanSendMessage] = useState(false);
 
   useEffect(() => {
+    console.log("In Developer");
     if (error) {
       console.log(error);
     }

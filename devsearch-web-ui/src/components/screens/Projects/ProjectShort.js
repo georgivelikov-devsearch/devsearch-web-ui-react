@@ -30,26 +30,31 @@ function ProjectShort({ project, developerData, canEdit }) {
           }
           alt="project thumbnail"
         />
-        <div className="card__body">
-          <h3 className="project__title">{project.projectName}</h3>
-          <p>
-            <a className="project__author" href="profile.html">
-              {project.authorFullname}
-            </a>
-          </p>
-          <p className="project--rating">
-            <span className="project__bold">92%</span> Postitive Feedback (62
-            Votes)
-          </p>
-          <div className="project__tags">
-            {projectTags.map((tag) => (
-              <span key={tag.publicKey} className="tag tag--pill tag--main">
-                <small>{tag.name}</small>
-              </span>
-            ))}
-          </div>
-        </div>
       </Link>
+      <div className="card__body">
+        <Link to="/" className="project full_width">
+          <h3 className="project__title">{project.projectName}</h3>
+        </Link>
+        <p>
+          <Link
+            to={`/developers/${project.authorUsername}`}
+            className="project__author"
+          >
+            {project.authorFullname}
+          </Link>
+        </p>
+        <p className="project--rating">
+          <span className="project__bold">92%</span> Postitive Feedback (62
+          Votes)
+        </p>
+        <div className="project__tags">
+          {projectTags.map((tag) => (
+            <span key={tag.publicKey} className="tag tag--pill tag--main">
+              <small>{tag.name}</small>
+            </span>
+          ))}
+        </div>
+      </div>
       {canEdit && (
         <div className="project_buttons">
           <Link
