@@ -1,8 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { deleteProject } from "../../../services/project/projectService";
+import { useDispatch } from "react-redux";
 
 function ProjectShort({ project, developerData, canEdit }) {
+  const dispatch = useDispatch();
   const [projectTags, setProjectTags] = useState([]);
 
   useEffect(() => {
@@ -10,6 +13,10 @@ function ProjectShort({ project, developerData, canEdit }) {
     tagsForSort.sort((a, b) => a.position - b.position);
     setProjectTags(tagsForSort);
   }, [project]);
+
+  const deleteProjectHandler = (projectId) => {
+    dispatch(deleteProject(projectId));
+  };
 
   return (
     <div className="column card">
@@ -52,7 +59,10 @@ function ProjectShort({ project, developerData, canEdit }) {
           >
             <i className="im"></i> Edit
           </Link>
-          <div className="tag tag--pill tag--sub settings__btn tag--lg project__floatright">
+          <div
+            className="tag tag--pill tag--sub settings__btn tag--lg project__floatright"
+            onClick={() => deleteProjectHandler(project.projectId)}
+          >
             <i className="im"></i> Delete{" "}
           </div>
         </div>

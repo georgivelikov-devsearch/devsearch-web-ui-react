@@ -6,8 +6,6 @@ import Developers from "./components/screens/Developers/Developers";
 import DeveloperEdit from "./components/screens/Developers/DeveloperEdit";
 import Developer from "./components/screens/Developers/Developer";
 import Projects from "./components/screens/Projects/Projects";
-import ProjectNew from "./components/screens/Projects/ProjectNew";
-import ProjectEdit from "./components/screens/Projects/ProjectEdit";
 import ProjectForm from "./components/screens/Projects/ProjectForm";
 
 function App() {
@@ -24,14 +22,6 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/developers/:username" element={<Developer />} />
-          <Route
-            path="/developers/:username/project/new"
-            element={<ProjectNew />}
-          />
-          <Route
-            path="/developers/:username/project/edit"
-            element={<ProjectEdit />}
-          />
           <Route
             path="/developers/:username/project/form"
             element={<ProjectForm />}

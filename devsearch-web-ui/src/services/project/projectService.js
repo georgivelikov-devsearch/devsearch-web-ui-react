@@ -11,6 +11,7 @@ import {
   AUTH_HEADERS_CONFIG,
   PROJECT_URL,
   PROJECTS_URL,
+  DELETE_PROJECT_URL,
 } from "../../constants/urlConstants";
 
 export const addProject = (newProject, successCallback) => async (dispatch) => {
@@ -73,6 +74,29 @@ export const getAllProjects = (page, searchText) => async (dispatch) => {
   } catch (error) {
     let errorRes = getErrorResponse(error, "Projects");
     dispatch(projectActions.projectListError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
+  }
+};
+
+export const deleteProject = (projectId) => async (dispatch) => {
+  try {
+    dispatch(loadingActions.startLoading());
+
+    const config = {
+      headers: AUTH_HEADERS_CONFIG(UserService.getToken()),
+    };
+    let deleteUrl = DELETE_PROJECT_URL(projectId);
+    const response = await axios.delete(deleteUrl, config);
+
+    if (response.status === 200) {
+      dispatch(projectActions.projectErrorClear());
+    } else {
+      throw new Error("Unknown response!");
+    }
+  } catch (error) {
+    let errorRes = getErrorResponse(error, "Projects");
+    dispatch(projectActions.projectError(errorRes));
   } finally {
     dispatch(loadingActions.stopLoading());
   }

@@ -5,6 +5,20 @@ import ProjectShort from "./ProjectShort";
 import { Link } from "react-router-dom";
 
 function DeveloperProjects({ projects, canEdit, developerData }) {
+  // const removeProjectFromList = (projectId) => {
+  //   let projectsArray = [...projects];
+  //   let searchIndex = -1;
+  //   for (var i = 0; i < projects.length; i++) {
+  //     if (projects[i].projectId === projectId) {
+  //       searchIndex = i;
+  //       break;
+  //     }
+  //   }
+
+  //   projectsArray.splice(searchIndex, 1);
+  //   setProjects(projectsArray);
+  // };
+
   return (
     <div>
       <div className="settings">

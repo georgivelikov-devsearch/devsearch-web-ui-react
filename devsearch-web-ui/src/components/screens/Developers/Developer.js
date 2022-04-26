@@ -24,7 +24,6 @@ function Developer() {
 
   useEffect(() => {
     if (error) {
-      console.log("ERRRRRRRRRRRRRORR");
       console.log(error);
     }
     if (UserService.isLoggedIn()) {
