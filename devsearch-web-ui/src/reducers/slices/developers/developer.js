@@ -33,7 +33,7 @@ const developerSlice = createSlice({
       projectsArray.splice(searchIndex, 1);
       let newDev = { ...state.developer };
       newDev.projects = projectsArray;
-      console.log(newDev);
+
       return {
         ...state,
         developer: newDev,
