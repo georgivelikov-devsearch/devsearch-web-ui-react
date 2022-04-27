@@ -24,7 +24,7 @@ function Projects() {
   useEffect(() => {
     const page = searchParams.get("page");
     const search = searchParams.get("search");
-    console.log(page);
+
     let searchText = "";
     // if (searchParameters && searchParameters.searchText && search) {
     //   searchText = searchParameters.searchText;

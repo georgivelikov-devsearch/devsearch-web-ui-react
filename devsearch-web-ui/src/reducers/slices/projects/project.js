@@ -25,6 +25,13 @@ const projectSlice = createSlice({
         projectListError: action.payload,
       };
     },
+    singleProject(state, action) {
+      const newProject = action.payload;
+      return {
+        state,
+        project: newProject,
+      };
+    },
   },
 });
 

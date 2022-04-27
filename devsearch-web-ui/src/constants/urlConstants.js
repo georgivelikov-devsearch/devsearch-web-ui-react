@@ -43,3 +43,6 @@ export const PROJECTS_URL = `${URL}/projects/public/all`;
 export const DELETE_PROJECT_URL = (projectId) => {
   return `${PROJECT_URL}/${projectId}`;
 };
+export const GET_PROJECT_URL = (projectName) => {
+  return `${PROJECT_URL}/${projectName}`;
+};

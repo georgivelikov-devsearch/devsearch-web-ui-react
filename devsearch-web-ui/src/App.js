@@ -7,6 +7,7 @@ import DeveloperEdit from "./components/screens/Developers/DeveloperEdit";
 import Developer from "./components/screens/Developers/Developer";
 import Projects from "./components/screens/Projects/Projects";
 import ProjectForm from "./components/screens/Projects/ProjectForm";
+import Project from "./components/screens/Projects/Project";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/developers/:username" element={<Developer />} />
+          <Route
+            path="/developers/:username/:projectName"
+            element={<Project />}
+          />
           <Route
             path="/developers/:username/project/form"
             element={<ProjectForm />}

@@ -13,6 +13,7 @@ import {
   PROJECT_URL,
   PROJECTS_URL,
   DELETE_PROJECT_URL,
+  GET_PROJECT_URL,
 } from "../../constants/urlConstants";
 
 export const addProject = (newProject, successCallback) => async (dispatch) => {
@@ -95,6 +96,30 @@ export const deleteProject = (projectId) => async (dispatch) => {
       dispatch(
         developerActions.developerRemoveProjectFromProjectList({ projectId })
       );
+    } else {
+      throw new Error("Unknown response!");
+    }
+  } catch (error) {
+    let errorRes = getErrorResponse(error, "Projects");
+    dispatch(projectActions.projectError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
+  }
+};
+
+export const getSingleProject = (projectName) => async (dispatch) => {
+  try {
+    dispatch(loadingActions.startLoading());
+
+    const config = {
+      headers: HEADERS_CONFIG,
+    };
+    let getProjectUrl = GET_PROJECT_URL(projectName);
+    const response = await axios.get(getProjectUrl, config);
+
+    if (response.status === 200) {
+      dispatch(projectActions.projectErrorClear());
+      dispatch(projectActions.singleProject(response.data));
     } else {
       throw new Error("Unknown response!");
     }

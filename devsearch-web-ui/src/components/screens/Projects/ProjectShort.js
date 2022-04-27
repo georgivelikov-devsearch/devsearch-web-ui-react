@@ -1,11 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { deleteProject } from "../../../services/project/projectService";
-import { useDispatch } from "react-redux";
 
 function ProjectShort({ project, developerData, canEdit }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [projectTags, setProjectTags] = useState([]);
 
   useEffect(() => {
@@ -20,7 +22,10 @@ function ProjectShort({ project, developerData, canEdit }) {
 
   return (
     <div className="column card">
-      <Link to="/" className="project full_width">
+      <Link
+        to={`/developers/${project.authorUsername}/${project.projectName}`}
+        className="project full_width project__hover"
+      >
         <img
           className="project__thumbnail"
           src={
@@ -32,7 +37,10 @@ function ProjectShort({ project, developerData, canEdit }) {
         />
       </Link>
       <div className="card__body">
-        <Link to="/" className="project full_width">
+        <Link
+          to={`/developers/${project.authorUsername}/${project.projectName}`}
+          className="project full_width project__hover"
+        >
           <h3 className="project__title">{project.projectName}</h3>
         </Link>
         <p>
