@@ -17,6 +17,7 @@ import {
   DEVELOPER_URL,
   PUBLIC_DEVELOPER_URL,
   DEVELOPER_LIST_URL,
+  POST_COMMENT_URL,
 } from "../../constants/urlConstants";
 
 export const getDeveloper = (username) => async (dispatch) => {
@@ -110,3 +111,26 @@ export const updateSearchForPublicDeveloperList =
       developerSearchListActions.updateSearchForDeveloperList({ searchText })
     );
   };
+
+export const addComment = (newComment) => async (dispatch) => {
+  try {
+    dispatch(loadingActions.startLoading());
+
+    const config = {
+      headers: AUTH_HEADERS_CONFIG(UserService.getToken()),
+    };
+
+    const response = await axios.post(POST_COMMENT_URL, newComment, config);
+
+    if (response.status === 200) {
+      dispatch(projectActions.addCommentToProject(response.data));
+    } else {
+      throw new Error("Unknown response!");
+    }
+  } catch (error) {
+    let errorRes = getErrorResponse(error, "Projects");
+    dispatch(projectActions.projectError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
+  }
+};

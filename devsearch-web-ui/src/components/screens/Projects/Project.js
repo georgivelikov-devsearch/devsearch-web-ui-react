@@ -1,21 +1,66 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSingleProject } from "../../../services/project/projectService";
+import { addComment } from "../../../services/developer/developerService";
+
 import { Link } from "react-router-dom";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
+import Comment from "./Comment";
 
 function Project() {
   const dispatch = useDispatch();
+  const commentRef = useRef(null);
   const { projectName } = useParams();
   const { loading } = useSelector((state) => state.loading);
   const { project } = useSelector((state) => state.project);
+  const [commentText, setCommentText] = useState("");
+  const [positiveFeedback, setPositiveFeedback] = useState(true);
 
   useEffect(() => {
     dispatch(getSingleProject(projectName));
   }, []);
+
+  const addCommentHandler = (e) => {
+    e.preventDefault();
+    const newComment = {
+      commentText,
+      projectId: project.projectId,
+      positiveFeedback,
+    };
+
+    dispatch(addComment(newComment));
+    setCommentText("");
+    commentRef.current.value = "";
+  };
+
+  const calculateRating = (project) => {
+    if (project.comments.length === 0) {
+      return "There is no feedback yet. Be the first to comment";
+    }
+
+    let totalCount = project.comments.length;
+    let positiveFeedbackCounter = 0;
+    let negativeFeedbackCounter = 0;
+
+    project.comments.forEach((c) => {
+      if (c.positiveFeedback) {
+        positiveFeedbackCounter++;
+      } else {
+        negativeFeedbackCounter--;
+      }
+    });
+
+    let rating = Math.round((positiveFeedback / totalCount) * 100);
+    let returnVal = `${rating}% Postitive Feedback (${totalCount} Votes)`;
+    if (totalCount === 1) {
+      returnVal = `${rating}% Postitive Feedback (${totalCount} Vote)`;
+    }
+
+    return returnVal;
+  };
 
   return (
     <main className="singleProject my-md">
@@ -45,7 +90,7 @@ function Project() {
                   }
                   target="_blank"
                 >
-                  <i class="im im-external-link"></i>Source Code
+                  <i className="im im-external-link"></i>Source Code
                 </a>
               )}
             </div>
@@ -71,11 +116,14 @@ function Project() {
 
               <div className="comments">
                 <h3 className="singleProject__subtitle">Feedback</h3>
-                <h5 className="project--rating">
-                  36% Postitive Feedback (18 Votes)
-                </h5>
+                <h5 className="project--rating">{calculateRating(project)}</h5>
 
-                <form className="form" action="#" method="POST">
+                <form
+                  onSubmit={addCommentHandler}
+                  className="form"
+                  action="#"
+                  method="POST"
+                >
                   <div className="form__field">
                     <label htmlFor="formInput#textarea">Comments: </label>
                     <textarea
@@ -83,14 +131,22 @@ function Project() {
                       name="message"
                       id="formInput#textarea"
                       placeholder="Write your comments here..."
+                      ref={commentRef}
+                      onChange={(e) => setCommentText(e.target.value)}
                     ></textarea>
                   </div>
                   <input
                     className="btn btn--sub btn--lg"
                     type="submit"
-                    value="Comments"
+                    value="Comment"
                   />
                 </form>
+                <div className="commentList">
+                  {project.comments &&
+                    project.comments.map((c) => (
+                      <Comment key={c.publicKey} comment={c} />
+                    ))}
+                </div>
               </div>
             </div>
           </div>

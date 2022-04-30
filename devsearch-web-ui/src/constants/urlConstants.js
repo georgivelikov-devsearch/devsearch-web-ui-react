@@ -26,6 +26,8 @@ export const PUBLIC_DEVELOPER_URL = (username) => {
 
 export const DEVELOPER_LIST_URL = `${URL}/developers/public/all`;
 
+export const POST_COMMENT_URL = `${URL}/developers/comment`;
+
 // Skill URLs
 export const SKILL_URL = `${URL}/skills`;
 

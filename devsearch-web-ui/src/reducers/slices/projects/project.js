@@ -32,6 +32,17 @@ const projectSlice = createSlice({
         project: newProject,
       };
     },
+    addCommentToProject(state, action) {
+      const newComment = action.payload;
+      let newProject = { ...state.project };
+      let projectComments = [...newProject.comments];
+      projectComments.push(newComment);
+      newProject.comments = projectComments;
+      return {
+        state,
+        project: newProject,
+      };
+    },
   },
 });
 
