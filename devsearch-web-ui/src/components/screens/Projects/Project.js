@@ -6,7 +6,7 @@ import { getSingleProject } from "../../../services/project/projectService";
 import { addComment } from "../../../services/developer/developerService";
 
 import { Link } from "react-router-dom";
-import Message from "../../common/Message";
+import StartRating from "../../common/StartRating";
 import Loader from "../../common/Loader";
 import Comment from "./Comment";
 
@@ -17,7 +17,7 @@ function Project() {
   const { loading } = useSelector((state) => state.loading);
   const { project } = useSelector((state) => state.project);
   const [commentText, setCommentText] = useState("");
-  const [positiveFeedback, setPositiveFeedback] = useState(true);
+  const [rating, setRating] = useState(5);
 
   useEffect(() => {
     dispatch(getSingleProject(projectName));
@@ -25,14 +25,17 @@ function Project() {
 
   const addCommentHandler = (e) => {
     e.preventDefault();
+    console.log("Rating: " + rating);
     const newComment = {
       commentText,
       projectId: project.projectId,
-      positiveFeedback,
+      rating,
     };
 
     dispatch(addComment(newComment));
-    setCommentText("");
+    // Both don't work
+    // setCommentText("");
+    // setRating(5);
     commentRef.current.value = "";
   };
 
@@ -42,21 +45,21 @@ function Project() {
     }
 
     let totalCount = project.comments.length;
-    let positiveFeedbackCounter = 0;
-    let negativeFeedbackCounter = 0;
+    let totalRating = 0;
 
     project.comments.forEach((c) => {
-      if (c.positiveFeedback) {
-        positiveFeedbackCounter++;
-      } else {
-        negativeFeedbackCounter--;
-      }
+      totalRating += c.rating;
     });
 
-    let rating = Math.round((positiveFeedback / totalCount) * 100);
-    let returnVal = `${rating}% Postitive Feedback (${totalCount} Votes)`;
+    let averageRating = totalRating / totalCount;
+    let returnVal = `Project Rating: ${averageRating.toFixed(
+      2
+    )} (${totalCount} Votes)`;
+
     if (totalCount === 1) {
-      returnVal = `${rating}% Postitive Feedback (${totalCount} Vote)`;
+      returnVal = `Rroject Rating: ${averageRating.toFixed(
+        2
+      )} (${totalCount} Vote)`;
     }
 
     return returnVal;
@@ -117,7 +120,7 @@ function Project() {
               <div className="comments">
                 <h3 className="singleProject__subtitle">Feedback</h3>
                 <h5 className="project--rating">{calculateRating(project)}</h5>
-
+                <StartRating defaultRating={5} propagateRating={setRating} />
                 <form
                   onSubmit={addCommentHandler}
                   className="form"

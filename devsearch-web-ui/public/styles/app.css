@@ -1220,3 +1220,39 @@ img {
   font-size: 2rem;
   font-weight: 500;
 }
+
+/*=======================
+  StarRating
+========================*/
+.star_rating button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.star_rating_on {
+  color:#FFD700;
+}
+
+.star_rating_off {
+  color: #ccc;
+  
+}
+
+.star_size_small {
+  font-size: 2rem;
+}
+
+.star_size_large {
+  font-size: 5rem;
+}
+
+.star_float_right {
+  float: right
+}
+
+.star_float_left {
+  display: inline;
+  float: left
+}
