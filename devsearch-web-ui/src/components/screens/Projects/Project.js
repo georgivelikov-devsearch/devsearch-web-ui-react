@@ -8,10 +8,12 @@ import {
   addComment,
   removeComment,
 } from "../../../services/developer/developerService";
-
+import { validateStringLength } from "../../../utils/validator";
+import { PROJECT_VALIDATION } from "../../../constants/projectConstants";
 import { Link } from "react-router-dom";
 import StarRating from "../../common/StarRating";
 import Loader from "../../common/Loader";
+import Message from "../../common/Message";
 import Comment from "./Comment";
 
 function Project() {
@@ -22,7 +24,12 @@ function Project() {
   const { projectName } = useParams();
   const { loading } = useSelector((state) => state.loading);
   const { project } = useSelector((state) => state.project);
-  const [commentText, setCommentText] = useState("");
+  const [commentText, setCommentText] = useState({
+    value: "",
+    isValid: true,
+    errorMessage: "",
+  });
+
   const [rating, setRating] = useState(5);
   // Comment section
   const [loggedInUsername, setLoggedInUsername] = useState("");
@@ -40,9 +47,25 @@ function Project() {
 
   const addCommentHandler = (e) => {
     e.preventDefault();
-    console.log("Rating: " + rating);
+
+    let isValid = validateStringLength(
+      commentText.value,
+      PROJECT_VALIDATION.COMMENT_MIN_LENGTH,
+      PROJECT_VALIDATION.COMMENT_MAX_LENGTH,
+      "Comment"
+    );
+    if (!isValid.result) {
+      setCommentText({
+        value: commentText.value,
+        isValid: isValid.result,
+        errorMessage: isValid.message,
+      });
+
+      return;
+    }
+
     const newComment = {
-      commentText,
+      commentText: commentText.value,
       projectId: project.projectId,
       rating,
     };
@@ -178,9 +201,21 @@ function Project() {
                           id="formInput#textarea"
                           placeholder="Write your comments here..."
                           ref={commentTextRef}
-                          onChange={(e) => setCommentText(e.target.value)}
+                          onChange={(e) =>
+                            setCommentText({
+                              ...commentText,
+                              value: e.target.value,
+                            })
+                          }
                         ></textarea>
                       </div>
+                      {!commentText.isValid && (
+                        <Message
+                          variant="alert alert--error"
+                          variantStyle={{ width: "100%" }}
+                          message={commentText.errorMessage}
+                        />
+                      )}
                       <input
                         className="btn btn--sub btn--lg"
                         type="submit"
