@@ -1,13 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function StartRating({ defaultRating, propagateRating }) {
+function StarRating({ defaultRating, propagateRating, starRatingRef }) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+
   useEffect(() => {
+    starRatingRef.current = setDefaultRating;
+    setDefaultRating();
+  }, []);
+
+  const setDefaultRating = () => {
+    setHover(defaultRating);
     setRating(defaultRating);
     propagateRating(defaultRating);
-  }, []);
+  };
 
   const handleRating = (val) => {
     setRating(val);
@@ -42,4 +49,4 @@ function StartRating({ defaultRating, propagateRating }) {
   );
 }
 
-export default StartRating;
+export default StarRating;

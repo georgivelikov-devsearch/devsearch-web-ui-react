@@ -10,21 +10,25 @@ import {
 } from "../../../services/developer/developerService";
 
 import { Link } from "react-router-dom";
-import StartRating from "../../common/StartRating";
+import StarRating from "../../common/StarRating";
 import Loader from "../../common/Loader";
 import Comment from "./Comment";
 
 function Project() {
   const dispatch = useDispatch();
-  const commentRef = useRef(null);
+  const commentTextRef = useRef(null);
+  const starRatingRef = useRef(null);
+
   const { projectName } = useParams();
   const { loading } = useSelector((state) => state.loading);
   const { project } = useSelector((state) => state.project);
   const [commentText, setCommentText] = useState("");
   const [rating, setRating] = useState(5);
+  // Comment section
   const [loggedInUsername, setLoggedInUsername] = useState("");
 
   useEffect(() => {
+    // needed for delete functionality in Comment
     if (UserService.isLoggedIn()) {
       setLoggedInUsername(UserService.getUsername());
     } else {
@@ -44,10 +48,8 @@ function Project() {
     };
 
     dispatch(addComment(newComment));
-    // Both don't work
-    // setCommentText("");
-    // setRating(5);
-    commentRef.current.value = "";
+    commentTextRef.current.value = "";
+    starRatingRef.current();
   };
 
   const removeCommentHandler = (commentId) => {
@@ -78,6 +80,25 @@ function Project() {
     }
 
     return returnVal;
+  };
+
+  // canAddComment is true if user is logged in or haven't commented the project yet
+  const canAddComment = (project) => {
+    let username = "";
+    if (UserService.isLoggedIn()) {
+      username = UserService.getUsername();
+    } else {
+      return false;
+    }
+
+    for (var i = 0; i < project.comments.length; i++) {
+      if (project.comments[i].author === username) {
+        // project already commented
+        return false;
+      }
+    }
+
+    return true;
   };
 
   return (
@@ -135,30 +156,39 @@ function Project() {
               <div className="comments">
                 <h3 className="singleProject__subtitle">Feedback</h3>
                 <h5 className="project--rating">{calculateRating(project)}</h5>
-                <StartRating defaultRating={5} propagateRating={setRating} />
-                <form
-                  onSubmit={addCommentHandler}
-                  className="form"
-                  action="#"
-                  method="POST"
-                >
-                  <div className="form__field">
-                    <label htmlFor="formInput#textarea">Comments: </label>
-                    <textarea
-                      className="input input--textarea"
-                      name="message"
-                      id="formInput#textarea"
-                      placeholder="Write your comments here..."
-                      ref={commentRef}
-                      onChange={(e) => setCommentText(e.target.value)}
-                    ></textarea>
+                {canAddComment(project) && (
+                  <div>
+                    <StarRating
+                      defaultRating={5}
+                      propagateRating={setRating}
+                      starRatingRef={starRatingRef}
+                    />
+
+                    <form
+                      onSubmit={addCommentHandler}
+                      className="form"
+                      action="#"
+                      method="POST"
+                    >
+                      <div className="form__field">
+                        <label htmlFor="formInput#textarea">Comments: </label>
+                        <textarea
+                          className="input input--textarea"
+                          name="message"
+                          id="formInput#textarea"
+                          placeholder="Write your comments here..."
+                          ref={commentTextRef}
+                          onChange={(e) => setCommentText(e.target.value)}
+                        ></textarea>
+                      </div>
+                      <input
+                        className="btn btn--sub btn--lg"
+                        type="submit"
+                        value="Comment"
+                      />
+                    </form>
                   </div>
-                  <input
-                    className="btn btn--sub btn--lg"
-                    type="submit"
-                    value="Comment"
-                  />
-                </form>
+                )}
                 <div className="commentList">
                   {project.comments &&
                     project.comments.map((c) => (
