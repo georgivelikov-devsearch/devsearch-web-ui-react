@@ -43,6 +43,26 @@ const projectSlice = createSlice({
         project: newProject,
       };
     },
+    removeCommentFromProject(state, action) {
+      const commentId = action.payload;
+      let newProject = { ...state.project };
+      let projectComments = [...newProject.comments];
+      let searchIndex = -1;
+      for (var i = 0; i < projectComments.length; i++) {
+        if (projectComments[i].commentId === commentId) {
+          searchIndex = i;
+          break;
+        }
+      }
+
+      projectComments.splice(searchIndex, 1);
+      newProject.comments = projectComments;
+
+      return {
+        state,
+        project: newProject,
+      };
+    },
   },
 });
 

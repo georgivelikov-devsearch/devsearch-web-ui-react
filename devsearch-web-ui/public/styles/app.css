@@ -599,6 +599,10 @@ img {
   font-size: 1.45rem;
 }
 
+.comment_display_block {
+  width: 100%;
+}
+
 /*=======================
   Account Settings
 ========================*/
@@ -1222,8 +1226,20 @@ img {
 }
 
 /*=======================
-  StarRating
+  Comment / StarRating
 ========================*/
+.delete_button_float_right {
+  float: right;
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+.comment_text {
+
+}
+
 .star_rating button {
   background-color: transparent;
   border: none;

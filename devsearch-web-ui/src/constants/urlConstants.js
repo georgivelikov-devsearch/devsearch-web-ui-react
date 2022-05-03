@@ -26,7 +26,12 @@ export const PUBLIC_DEVELOPER_URL = (username) => {
 
 export const DEVELOPER_LIST_URL = `${URL}/developers/public/all`;
 
+// Developer Comments URLs
 export const POST_COMMENT_URL = `${URL}/developers/comment`;
+
+export const DELETE_COMMENT_URL = (commentId) => {
+  return `${URL}/developers/comment/${commentId}`;
+};
 
 // Skill URLs
 export const SKILL_URL = `${URL}/skills`;

@@ -2,8 +2,12 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 import { getSingleProject } from "../../../services/project/projectService";
-import { addComment } from "../../../services/developer/developerService";
+import {
+  addComment,
+  removeComment,
+} from "../../../services/developer/developerService";
 
 import { Link } from "react-router-dom";
 import StartRating from "../../common/StartRating";
@@ -18,8 +22,15 @@ function Project() {
   const { project } = useSelector((state) => state.project);
   const [commentText, setCommentText] = useState("");
   const [rating, setRating] = useState(5);
+  const [loggedInUsername, setLoggedInUsername] = useState("");
 
   useEffect(() => {
+    if (UserService.isLoggedIn()) {
+      setLoggedInUsername(UserService.getUsername());
+    } else {
+      setLoggedInUsername("");
+    }
+
     dispatch(getSingleProject(projectName));
   }, []);
 
@@ -37,6 +48,10 @@ function Project() {
     // setCommentText("");
     // setRating(5);
     commentRef.current.value = "";
+  };
+
+  const removeCommentHandler = (commentId) => {
+    dispatch(removeComment(commentId));
   };
 
   const calculateRating = (project) => {
@@ -147,7 +162,12 @@ function Project() {
                 <div className="commentList">
                   {project.comments &&
                     project.comments.map((c) => (
-                      <Comment key={c.publicKey} comment={c} />
+                      <Comment
+                        key={c.publicKey}
+                        comment={c}
+                        removeComment={removeCommentHandler}
+                        loggedInUsername={loggedInUsername}
+                      />
                     ))}
                 </div>
               </div>
