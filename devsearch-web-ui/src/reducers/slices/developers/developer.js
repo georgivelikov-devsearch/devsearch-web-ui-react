@@ -8,16 +8,16 @@ const developerSlice = createSlice({
       return { ...state, error: null };
     },
     developerSuccess(state, action) {
-      return { developer: action.payload };
+      return { ...state, developer: action.payload };
     },
     developerError(state, action) {
-      return { error: action.payload };
+      return { ...state, error: action.payload };
     },
     developerPublicSuccess(state, action) {
-      return { developer: action.payload };
+      return { ...state, developer: action.payload };
     },
     developerPublicError(state, action) {
-      return { error: action.payload };
+      return { ...state, error: action.payload };
     },
     developerRemoveProjectFromProjectList(state, action) {
       let { projectId } = action.payload;
