@@ -4,21 +4,18 @@ const developerSlice = createSlice({
   name: "developer",
   initialState: {},
   reducers: {
-    clearError(state, action) {
-      return { ...state, error: null };
-    },
+    // clearError(state, action) {
+    //   return { ...state, error: null };
+    // },
     developerSuccess(state, action) {
       return { ...state, developer: action.payload };
-    },
-    developerError(state, action) {
-      return { ...state, error: action.payload };
     },
     developerPublicSuccess(state, action) {
       return { ...state, developer: action.payload };
     },
-    developerPublicError(state, action) {
-      return { ...state, error: action.payload };
-    },
+    // developerPublicError(state, action) {
+    //   return { ...state, error: action.payload };
+    // },
     developerRemoveProjectFromProjectList(state, action) {
       let { projectId } = action.payload;
       let projectsArray = [...state.developer.projects];

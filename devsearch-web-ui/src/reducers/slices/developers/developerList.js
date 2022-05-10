@@ -11,9 +11,6 @@ const developerListSlice = createSlice({
         searchParameters: action.searchParameters,
       };
     },
-    developerListError(state, action) {
-      state.error = action.payload;
-    },
   },
 });
 

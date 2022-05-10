@@ -4,7 +4,7 @@ import PublicDeveloperShort from "./DeveloperShort";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
-function DeveloperList({ developers, error }) {
+function DeveloperList({ developers, developerListError }) {
   return (
     <div className="devlist">
       <div className="container">
@@ -18,7 +18,7 @@ function DeveloperList({ developers, error }) {
               />
             ))}
           </div>
-        ) : error ? (
+        ) : developerListError ? (
           <Message
             variant="alert alert--error"
             variantStyle={{
@@ -26,7 +26,7 @@ function DeveloperList({ developers, error }) {
               display: "inline-block",
               textAlign: "center",
             }}
-            message={error.message}
+            message={developerListError.message}
           />
         ) : (
           <Loader />

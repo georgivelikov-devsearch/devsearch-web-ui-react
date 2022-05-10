@@ -15,16 +15,18 @@ function Developers() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { developers, totalPages } = useSelector(
+    (state) => state.developerList
+  );
+  const { developerListError } = useSelector((state) => state.developerError);
+  const { searchParameters } = useSelector(
+    (state) => state.developerSearchList
+  );
+
   const [text, setText] = useState("");
 
-  const developerList = useSelector((state) => state.developerList);
-  const { error, developers, totalPages } = developerList;
-
-  const searchDeveloperList = useSelector((state) => state.developerSearchList);
-
-  const { searchParameters } = searchDeveloperList;
-
   useEffect(() => {
+    console.log("In Developers");
     const page = searchParams.get("page");
     const search = searchParams.get("search");
 
@@ -88,7 +90,10 @@ function Developers() {
           </div>
         </div>
       </section>
-      <DeveloperList developers={developers} error={error} />
+      <DeveloperList
+        developers={developers}
+        developerListError={developerListError}
+      />
       <Paging
         totalPages={Number(totalPages)}
         currentPage={Number(searchParams.get("page"))}

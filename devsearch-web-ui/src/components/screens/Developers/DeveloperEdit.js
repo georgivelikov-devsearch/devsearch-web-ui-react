@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 import {
   getDeveloper,
   editDeveloper,
 } from "../../../services/developer/developerService";
-
 import { validateStringLength } from "../../../utils/validator";
 import { getBase64FromFile } from "../../../utils/utils";
 import {
@@ -19,15 +19,15 @@ import HomeIcon from "../../common/HomeIcon";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";
 
-import UserService from "../../../services/identity/keycloak/keycloakUserService";
-
 function DeveloperEdit() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { error, developer } = useSelector((state) => state.developer);
+  const { developer } = useSelector((state) => state.developer);
+  const { developerError, developerEditError } = useSelector(
+    (state) => state.developerError
+  );
   const { loading } = useSelector((state) => state.loading);
-  const { editError } = useSelector((state) => state.developerEdit);
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -48,6 +48,7 @@ function DeveloperEdit() {
   const [newDeveloperPictureUpload, setNewDeveloperPictureUpload] =
     useState(false);
 
+  // TODO - add objects for the validation
   const [validFirstName, setValidFirstName] = useState(true);
   const [validLastName, setValidLastName] = useState(true);
   const [validShortIntro, setValidShortIntro] = useState(true);
@@ -81,6 +82,7 @@ function DeveloperEdit() {
     useState("");
 
   useEffect(() => {
+    console.log("In DeveloperEdit");
     if (!UserService.isLoggedIn()) {
       UserService.doLogin();
     } else if (!developer) {
@@ -321,7 +323,7 @@ function DeveloperEdit() {
           <h3>Edit Developer</h3>
           <p>Edit your developer</p>
         </div>
-        {error && (
+        {developerError && (
           <Message
             variant="alert alert--error"
             variantStyle={{
@@ -329,11 +331,11 @@ function DeveloperEdit() {
               display: "inline-block",
               textAlign: "center",
             }}
-            message={error.message}
+            message={developerError.message}
           />
         )}
         {loading && <Loader />}
-        {editError && (
+        {developerEditError && (
           <Message
             variant="alert alert--error"
             variantStyle={{
@@ -341,7 +343,7 @@ function DeveloperEdit() {
               display: "inline-block",
               textAlign: "center",
             }}
-            message={editError.message}
+            message={developerEditError.message}
           />
         )}
         {developer && (

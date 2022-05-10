@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import UserService from "../../../services/identity/keycloak/keycloakUserService";
 
+import UserService from "../../../services/identity/keycloak/keycloakUserService";
 import {
   getDeveloper,
   getPublicDeveloper,
@@ -17,16 +17,16 @@ import DeveloperProjects from "../Projects/DeveloperProjects";
 function Developer() {
   const dispatch = useDispatch();
   const { username } = useParams();
-  const { error, developer } = useSelector((state) => state.developer);
+
+  const { developer } = useSelector((state) => state.developer);
+  const { developerError } = useSelector((state) => state.developerError);
   const { loading } = useSelector((state) => state.loading);
+
   const [canEdit, setCanEdit] = useState(false);
   const [canSendMessage, setCanSendMessage] = useState(false);
 
   useEffect(() => {
     console.log("In Developer");
-    if (error) {
-      console.log(error);
-    }
     if (UserService.isLoggedIn()) {
       if (username === UserService.getUsername()) {
         setCanEdit(true);
@@ -188,7 +188,7 @@ function Developer() {
           </div>
         </div>
       )}
-      {error && (
+      {developerError && (
         <Message
           variant="alert alert--error"
           variantStyle={{
@@ -196,7 +196,7 @@ function Developer() {
             display: "inline-block",
             textAlign: "center",
           }}
-          message={error.message}
+          message={developerError.message}
         />
       )}
       {loading && <Loader />}
