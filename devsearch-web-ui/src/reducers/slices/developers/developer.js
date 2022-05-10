@@ -2,13 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const developerSlice = createSlice({
   name: "developer",
-  initialState: {},
+  initialState: {
+    developer: null,
+    developerList: {
+      developers: null,
+      totalPages: null,
+      searchParameteres: null,
+    },
+  },
   reducers: {
     developerSuccess(state, action) {
       return { ...state, developer: action.payload };
     },
     developerPublicSuccess(state, action) {
       return { ...state, developer: action.payload };
+    },
+    developerListSuccess(state, action) {
+      return {
+        ...state,
+        developerList: action.payload,
+      };
     },
     developerRemoveProjectFromProjectList(state, action) {
       let { projectId } = action.payload;

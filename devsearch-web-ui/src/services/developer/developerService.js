@@ -4,7 +4,6 @@ import { getErrorResponse } from "../../utils/utils";
 import { loadingActions } from "../../reducers/slices/global/loading";
 import { developerActions } from "../../reducers/slices/developers/developer";
 import { developerErrorActions } from "../../reducers/slices/developers/developerError";
-import { developerListActions } from "../../reducers/slices/developers/developerList";
 import { developerSearchListActions } from "../../reducers/slices/developers/developerSearchList";
 import { skillActions } from "../../reducers/slices/skills/skill";
 import { projectActions } from "../../reducers/slices/projects/project";
@@ -98,7 +97,7 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
 
     const response = await axios.get(DEVELOPER_LIST_URL, config);
 
-    dispatch(developerListActions.developerListSuccess(response.data));
+    dispatch(developerActions.developerListSuccess(response.data));
     dispatch(developerErrorActions.developerListErrorClear());
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");

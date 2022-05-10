@@ -16,7 +16,7 @@ function Developers() {
   const navigate = useNavigate();
 
   const { developers, totalPages } = useSelector(
-    (state) => state.developerList
+    (state) => state.developer.developerList
   );
   const { developerListError } = useSelector((state) => state.developerError);
   const { searchParameters } = useSelector(
