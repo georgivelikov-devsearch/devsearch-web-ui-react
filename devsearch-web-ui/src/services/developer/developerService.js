@@ -4,7 +4,6 @@ import { getErrorResponse } from "../../utils/utils";
 import { loadingActions } from "../../reducers/slices/global/loading";
 import { developerActions } from "../../reducers/slices/developers/developer";
 import { developerErrorActions } from "../../reducers/slices/developers/developerError";
-import { developerSearchListActions } from "../../reducers/slices/developers/developerSearchList";
 import { skillActions } from "../../reducers/slices/skills/skill";
 import { projectActions } from "../../reducers/slices/projects/project";
 
@@ -96,8 +95,13 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
     };
 
     const response = await axios.get(DEVELOPER_LIST_URL, config);
+    let payload = {
+      totalPages: response.data.totalPages,
+      developers: response.data.developers,
+      //searchText,
+    };
 
-    dispatch(developerActions.developerListSuccess(response.data));
+    dispatch(developerActions.developerListSuccess(payload));
     dispatch(developerErrorActions.developerListErrorClear());
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
@@ -107,11 +111,9 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
   }
 };
 
-export const updateSearchForPublicDeveloperList =
+export const updateSearchForDeveloperList =
   (searchText) => async (dispatch) => {
-    dispatch(
-      developerSearchListActions.updateSearchForDeveloperList({ searchText })
-    );
+    dispatch(developerActions.updateSearchForDeveloperList(searchText));
   };
 
 export const addComment = (newComment) => async (dispatch) => {

@@ -5,9 +5,9 @@ const developerSlice = createSlice({
   initialState: {
     developer: null,
     developerList: {
-      developers: null,
       totalPages: null,
-      searchParameteres: null,
+      developers: null,
+      //searchText: null,
     },
   },
   reducers: {
@@ -21,6 +21,19 @@ const developerSlice = createSlice({
       return {
         ...state,
         developerList: action.payload,
+      };
+    },
+    updateSearchForDeveloperList(state, action) {
+      console.log("updateSearchForDeveloperList");
+      console.log(action.payload);
+      let newDeveloperListState = {
+        ...state.developerList,
+        searchText: action.payload,
+      };
+
+      return {
+        ...state,
+        developerList: newDeveloperListState,
       };
     },
     developerRemoveProjectFromProjectList(state, action) {

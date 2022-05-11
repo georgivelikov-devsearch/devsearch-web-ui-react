@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-import {
-  getDeveloperList,
-  updateSearchForPublicDeveloperList,
-} from "../../../services/developer/developerService";
+import { getDeveloperList } from "../../../services/developer/developerService";
 
 import DeveloperList from "./DeveloperList";
 import Paging from "../../common/Paging";
@@ -19,35 +16,39 @@ function Developers() {
     (state) => state.developer.developerList
   );
   const { developerListError } = useSelector((state) => state.developerError);
-  const { searchParameters } = useSelector(
-    (state) => state.developerSearchList
-  );
 
-  const [text, setText] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     console.log("In Developers");
     const page = searchParams.get("page");
-    const search = searchParams.get("search");
+    const searchText = searchParams.get("searchText");
 
-    let searchText = "";
-    if (searchParameters && searchParameters.searchText && search) {
-      searchText = searchParameters.searchText;
+    let newSearchValue = "";
+    if (searchText) {
+      newSearchValue = searchText;
     }
 
-    setText(searchText);
+    //console.log("search text: " + searchText);
+    //console.log("search value: " + searchValue);
+    //console.log("newSearchValue: " + newSearchValue);
+    setSearchValue(newSearchValue);
+    //console.log("search value2: " + searchValue);
     dispatch(getDeveloperList(page, searchText));
     window.scrollTo(0, 0);
-  }, [dispatch, searchParams, searchParameters]);
+  }, [dispatch, searchParams]);
 
   const submitSearch = (e) => {
     e.preventDefault();
-    dispatch(updateSearchForPublicDeveloperList(text));
-    if (text == null || text.trim() === "") {
+    //dispatch(updateSearchForDeveloperList(searchValue));
+    console.log("submitSearch");
+    console.log(searchValue);
+
+    if (searchValue == null || searchValue.trim() === "") {
       //no search indicator needed
       navigate("/developers?page=1");
     } else {
-      navigate("/developers?page=1&search=true");
+      navigate(`/developers?page=1&searchText=${searchValue}`);
     }
   };
 
@@ -76,8 +77,8 @@ function Developers() {
                   type="text"
                   name="text"
                   placeholder="Search by developer name"
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  defaultValue={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
               </div>
 
@@ -98,7 +99,7 @@ function Developers() {
         totalPages={Number(totalPages)}
         currentPage={Number(searchParams.get("page"))}
         root={"developers"}
-        search={searchParams.get("search")}
+        searchText={searchParams.get("searchText")}
       />
     </main>
   );
