@@ -29,11 +29,11 @@ function Developers() {
       newSearchValue = searchText;
     }
 
-    //console.log("search text: " + searchText);
-    //console.log("search value: " + searchValue);
-    //console.log("newSearchValue: " + newSearchValue);
+    console.log("search text: " + searchText);
+    console.log("search value: " + searchValue);
+    console.log("newSearchValue: " + newSearchValue);
     setSearchValue(newSearchValue);
-    //console.log("search value2: " + searchValue);
+    console.log("search value2: " + searchValue);
     dispatch(getDeveloperList(page, searchText));
     window.scrollTo(0, 0);
   }, [dispatch, searchParams]);
@@ -77,7 +77,6 @@ function Developers() {
                   type="text"
                   name="text"
                   placeholder="Search by developer name"
-                  defaultValue={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                 />
               </div>
