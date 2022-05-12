@@ -23,29 +23,26 @@ function Developers() {
     console.log("In Developers");
     const page = searchParams.get("page");
     const searchText = searchParams.get("searchText");
-
-    let newSearchValue = "";
     if (searchText) {
-      newSearchValue = searchText;
+      setSearchValue(searchText);
     }
 
-    console.log("search text: " + searchText);
-    console.log("search value: " + searchValue);
-    console.log("newSearchValue: " + newSearchValue);
-    setSearchValue(newSearchValue);
-    console.log("search value2: " + searchValue);
+    //console.log("search text: " + searchText);
+    //console.log("search value: " + searchValue);
     dispatch(getDeveloperList(page, searchText));
     window.scrollTo(0, 0);
   }, [dispatch, searchParams]);
 
+  const updateSearchValue = (e) => {
+    //console.log("updateSearchValue: " + e.target.value);
+    setSearchValue(e.target.value);
+  };
+
   const submitSearch = (e) => {
     e.preventDefault();
-    //dispatch(updateSearchForDeveloperList(searchValue));
-    console.log("submitSearch");
-    console.log(searchValue);
-
-    if (searchValue == null || searchValue.trim() === "") {
-      //no search indicator needed
+    //console.log("submitSearch: " + searchValue);
+    if (searchValue === null || searchValue.trim() === "") {
+      //no searchText needed
       navigate("/developers?page=1");
     } else {
       navigate(`/developers?page=1&searchText=${searchValue}`);
@@ -75,9 +72,10 @@ function Developers() {
                   className="input input--text"
                   id="formInput#search"
                   type="text"
-                  name="text"
+                  name="searchValue"
                   placeholder="Search by developer name"
-                  onChange={(e) => setSearchValue(e.target.value)}
+                  defaultValue={searchValue}
+                  onChange={(e) => updateSearchValue(e)}
                 />
               </div>
 

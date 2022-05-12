@@ -5,11 +5,6 @@ import { Link } from "react-router-dom";
 function Paging({ totalPages, currentPage, root, searchText }) {
   const pageLimit = 10;
   let pageList = [];
-  console.log("In Paging");
-  console.log("Paging searchText: " + searchText);
-  // 'doSearch' paramter in the url 'http://<host>:<port>/<root>?page=1&doSearch' does not have value, or more precisely has value "",
-  // but indicates searching operation. When the url is 'http://<host>:<port>/<root>?page=1' it means that there is not search and this
-  // requires clean new list for pagination. 'search' parameter in that case is null
   let backLink = `/${root}?page=${currentPage - 1}`;
   let nextLink = `/${root}?page=${currentPage + 1}`;
   if (searchText) {
