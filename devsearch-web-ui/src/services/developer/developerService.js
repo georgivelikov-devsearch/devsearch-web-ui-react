@@ -30,7 +30,7 @@ export const getDeveloper = (username) => async (dispatch) => {
     const skills = developer.skillDescriptions;
 
     dispatch(skillActions.setSkills(skills));
-    dispatch(developerActions.developerSuccess(developer));
+    dispatch(developerActions.getDeveloper(developer));
     dispatch(developerErrorActions.developerErrorClear());
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
@@ -50,7 +50,7 @@ export const getPublicDeveloper = (username) => async (dispatch) => {
     const developer = response.data;
     const skills = developer.skillDescriptions;
     dispatch(skillActions.setSkills(skills));
-    dispatch(developerActions.developerPublicSuccess(developer));
+    dispatch(developerActions.getPublicDeveloper(developer));
     dispatch(developerErrorActions.developerPublicErrorClear());
   } catch (error) {
     let errorRes = getErrorResponse(error, "DEVELOPER");
@@ -95,13 +95,7 @@ export const getDeveloperList = (page, searchText) => async (dispatch) => {
     };
 
     const response = await axios.get(DEVELOPER_LIST_URL, config);
-    let payload = {
-      totalPages: response.data.totalPages,
-      developers: response.data.developers,
-      //searchText,
-    };
-
-    dispatch(developerActions.developerListSuccess(payload));
+    dispatch(developerActions.getDeveloperList(response.data));
     dispatch(developerErrorActions.developerListErrorClear());
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");

@@ -94,7 +94,7 @@ export const deleteProject = (projectId) => async (dispatch) => {
     if (response.status === 200) {
       dispatch(projectActions.projectErrorClear());
       dispatch(
-        developerActions.developerRemoveProjectFromProjectList({ projectId })
+        developerActions.removeDeveloperProjectFromProjectList({ projectId })
       );
     } else {
       throw new Error("Unknown response!");

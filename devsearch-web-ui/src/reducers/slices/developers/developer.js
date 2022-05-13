@@ -11,13 +11,13 @@ const developerSlice = createSlice({
     },
   },
   reducers: {
-    developerSuccess(state, action) {
+    getDeveloper(state, action) {
       return { ...state, developer: action.payload };
     },
-    developerPublicSuccess(state, action) {
+    getPublicDeveloper(state, action) {
       return { ...state, developer: action.payload };
     },
-    developerListSuccess(state, action) {
+    getDeveloperList(state, action) {
       return {
         ...state,
         developerList: action.payload,
@@ -36,7 +36,7 @@ const developerSlice = createSlice({
         developerList: newDeveloperListState,
       };
     },
-    developerRemoveProjectFromProjectList(state, action) {
+    removeDeveloperProjectFromProjectList(state, action) {
       let { projectId } = action.payload;
       let projectsArray = [...state.developer.projects];
       let searchIndex = -1;

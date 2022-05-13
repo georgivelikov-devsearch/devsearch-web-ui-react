@@ -42,6 +42,8 @@ function Developer() {
       setCanSendMessage(false);
       dispatch(getPublicDeveloper(username));
     }
+
+    window.scrollTo(0, 0);
   }, [dispatch, username]);
 
   return (
