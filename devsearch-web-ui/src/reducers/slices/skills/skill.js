@@ -2,24 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const skillSlice = createSlice({
   name: "skills",
-  initialState: {},
+  initialState: {
+    skillDescriptions: null,
+    skillError: null,
+  },
   reducers: {
     setSkills(state, action) {
-      return { skillDescriptions: action.payload };
+      return { skillDescriptions: action.payload, skillError: null };
     },
-    clearError(state, actions) {
-      return { ...state, skillError: null };
-    },
-    skillSuccess(state, action) {
+    addSkill(state, action) {
       const newSkill = action.payload;
       const newSkillDescriptions = [...state.skillDescriptions];
       newSkillDescriptions.push(newSkill);
-      return { skillDescriptions: newSkillDescriptions };
+      return { skillDescriptions: newSkillDescriptions, skillError: null };
     },
-    skillError(state, action) {
-      return { ...state, skillError: action.payload };
-    },
-    skillEditSuccess(state, action) {
+    editSkill(state, action) {
       let editedSkill = action.payload;
       let editedSkillDescriptions;
       for (var i = 0; i < state.skillDescriptions.length; i++) {
@@ -34,14 +31,11 @@ const skillSlice = createSlice({
       }
 
       return {
-        ...state,
         skillDescriptions: editedSkillDescriptions,
+        skillError: null,
       };
     },
-    skillEditError(state, action) {
-      return { ...state, skillError: action.payload };
-    },
-    skillDeleteSuccess(state, action) {
+    deleteSkill(state, action) {
       let deletedId = action.payload;
       let searchIndex = -1;
       for (var j = 0; j < state.skillDescriptions.length; j++) {
@@ -54,22 +48,22 @@ const skillSlice = createSlice({
       let editedSkillDescriptions = [...state.skillDescriptions];
       editedSkillDescriptions.splice(searchIndex, 1);
       return {
-        ...state,
         skillDescriptions: editedSkillDescriptions,
+        skillError: null,
       };
     },
-    skillDeleteError(state, action) {
-      return { ...state, skillError: action.payload };
-    },
-    skillOrderSuccess(state, action) {
+    orderSkills(state, action) {
       const orderedSkillDescriptionList = action.payload;
       return {
-        ...state,
         skillDescriptions: orderedSkillDescriptionList,
+        skillError: null,
       };
     },
-    skillOrderError(state, action) {
+    skillError(state, action) {
       return { ...state, skillError: action.payload };
+    },
+    clearSkillError(state, action) {
+      return { ...state, skillError: null };
     },
   },
 });

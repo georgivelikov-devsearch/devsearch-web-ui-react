@@ -69,6 +69,7 @@ function Developer() {
                         ? developer.developerPictureUrl
                         : "../../../images/user-default.png"
                     }
+                    alt="../../../images/user-default.png"
                   />
                   <h2 className="dev__name">
                     {developer.firstName} {developer.lastName}
@@ -100,6 +101,7 @@ function Developer() {
                               : "https://" + developer.socialGithub
                           }
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <i className="im im-github"></i>
                         </a>
@@ -115,6 +117,7 @@ function Developer() {
                               : "https://" + developer.socialYoutube
                           }
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <i className="im im-youtube"></i>
                         </a>
@@ -130,6 +133,7 @@ function Developer() {
                               : "https://" + developer.socialTwitter
                           }
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <i className="im im-twitter"></i>
                         </a>
@@ -145,6 +149,7 @@ function Developer() {
                               : "https://" + developer.socialLinkedIn
                           }
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <i className="im im-linkedin"></i>
                         </a>
@@ -156,6 +161,7 @@ function Developer() {
                           title="Personal Website"
                           href={developer.socialWebsite}
                           target="_blank"
+                          rel="noreferrer"
                         >
                           <i className="im im-globe"></i>
                         </a>

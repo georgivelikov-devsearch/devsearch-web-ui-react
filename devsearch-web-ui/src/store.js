@@ -11,7 +11,7 @@ const store = configureStore({
     loading: loadingReducer,
     developer: developerReducer,
     developerError: developerErrorReducer,
-    skills: skillReducer,
+    skill: skillReducer,
     project: projectReducer,
   },
 });

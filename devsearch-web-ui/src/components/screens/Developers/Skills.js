@@ -7,20 +7,18 @@ import Loader from "../../common/Loader";
 import { DraggableArea } from "react-draggable-tags";
 
 import {
-  createSkill,
+  addSkill,
   editSkill,
   deleteSkill,
   orderSkills,
-  clearError,
+  clearSkillError,
 } from "../../../services/developer/skillService";
 
 function Skills({ developer, canEdit }) {
   const dispatch = useDispatch();
 
   const { loading } = useSelector((state) => state.loading);
-  const { skillError, skillDescriptions } = useSelector(
-    (state) => state.skills
-  );
+  const { skillDescriptions, skillError } = useSelector((state) => state.skill);
 
   const [allSkillDescriptions, setAllSkillDescriptions] = useState([]);
   const [isSkillPanelOpen, setIsSkillPanelOpen] = useState(false);
@@ -78,7 +76,7 @@ function Skills({ developer, canEdit }) {
     setEditedSkillDescription("");
 
     //clear error if it exists
-    dispatch(clearError());
+    dispatch(clearSkillError());
   };
 
   const toggleOrderPanel = () => {
@@ -141,7 +139,7 @@ function Skills({ developer, canEdit }) {
       },
     };
 
-    dispatch(createSkill(newSkillData, toggleSkillPanel));
+    dispatch(addSkill(newSkillData, toggleSkillPanel));
   };
 
   const editSkillHandler = (e) => {

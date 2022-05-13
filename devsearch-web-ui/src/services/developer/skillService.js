@@ -11,23 +11,22 @@ import {
   ORDER_SKILLS_URL,
 } from "../../constants/urlConstants";
 
-export const createSkill =
-  (newSkillData, successCallback) => async (dispatch) => {
-    try {
-      dispatch(loadingActions.startLoading());
+export const addSkill = (newSkillData, successCallback) => async (dispatch) => {
+  try {
+    dispatch(loadingActions.startLoading());
 
-      const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
-      const response = await axios.post(SKILL_URL, newSkillData, config);
-      const newSkill = response.data;
-      dispatch(skillActions.skillSuccess(newSkill));
-      successCallback();
-    } catch (error) {
-      let errorRes = getErrorResponse(error, "Developers");
-      dispatch(skillActions.skillError(errorRes));
-    } finally {
-      dispatch(loadingActions.stopLoading());
-    }
-  };
+    const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
+    const response = await axios.post(SKILL_URL, newSkillData, config);
+    const newSkill = response.data;
+    dispatch(skillActions.addSkill(newSkill));
+    successCallback();
+  } catch (error) {
+    let errorRes = getErrorResponse(error, "Developers");
+    dispatch(skillActions.skillError(errorRes));
+  } finally {
+    dispatch(loadingActions.stopLoading());
+  }
+};
 
 export const editSkill = (editSkillData) => async (dispatch) => {
   try {
@@ -36,7 +35,7 @@ export const editSkill = (editSkillData) => async (dispatch) => {
     const config = { headers: AUTH_HEADERS_CONFIG(UserService.getToken()) };
     const response = await axios.put(SKILL_URL, editSkillData, config);
     const editedSkill = response.data;
-    dispatch(skillActions.skillEditSuccess(editedSkill));
+    dispatch(skillActions.editSkill(editedSkill));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(skillActions.skillEditError(errorRes));
@@ -56,7 +55,7 @@ export const deleteSkill = (skillDescriptionId) => async (dispatch) => {
     );
 
     await axios.delete(deleteUrl, config);
-    dispatch(skillActions.skillDeleteSuccess(skillDescriptionId));
+    dispatch(skillActions.deleteSkill(skillDescriptionId));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(skillActions.skillDeleteError(errorRes));
@@ -73,7 +72,7 @@ export const orderSkills = (tags) => async (dispatch) => {
     const orderSkillsUrl = ORDER_SKILLS_URL(UserService.getUsername());
     const response = await axios.put(orderSkillsUrl, tags, config);
 
-    dispatch(skillActions.skillOrderSuccess(response.data));
+    dispatch(skillActions.orderSkills(response.data));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Developers");
     dispatch(skillActions.skillOrderError(errorRes));
@@ -82,6 +81,6 @@ export const orderSkills = (tags) => async (dispatch) => {
   }
 };
 
-export const clearError = () => async (dispatch) => {
-  dispatch(skillActions.clearError());
+export const clearSkillError = () => async (dispatch) => {
+  dispatch(skillActions.clearSkillError());
 };
