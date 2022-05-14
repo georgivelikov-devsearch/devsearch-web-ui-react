@@ -12,8 +12,10 @@ function Projects() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const projectList = useSelector((state) => state.project);
-  const { projectListError, projects, totalPages } = projectList;
+  const { projectList, projectListError } = useSelector(
+    (state) => state.project
+  );
+  const { projects, totalPages } = projectList;
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {

@@ -72,7 +72,7 @@ export const getAllProjects = (page, searchText) => async (dispatch) => {
     };
 
     const response = await axios.get(PROJECTS_URL, config);
-    dispatch(projectActions.projectListSuccess(response.data));
+    dispatch(projectActions.getProjectList(response.data));
   } catch (error) {
     let errorRes = getErrorResponse(error, "Projects");
     dispatch(projectActions.projectListError(errorRes));
@@ -107,7 +107,7 @@ export const deleteProject = (projectId) => async (dispatch) => {
   }
 };
 
-export const getSingleProject = (projectName) => async (dispatch) => {
+export const getProject = (projectName) => async (dispatch) => {
   try {
     dispatch(loadingActions.startLoading());
 
@@ -118,8 +118,7 @@ export const getSingleProject = (projectName) => async (dispatch) => {
     const response = await axios.get(getProjectUrl, config);
 
     if (response.status === 200) {
-      dispatch(projectActions.projectErrorClear());
-      dispatch(projectActions.singleProject(response.data));
+      dispatch(projectActions.getProject(response.data));
     } else {
       throw new Error("Unknown response!");
     }

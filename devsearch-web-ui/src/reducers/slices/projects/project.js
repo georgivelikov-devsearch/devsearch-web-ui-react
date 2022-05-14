@@ -2,20 +2,38 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const projectSlice = createSlice({
   name: "project",
-  initialState: {},
+  initialState: {
+    project: null,
+    projectError: null,
+    projectList: {
+      totalPages: null,
+      projects: null,
+    },
+    projectListError: null,
+  },
   reducers: {
-    projectErrorClear(state, actions) {
-      return { ...state, projectError: null };
+    getProject(state, action) {
+      const newProject = action.payload;
+      return {
+        ...state,
+        project: newProject,
+        projectError: null,
+      };
     },
     projectError(state, action) {
       return { ...state, projectError: action.payload };
     },
-    projectListSuccess(state, action) {
-      return {
-        ...state,
+    projectErrorClear(state, action) {
+      return { ...state, projectError: null };
+    },
+    getProjectList(state, action) {
+      let newProjectList = {
         projects: action.payload.projects,
         totalPages: action.payload.totalPages,
-        searchParameters: action.searchParameters,
+      };
+      return {
+        ...state,
+        projectList: newProjectList,
         projectListError: null,
       };
     },
@@ -25,11 +43,10 @@ const projectSlice = createSlice({
         projectListError: action.payload,
       };
     },
-    singleProject(state, action) {
-      const newProject = action.payload;
+    projectListErrorClear(state, action) {
       return {
-        state,
-        project: newProject,
+        ...state,
+        projectListError: null,
       };
     },
     addCommentToProject(state, action) {
@@ -38,8 +55,9 @@ const projectSlice = createSlice({
       let projectComments = [...newProject.comments];
       projectComments.push(newComment);
       newProject.comments = projectComments;
+
       return {
-        state,
+        ...state,
         project: newProject,
       };
     },
@@ -59,7 +77,7 @@ const projectSlice = createSlice({
       newProject.comments = projectComments;
 
       return {
-        state,
+        ...state,
         project: newProject,
       };
     },

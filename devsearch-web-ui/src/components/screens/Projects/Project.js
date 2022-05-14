@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
-import { getSingleProject } from "../../../services/project/projectService";
+import { getProject } from "../../../services/project/projectService";
 import {
   addComment,
   removeComment,
@@ -45,7 +45,7 @@ function Project() {
       setLoggedInUsername("");
     }
 
-    dispatch(getSingleProject(projectName));
+    dispatch(getProject(projectName));
   }, [dispatch, projectName]);
 
   const addCommentHandler = (e) => {
