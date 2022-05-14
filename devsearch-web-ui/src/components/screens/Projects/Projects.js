@@ -12,28 +12,32 @@ function Projects() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //const [text, setText] = useState("");
-
   const projectList = useSelector((state) => state.project);
   const { projectListError, projects, totalPages } = projectList;
-
-  //const searchDeveloperList = useSelector((state) => state.developerSearchList);
-
-  //const { searchParameters } = searchDeveloperList;
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
+    console.log("In Projects");
     const page = searchParams.get("page");
-    const search = searchParams.get("search");
-
-    let searchText = "";
-    // if (searchParameters && searchParameters.searchText && search) {
-    //   searchText = searchParameters.searchText;
-    // }
+    const searchText = searchParams.get("searchText");
+    if (searchText) {
+      setSearchValue(searchText);
+    }
 
     //setText(searchText);
     dispatch(getAllProjects(page, searchText));
     window.scrollTo(0, 0);
   }, [dispatch, searchParams]);
+
+  const submitSearch = (e) => {
+    e.preventDefault();
+    if (searchValue === null || searchValue.trim() === "") {
+      //no searchText needed
+      navigate("/projects?page=1");
+    } else {
+      navigate(`/projects?page=1&searchText=${searchValue}`);
+    }
+  };
 
   return (
     <main className="projects">
@@ -46,7 +50,12 @@ function Projects() {
           </div>
 
           <div className="hero-section__search">
-            <form className="form" action="#" method="get">
+            <form
+              className="form"
+              action="#"
+              method="get"
+              onSubmit={submitSearch}
+            >
               <div className="form__field">
                 <label htmlFor="formInput#search">Search By Projects </label>
                 <input
@@ -54,7 +63,9 @@ function Projects() {
                   id="formInput#search"
                   type="text"
                   name="text"
-                  placeholder="Search by Project Title"
+                  placeholder="Search by project title"
+                  defaultValue={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
               </div>
 
@@ -72,7 +83,7 @@ function Projects() {
         totalPages={Number(totalPages)}
         currentPage={Number(searchParams.get("page"))}
         root={"projects"}
-        search={searchParams.get("search")}
+        searchText={searchParams.get("searchText")}
       />
     </main>
   );

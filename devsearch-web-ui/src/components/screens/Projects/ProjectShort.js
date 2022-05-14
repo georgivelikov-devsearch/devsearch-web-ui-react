@@ -20,6 +20,33 @@ function ProjectShort({ project, developerData, canEdit }) {
     dispatch(deleteProject(projectId));
   };
 
+  // const calculateRating = (project) => {
+  //   console.log(project);
+  //   if (!project.comments || project.comments.length === 0) {
+  //     return "There is no feedback yet.";
+  //   }
+
+  //   let totalCount = project.comments.length;
+  //   let totalRating = 0;
+
+  //   project.comments.forEach((c) => {
+  //     totalRating += c.rating;
+  //   });
+
+  //   let averageRating = totalRating / totalCount;
+  //   let returnVal = `Project Rating: ${averageRating.toFixed(
+  //     2
+  //   )} (${totalCount} Votes)`;
+
+  //   if (totalCount === 1) {
+  //     returnVal = `Rroject Rating: ${averageRating.toFixed(
+  //       2
+  //     )} (${totalCount} Vote)`;
+  //   }
+
+  //   return returnVal;
+  // };
+
   return (
     <div className="column card">
       <Link
@@ -51,10 +78,7 @@ function ProjectShort({ project, developerData, canEdit }) {
             {project.authorFullname}
           </Link>
         </p>
-        <p className="project--rating">
-          <span className="project__bold">92%</span> Postitive Feedback (62
-          Votes)
-        </p>
+        {/* <p className="project--rating">{calculateRating(project)}</p> */}
         <div className="project__tags">
           {projectTags.map((tag) => (
             <span key={tag.publicKey} className="tag tag--pill tag--main">

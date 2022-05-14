@@ -33,11 +33,6 @@ function Developers() {
     window.scrollTo(0, 0);
   }, [dispatch, searchParams]);
 
-  const updateSearchValue = (e) => {
-    //console.log("updateSearchValue: " + e.target.value);
-    setSearchValue(e.target.value);
-  };
-
   const submitSearch = (e) => {
     e.preventDefault();
     //console.log("submitSearch: " + searchValue);
@@ -75,7 +70,7 @@ function Developers() {
                   name="searchValue"
                   placeholder="Search by developer name"
                   defaultValue={searchValue}
-                  onChange={(e) => updateSearchValue(e)}
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
               </div>
 
