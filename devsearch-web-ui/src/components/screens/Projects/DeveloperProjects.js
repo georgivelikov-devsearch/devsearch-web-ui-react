@@ -1,8 +1,7 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ProjectShort from "./ProjectShort";
+
 import { Link } from "react-router-dom";
+import ProjectShort from "./ProjectShort";
 
 function DeveloperProjects({ projects, canEdit, developerData }) {
   return (

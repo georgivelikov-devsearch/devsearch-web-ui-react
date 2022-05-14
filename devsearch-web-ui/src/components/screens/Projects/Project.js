@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
 import { getSingleProject } from "../../../services/project/projectService";
 import {
@@ -10,6 +11,7 @@ import {
 } from "../../../services/developer/developerService";
 import { validateStringLength } from "../../../utils/validator";
 import { PROJECT_VALIDATION } from "../../../constants/projectConstants";
+
 import { Link } from "react-router-dom";
 import StarRating from "../../common/StarRating";
 import Loader from "../../common/Loader";
@@ -22,14 +24,15 @@ function Project() {
   const starRatingRef = useRef(null);
 
   const { projectName } = useParams();
+
   const { loading } = useSelector((state) => state.loading);
   const { project } = useSelector((state) => state.project);
+
   const [commentText, setCommentText] = useState({
     value: "",
     isValid: true,
     errorMessage: "",
   });
-
   const [rating, setRating] = useState(5);
   // Comment section
   const [loggedInUsername, setLoggedInUsername] = useState("");
@@ -43,7 +46,7 @@ function Project() {
     }
 
     dispatch(getSingleProject(projectName));
-  }, []);
+  }, [dispatch, projectName]);
 
   const addCommentHandler = (e) => {
     e.preventDefault();
@@ -151,6 +154,7 @@ function Project() {
                       : "https://" + project.sourceCode
                   }
                   target="_blank"
+                  rel="noreferrer"
                 >
                   <i className="im im-external-link"></i>Source Code
                 </a>

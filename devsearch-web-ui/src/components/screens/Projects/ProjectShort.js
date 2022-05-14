@@ -1,13 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+
 import { deleteProject } from "../../../services/project/projectService";
+
+import { Link } from "react-router-dom";
 
 function ProjectShort({ project, developerData, canEdit }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [projectTags, setProjectTags] = useState([]);
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import ProjectShort from "./ProjectShort";
 import Message from "../../common/Message";
 import Loader from "../../common/Loader";

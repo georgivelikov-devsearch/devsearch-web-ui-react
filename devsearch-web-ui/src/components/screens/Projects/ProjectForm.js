@@ -3,21 +3,19 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Message from "../../common/Message";
-import Loader from "../../common/Loader";
-import { DraggableArea } from "react-draggable-tags";
-
 import UserService from "../../../services/identity/keycloak/keycloakUserService";
-
 import { validateStringLength } from "../../../utils/validator";
 import { getBase64FromFile } from "../../../utils/utils";
 import { PROJECT_VALIDATION } from "../../../constants/projectConstants";
 import { NAVIGATE_TO_PROFILE } from "../../../constants/developerConstants";
-
 import {
   addProject,
   updateProject,
 } from "../../../services/project/projectService";
+
+import { DraggableArea } from "react-draggable-tags";
+import Message from "../../common/Message";
+import Loader from "../../common/Loader";
 
 function ProjectForm() {
   const dispatch = useDispatch();
@@ -53,8 +51,6 @@ function ProjectForm() {
   const [isAddTagOpen, setIsAddTagOpen] = useState(false);
 
   const [projectPictureUrl, setProjectPictureUrl] = useState("");
-  // used for upload
-  const [newProjectPictureUrl, setNewProjectPictureUrl] = useState("");
   // this is done because there is no need to reupload the picture to
   //the File Service every time when update request is send to the backend (it is limited free account)
   const [newProjectPictureUpload, setNewProjectPictureUpload] = useState(false);
@@ -90,7 +86,7 @@ function ProjectForm() {
       projectTags.sort((a, b) => a.position - b.position);
       setTags(projectTags);
     }
-  }, [dispatch, project]);
+  }, [dispatch, project, isNewProject]);
 
   const removeTag = (id) => {
     let searchIndex = -1;
